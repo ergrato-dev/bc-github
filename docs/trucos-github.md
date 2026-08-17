@@ -135,8 +135,31 @@ Los consejos genéricos de productividad no entran.
 | El informe es un issue | Queda fechado, se comenta y se busca. Etiquétalo `type:informe` |
 | Los `schedule` mueren a los 60 días | Sin actividad en el repo se desactivan solos |
 
+## Semana 06 — Pull requests a fondo
+
+→ [Semana 06](../bootcamp/week-06-pull_requests_a_fondo/README.md)
+
+| Truco | Cómo |
+|-------|------|
+| Traer un PR a local | `gh pr checkout 42` — también con PRs de forks |
+| Diff sin ruido de espacios | `?w=1` en la URL del PR |
+| El diff en texto plano | `.diff` o `.patch` al final de la URL |
+| Sugerencia aplicable | Bloque ` ```suggestion ` en un comentario de línea |
+| Sugerencia multilínea | Selecciona el rango en el diff antes de comentar |
+| Una notificación, no quince | *Start a review* en vez de *Add single comment* |
+| Severidad en el comentario | `bloqueante:` · `sugerencia:` · `nit:` |
+| Solo lo nuevo desde tu última revisión | *Files changed* → *Changes since your last review* |
+| Qué archivos toca | `gh pr diff 42 --name-only` |
+| Crear el PR con la descripción hecha | `gh pr create --fill` reutiliza tus mensajes de commit |
+| Auto-merge | `gh pr merge 42 --auto --squash` |
+| Draft y vuelta atrás | `gh pr ready 42` · `gh pr ready --undo 42` |
+| Ver por qué no se puede mergear | `gh pr view 42 --json mergeable,mergeStateStatus` |
+| Commit de squash con el título del PR | `gh repo edit --squash-merge-commit-message pr-title-description` |
+| Reordenar una pila | `git rebase --onto origin/main <base-vieja> <tu-rama>` |
+| Conflictos con el ancestro a la vista | `git config --global merge.conflictStyle zdiff3` |
+
 ---
 
-> Las secciones de las semanas 06 a 21 se añaden a medida que se publica cada
+> Las secciones de las semanas 07 a 21 se añaden a medida que se publica cada
 > semana. Si has hecho una semana y su sección no está aquí,
 > [abre un issue](https://github.com/ergrato-dev/bc-github/issues).

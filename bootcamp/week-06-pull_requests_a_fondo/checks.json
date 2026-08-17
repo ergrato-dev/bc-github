@@ -1,0 +1,48 @@
+{
+  "semana": "06",
+  "titulo": "Pull requests a fondo",
+  "checks": [
+    {
+      "id": "plantilla-pr",
+      "descripcion": "Existe .github/pull_request_template.md",
+      "api": "repos/{repo}/contents/.github/pull_request_template.md",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/01-primer-pr-completo.md, paso 1"
+    },
+    {
+      "id": "tres-pr-mergeados",
+      "descripcion": "Hay 3 o más pull requests mergeados",
+      "api": "repos/{repo}/pulls?state=closed&per_page=100",
+      "jq": "[.[] | select(.merged_at != null)] | length >= 3",
+      "pista": "2-practicas/01-primer-pr-completo.md, paso 8"
+    },
+    {
+      "id": "una-estrategia-merge",
+      "descripcion": "Solo hay una estrategia de merge habilitada",
+      "api": "repos/{repo}",
+      "jq": "[.allow_squash_merge, .allow_merge_commit, .allow_rebase_merge] | map(select(. == true)) | length == 1",
+      "pista": "2-practicas/03-comparar-estrategias.md, paso 7"
+    },
+    {
+      "id": "borrar-rama-al-mergear",
+      "descripcion": "Las ramas se borran automáticamente al mergear",
+      "api": "repos/{repo}",
+      "jq": ".delete_branch_on_merge == true",
+      "pista": "2-practicas/03-comparar-estrategias.md, paso 7"
+    },
+    {
+      "id": "comentarios-de-revision",
+      "descripcion": "Hay comentarios de revisión de línea en algún PR",
+      "api": "repos/{repo}/pulls/comments?per_page=10",
+      "jq": "length > 0",
+      "pista": "2-practicas/02-review-con-sugerencias.md, pasos 2-4"
+    },
+    {
+      "id": "pila-de-prs",
+      "descripcion": "Existe un PR cuya base no es la rama por defecto (pila)",
+      "api": "repos/{repo}/pulls?state=all&per_page=100",
+      "jq": "[.[] | select(.base.ref != .base.repo.default_branch)] | length > 0",
+      "pista": "2-practicas/04-conflictos-y-stacked.md, paso 6"
+    }
+  ]
+}

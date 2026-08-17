@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" width="800" height="420" role="img" aria-label="Comparación de las tres estrategias de merge: merge commit conserva la bifurcación y todos los commits, squash produce un único commit y rebase reaplica los commits en línea recta">
+  <title>Qué le hace cada estrategia de merge a la historia</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .main { fill: #58a6ff; stroke: #1f6feb; stroke-width: 1.5; }
+    .feat { fill: #a371f7; stroke: #8957e0; stroke-width: 1.5; }
+    .sq   { fill: #3fb950; stroke: #2ea043; stroke-width: 1.5; }
+    .edge { stroke: #30363d; stroke-width: 2; fill: none; }
+    .sha  { font-size: 11px; font-weight: 600; fill: #0d1117; }
+  </style>
+
+  <rect class="bg" width="800" height="420"/>
+  <text class="t h" x="40" y="36">Tres formas de integrar el mismo PR de tres commits</text>
+
+  <!-- merge commit -->
+  <text class="t cap" x="40" y="80">Merge commit</text>
+  <text class="t s" x="180" y="80">conserva la rama y sus 3 commits · añade un commit de merge</text>
+  <line class="edge" x1="60" y1="118" x2="240" y2="118"/>
+  <line class="edge" x1="240" y1="118" x2="330" y2="96"/>
+  <line class="edge" x1="330" y1="96" x2="420" y2="96"/>
+  <line class="edge" x1="420" y1="96" x2="510" y2="118"/>
+  <circle class="main" cx="60"  cy="118" r="14"/>
+  <circle class="main" cx="150" cy="118" r="14"/>
+  <circle class="feat" cx="330" cy="96"  r="14"/>
+  <circle class="feat" cx="420" cy="96"  r="14"/>
+  <circle class="feat" cx="240" cy="96"  r="14"/>
+  <line class="edge" x1="150" y1="118" x2="240" y2="96"/>
+  <circle class="main" cx="510" cy="118" r="14"/>
+  <text class="t sha" x="510" y="122" text-anchor="middle">M</text>
+  <text class="t s" x="560" y="122">← el wip también llega a main</text>
+
+  <!-- squash -->
+  <text class="t cap" x="40" y="200">Squash</text>
+  <text class="t s" x="180" y="200">un PR = un commit · historia lineal · el detalle queda en el PR</text>
+  <line class="edge" x1="60" y1="238" x2="330" y2="238"/>
+  <circle class="main" cx="60"  cy="238" r="14"/>
+  <circle class="main" cx="150" cy="238" r="14"/>
+  <circle class="sq"   cx="240" cy="238" r="14"/>
+  <text class="t sha" x="240" y="242" text-anchor="middle">S</text>
+  <circle class="main" cx="330" cy="238" r="14"/>
+  <text class="t s" x="380" y="242">← bisect trivial · revertir es un solo revert</text>
+
+  <!-- rebase -->
+  <text class="t cap" x="40" y="320">Rebase and merge</text>
+  <text class="t s" x="220" y="320">los 3 commits en línea recta · SHAs nuevos · sin commit de merge</text>
+  <line class="edge" x1="60" y1="358" x2="510" y2="358"/>
+  <circle class="main" cx="60"  cy="358" r="14"/>
+  <circle class="main" cx="150" cy="358" r="14"/>
+  <circle class="feat" cx="240" cy="358" r="14"/>
+  <text class="t sha" x="240" y="362" text-anchor="middle">C'</text>
+  <circle class="feat" cx="330" cy="358" r="14"/>
+  <text class="t sha" x="330" y="362" text-anchor="middle">D'</text>
+  <circle class="feat" cx="420" cy="358" r="14"/>
+  <text class="t sha" x="420" y="362" text-anchor="middle">E'</text>
+  <circle class="main" cx="510" cy="358" r="14"/>
+  <text class="t s" x="560" y="362">← exige commits limpios</text>
+</svg>
