@@ -116,8 +116,27 @@ Los consejos genéricos de productividad no entran.
 | Convertir una nota en issue | Un draft se convierte en issue conservando los campos |
 | Crear item rápido | Pulsa `c` dentro del project |
 
+## Semana 05 — Projects v2: automatización y métricas
+
+→ [Semana 05](../bootcamp/week-05-projects_v2_automatizacion_y_metricas/README.md)
+
+| Truco | Cómo |
+|-------|------|
+| `GITHUB_TOKEN` no vale para Projects | Necesitas PAT fine-grained con `Projects: Read and write` en **Account permissions** |
+| Añadir sin duplicar | `addProjectV2ItemById` es idempotente |
+| Los IDs, en `vars`; el token, en `secrets` | `gh variable set PROJECT_ID` · `gh secret set PROJECT_TOKEN` |
+| Probar un workflow sin esperar al cron | Añade `workflow_dispatch:` y lanza `gh workflow run <archivo>` |
+| Relanzar solo lo que falló | `gh run rerun <id> --failed` |
+| Lead time en una línea | `--json createdAt,closedAt` + `((.closedAt\|fromdate) - (.createdAt\|fromdate)) / 86400` |
+| Mediana, no media | Un issue olvidado destroza la media; usa `sort \| .[length/2 \| floor]` |
+| Excluir descartes de las métricas | `select(.stateReason != "not_planned")` |
+| El rate limit de GraphQL va por puntos | `gh api graphql -f query='{ rateLimit { cost remaining } }'` |
+| Exportar una vista a CSV | Vista de tabla → `···` → *Export view data* |
+| El informe es un issue | Queda fechado, se comenta y se busca. Etiquétalo `type:informe` |
+| Los `schedule` mueren a los 60 días | Sin actividad en el repo se desactivan solos |
+
 ---
 
-> Las secciones de las semanas 05 a 21 se añaden a medida que se publica cada
+> Las secciones de las semanas 06 a 21 se añaden a medida que se publica cada
 > semana. Si has hecho una semana y su sección no está aquí,
 > [abre un issue](https://github.com/ergrato-dev/bc-github/issues).

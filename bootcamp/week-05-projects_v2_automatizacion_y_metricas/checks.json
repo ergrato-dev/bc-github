@@ -1,0 +1,48 @@
+{
+  "semana": "05",
+  "titulo": "Projects v2: automatización y métricas",
+  "checks": [
+    {
+      "id": "workflow-project",
+      "descripcion": "Existe .github/workflows/project-automation.yml",
+      "api": "repos/{repo}/contents/.github/workflows/project-automation.yml",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/02-workflow-add-to-project.md, paso 4"
+    },
+    {
+      "id": "workflow-informe",
+      "descripcion": "Existe .github/workflows/informe-semanal.yml",
+      "api": "repos/{repo}/contents/.github/workflows/informe-semanal.yml",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/04-informe-semanal.md, paso 4"
+    },
+    {
+      "id": "script-metricas",
+      "descripcion": "scripts/metricas.sh está en el repositorio",
+      "api": "repos/{repo}/contents/scripts/metricas.sh",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/03-panel-de-metricas.md, paso 6"
+    },
+    {
+      "id": "secreto-project-token",
+      "descripcion": "El secreto PROJECT_TOKEN está configurado",
+      "api": "repos/{repo}/actions/secrets",
+      "jq": "[.secrets[] | select(.name == \"PROJECT_TOKEN\")] | length > 0",
+      "pista": "2-practicas/02-workflow-add-to-project.md, paso 2"
+    },
+    {
+      "id": "ejecucion-correcta",
+      "descripcion": "Hay al menos una ejecución de workflow completada con éxito",
+      "api": "repos/{repo}/actions/runs?status=success&per_page=5",
+      "jq": ".total_count > 0",
+      "pista": "2-practicas/04-informe-semanal.md, paso 5"
+    },
+    {
+      "id": "issue-informe",
+      "descripcion": "Existe al menos un issue con la label type:informe",
+      "api": "repos/{repo}/issues?state=all&labels=type:informe&per_page=5",
+      "jq": "length > 0",
+      "pista": "2-practicas/04-informe-semanal.md, paso 3"
+    }
+  ]
+}
