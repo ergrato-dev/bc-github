@@ -182,11 +182,16 @@ gh auth status
 ```
 
 Debe listar tu cuenta y los scopes. Para el bootcamp necesitas al menos:
-`repo`, `read:org`, `workflow`, `gist`.
+`repo`, `read:org`, `workflow`, `gist` y `read:project`.
 
 ```bash
-gh auth refresh -s workflow,read:org,gist
+gh auth refresh -s workflow,read:org,gist,read:project
 ```
+
+> [!IMPORTANT]
+> `read:project` no viene por defecto y hace falta desde la Semana 04: **toda**
+> consulta a Projects v2 va por GraphQL y falla con `INSUFFICIENT_SCOPES` sin
+> él. Para escribir en un project (Semana 05) necesitarás `project` completo.
 
 ---
 

@@ -174,7 +174,8 @@ cd bc-github
 ### 2. Preparar el entorno
 
 ```bash
-gh auth login          # elige HTTPS o SSH; concede scope 'repo' y 'read:org'
+gh auth login          # elige HTTPS o SSH
+gh auth refresh -s workflow,read:org,gist,read:project
 gh auth status         # debe listar tu cuenta y los scopes
 ./scripts/verificar-semana.sh --doctor
 ```

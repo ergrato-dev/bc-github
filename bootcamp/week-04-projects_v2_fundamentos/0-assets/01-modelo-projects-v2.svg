@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440" width="800" height="440" role="img" aria-label="Modelo de datos de Projects v2: un conjunto de items con campos, y varias vistas que filtran y agrupan esos mismos datos de formas distintas">
+  <title>Modelo de datos de Projects v2</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .box  { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .acc  { fill: #161b22; stroke: #58a6ff; stroke-width: 2; }
+    .pur  { fill: #161b22; stroke: #a371f7; stroke-width: 2; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .m    { font-size: 11px; fill: #8b949e; }
+    .line { stroke: #a371f7; stroke-width: 1.5; fill: none; }
+  </style>
+  <defs>
+    <marker id="ap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#a371f7"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="800" height="440"/>
+  <text class="t h" x="40" y="38">Un solo conjunto de datos. Muchas formas de mirarlo.</text>
+
+  <!-- tabla de datos -->
+  <rect class="acc" x="40" y="66" width="430" height="190" rx="8"/>
+  <text class="t cap" x="60" y="90">Items × campos (la base de datos)</text>
+
+  <text class="t m" x="60"  y="120">item</text>
+  <text class="t m" x="190" y="120">Status</text>
+  <text class="t m" x="290" y="120">Priority</text>
+  <text class="t m" x="380" y="120">Iteration</text>
+
+  <line x1="60" y1="128" x2="450" y2="128" stroke="#30363d" stroke-width="1"/>
+
+  <text class="t s" x="60"  y="150">#12 multa</text>
+  <text class="t s" x="190" y="150">En curso</text>
+  <text class="t s" x="290" y="150">Alta</text>
+  <text class="t s" x="380" y="150">Sprint 1</text>
+
+  <text class="t s" x="60"  y="176">#13 socios</text>
+  <text class="t s" x="190" y="176">Backlog</text>
+  <text class="t s" x="290" y="176">Media</text>
+  <text class="t s" x="380" y="176">—</text>
+
+  <text class="t s" x="60"  y="202">#14 catálogo</text>
+  <text class="t s" x="190" y="202">Hecho</text>
+  <text class="t s" x="290" y="202">Baja</text>
+  <text class="t s" x="380" y="202">Sprint 1</text>
+
+  <text class="t s" x="60"  y="228">#15 informes</text>
+  <text class="t s" x="190" y="228">En curso</text>
+  <text class="t s" x="290" y="228">Alta</text>
+  <text class="t s" x="380" y="228">Sprint 2</text>
+
+  <!-- vistas -->
+  <line class="line" x1="470" y1="120" x2="530" y2="106" marker-end="url(#ap)"/>
+  <line class="line" x1="470" y1="160" x2="530" y2="200" marker-end="url(#ap)"/>
+  <line class="line" x1="470" y1="200" x2="530" y2="294" marker-end="url(#ap)"/>
+
+  <rect class="pur" x="530" y="76" width="230" height="60" rx="8"/>
+  <text class="t cap" x="550" y="100">Vista: Sprint actual</text>
+  <text class="t m"   x="550" y="120">board · iteration:@current · by Status</text>
+
+  <rect class="pur" x="530" y="170" width="230" height="60" rx="8"/>
+  <text class="t cap" x="550" y="194">Vista: Backlog</text>
+  <text class="t m"   x="550" y="214">table · no:iteration · by Priority</text>
+
+  <rect class="pur" x="530" y="264" width="230" height="60" rx="8"/>
+  <text class="t cap" x="550" y="288">Vista: Roadmap</text>
+  <text class="t m"   x="550" y="308">roadmap · is:open · by Area</text>
+
+  <!-- nota -->
+  <rect class="box" x="40" y="290" width="430" height="110" rx="8"/>
+  <text class="t cap" x="60" y="316">Lo que hay que interiorizar</text>
+  <text class="t s" x="60" y="340">· Las columnas del tablero son los valores de un campo.</text>
+  <text class="t s" x="60" y="360">· Mover una tarjeta de columna edita ese campo.</text>
+  <text class="t s" x="60" y="380">· Cambiar Group by no modifica ningún dato: cambia la pregunta.</text>
+
+  <text class="t s" x="530" y="360">Projects v2 solo existe</text>
+  <text class="t s" x="530" y="380">en la API GraphQL.</text>
+  <text class="t s" x="530" y="400">Scope: read:project</text>
+</svg>

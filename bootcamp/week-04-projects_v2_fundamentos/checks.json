@@ -1,0 +1,41 @@
+{
+  "semana": "04",
+  "titulo": "Projects v2: fundamentos",
+  "checks": [
+    {
+      "id": "project-con-items",
+      "descripcion": "Tienes un Project v2 con 12 o más items",
+      "graphql": "query($owner: String!) { user(login: $owner) { projectsV2(first: 10) { nodes { title items { totalCount } } } } }",
+      "jq": "[.data.user.projectsV2.nodes[] | select(.items.totalCount >= 12)] | length > 0",
+      "pista": "2-practicas/01-crear-el-project.md, paso 6"
+    },
+    {
+      "id": "campos-personalizados",
+      "descripcion": "El project tiene los campos Priority, Size y Area",
+      "graphql": "query($owner: String!) { user(login: $owner) { projectsV2(first: 10) { nodes { fields(first: 50) { nodes { ... on ProjectV2FieldCommon { name } } } } } } }",
+      "jq": "[.data.user.projectsV2.nodes[] | [.fields.nodes[].name] | select(index(\"Priority\") and index(\"Size\") and index(\"Area\"))] | length > 0",
+      "pista": "2-practicas/01-crear-el-project.md, paso 4"
+    },
+    {
+      "id": "campo-iteracion",
+      "descripcion": "El project tiene un campo de iteración con 3 o más iteraciones",
+      "graphql": "query($owner: String!) { user(login: $owner) { projectsV2(first: 10) { nodes { fields(first: 50) { nodes { ... on ProjectV2IterationField { name configuration { iterations { title } } } } } } } } }",
+      "jq": "[.data.user.projectsV2.nodes[].fields.nodes[] | select(.configuration != null) | select((.configuration.iterations | length) >= 3)] | length > 0",
+      "pista": "2-practicas/03-iteraciones-y-roadmap.md, paso 1"
+    },
+    {
+      "id": "cuatro-vistas",
+      "descripcion": "El project tiene 4 o más vistas",
+      "graphql": "query($owner: String!) { user(login: $owner) { projectsV2(first: 10) { nodes { views(first: 20) { totalCount } } } } }",
+      "jq": "[.data.user.projectsV2.nodes[] | select(.views.totalCount >= 4)] | length > 0",
+      "pista": "2-practicas/02-vistas-que-responden.md"
+    },
+    {
+      "id": "script-resumen",
+      "descripcion": "scripts/project-resumen.sh está en el repositorio",
+      "api": "repos/{repo}/contents/scripts/project-resumen.sh",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/04-graphql-del-project.md, paso 6"
+    }
+  ]
+}

@@ -97,8 +97,27 @@ Los consejos genéricos de productividad no entran.
 | Desviar las dudas fuera de Issues | `contact_links` hacia Discussions |
 | Respuestas guardadas | `Settings → Saved replies`, se insertan con `Ctrl` + `.` |
 
+## Semana 04 — Projects v2: fundamentos
+
+→ [Semana 04](../bootcamp/week-04-projects_v2_fundamentos/README.md)
+
+| Truco | Cómo |
+|-------|------|
+| Crear un project desde la terminal | `gh project create --owner @me --title "Mi tablero"` |
+| Ver el número de tus projects | `gh project list --owner @me` |
+| Los IDs internos que pide GraphQL | `gh project view <n> --owner @me --format json` |
+| Añadir el backlog existente por lote | `gh issue list --json url --jq '.[].url' \| xargs -I{} gh project item-add <n> --owner @me --url {}` |
+| Sprint actual sin mantenimiento | `iteration:@current` (también `@previous` y `@next`) |
+| Encontrar el trabajo huérfano | `is:open no:assignee no:iteration` |
+| Una vista, no un project nuevo | Para ver lo mismo de otra forma se duplica la **vista** |
+| Reordenar las columnas del tablero | Se reordenan las **opciones del campo**, no la vista |
+| Slicing en vez de una vista por área | Panel lateral *Slice* por `Area` |
+| Editar en masa | La vista de tabla acepta selección múltiple y pegado |
+| Convertir una nota en issue | Un draft se convierte en issue conservando los campos |
+| Crear item rápido | Pulsa `c` dentro del project |
+
 ---
 
-> Las secciones de las semanas 04 a 21 se añaden a medida que se publica cada
+> Las secciones de las semanas 05 a 21 se añaden a medida que se publica cada
 > semana. Si has hecho una semana y su sección no está aquí,
 > [abre un issue](https://github.com/ergrato-dev/bc-github/issues).
