@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440" width="800" height="440" role="img" aria-label="Comparación de tres flujos de ramas: GitHub flow con una rama principal y ramas cortas, trunk-based con ramas de horas, y git-flow con main, develop y ramas de release y hotfix">
+  <title>GitHub flow, trunk-based y git-flow</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .m    { fill: #58a6ff; stroke: #1f6feb; stroke-width: 1.5; }
+    .f    { fill: #a371f7; stroke: #8957e0; stroke-width: 1.5; }
+    .d    { fill: #3fb950; stroke: #2ea043; stroke-width: 1.5; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+  </style>
+
+  <rect class="bg" width="800" height="440"/>
+  <text class="t h" x="40" y="36">¿Cuánto tiempo puede vivir un cambio fuera de la rama principal?</text>
+
+  <!-- GitHub flow -->
+  <text class="t cap" x="40" y="78">GitHub flow</text>
+  <text class="t s" x="170" y="78">una rama permanente · ramas de días · PR y borrar</text>
+  <line class="e" x1="60" y1="118" x2="620" y2="118"/>
+  <text class="t lbl" x="628" y="122">main</text>
+  <circle class="m" cx="60"  cy="118" r="10"/>
+  <circle class="m" cx="200" cy="118" r="10"/>
+  <circle class="m" cx="380" cy="118" r="10"/>
+  <circle class="m" cx="560" cy="118" r="10"/>
+  <path class="e" d="M120 118 C150 92, 170 92, 200 118"/>
+  <circle class="f" cx="160" cy="96" r="9"/>
+  <path class="e" d="M260 118 C310 88, 330 88, 380 118"/>
+  <circle class="f" cx="320" cy="92" r="9"/>
+  <path class="e" d="M440 118 C490 88, 510 88, 560 118"/>
+  <circle class="f" cx="500" cy="92" r="9"/>
+
+  <!-- Trunk-based -->
+  <text class="t cap" x="40" y="196">Trunk-based</text>
+  <text class="t s" x="170" y="196">ramas de horas · feature flags para lo no terminado</text>
+  <line class="e" x1="60" y1="236" x2="620" y2="236"/>
+  <text class="t lbl" x="628" y="240">main</text>
+  <circle class="m" cx="60"  cy="236" r="10"/>
+  <circle class="m" cx="150" cy="236" r="10"/>
+  <circle class="m" cx="240" cy="236" r="10"/>
+  <circle class="m" cx="330" cy="236" r="10"/>
+  <circle class="m" cx="420" cy="236" r="10"/>
+  <circle class="m" cx="510" cy="236" r="10"/>
+  <circle class="m" cx="600" cy="236" r="10"/>
+  <path class="e" d="M150 236 C175 216, 215 216, 240 236"/>
+  <path class="e" d="M330 236 C355 216, 395 216, 420 236"/>
+  <path class="e" d="M510 236 C535 216, 575 216, 600 236"/>
+
+  <!-- git-flow -->
+  <text class="t cap" x="40" y="314">git-flow</text>
+  <text class="t s" x="170" y="314">main + develop + feature/release/hotfix · varias versiones vivas</text>
+  <line class="e" x1="60" y1="352" x2="620" y2="352"/>
+  <text class="t lbl" x="628" y="356">main</text>
+  <circle class="m" cx="60"  cy="352" r="10"/>
+  <circle class="m" cx="400" cy="352" r="10"/>
+  <circle class="m" cx="600" cy="352" r="10"/>
+
+  <line class="e" x1="60" y1="400" x2="620" y2="400"/>
+  <text class="t lbl" x="628" y="404">develop</text>
+  <circle class="d" cx="140" cy="400" r="9"/>
+  <circle class="d" cx="260" cy="400" r="9"/>
+  <circle class="d" cx="380" cy="400" r="9"/>
+  <circle class="d" cx="520" cy="400" r="9"/>
+  <line class="e" x1="60" y1="352" x2="60" y2="400"/>
+  <path class="e" d="M380 400 C390 380, 392 370, 400 352"/>
+  <path class="e" d="M520 400 C560 380, 580 366, 600 352"/>
+  <circle class="f" cx="200" cy="428" r="9"/>
+  <path class="e" d="M140 400 C160 418, 180 424, 200 428"/>
+  <path class="e" d="M200 428 C225 420, 245 410, 260 400"/>
+</svg>

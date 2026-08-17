@@ -158,8 +158,30 @@ Los consejos genéricos de productividad no entran.
 | Reordenar una pila | `git rebase --onto origin/main <base-vieja> <tu-rama>` |
 | Conflictos con el ancestro a la vista | `git config --global merge.conflictStyle zdiff3` |
 
+## Semana 07 — Code review y convenciones
+
+→ [Semana 07](../bootcamp/week-07-code_review_y_convenciones/README.md)
+
+| Truco | Cómo |
+|-------|------|
+| Severidad en los comentarios | `bloqueante:` · `sugerencia:` · `nit:` |
+| Pregunta en vez de ordenar | "¿qué pasa si `dias` es negativo?" abre conversación |
+| Breaking change | `feat!:` o `BREAKING CHANGE:` en el footer — mejor ambos |
+| Scope del dominio, no del archivo | `feat(prestamos):`, no `feat(index-js):` |
+| Hooks que sí se comparten | `.githooks/` + `git config core.hooksPath .githooks` |
+| Con squash, valida el título del PR | Es el mensaje que acaba en `main` |
+| Revalidar sin commits | El tipo `edited` en `on: pull_request` |
+| Avisar sin fallar el job | `echo "::warning::..."` |
+| Nunca interpoles texto de usuario en `run:` | Pásalo por `env:` — inyección de comandos |
+| CODEOWNERS: gana la última regla | General arriba, excepciones abajo |
+| Comprobar CODEOWNERS | `gh api repos/{owner}/{repo}/codeowners/errors --jq '.errors'` |
+| Rama desde el issue | Barra lateral del issue → *Create a branch* |
+| Limpiar ramas mergeadas | `git fetch -p && git branch --merged main \| grep -v main \| xargs -r git branch -d` |
+| Ramas por antigüedad | `git for-each-ref --sort=committerdate refs/heads/ --format='%(committerdate:short) %(refname:short)'` |
+| Cuántos commits incumplen | `git log --oneline -50 \| grep -vcE '^[a-f0-9]+ (feat\|fix\|docs\|chore)'` |
+
 ---
 
-> Las secciones de las semanas 07 a 21 se añaden a medida que se publica cada
+> Las secciones de las semanas 08 a 21 se añaden a medida que se publica cada
 > semana. Si has hecho una semana y su sección no está aquí,
 > [abre un issue](https://github.com/ergrato-dev/bc-github/issues).

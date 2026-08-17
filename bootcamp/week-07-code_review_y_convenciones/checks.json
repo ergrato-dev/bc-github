@@ -1,0 +1,48 @@
+{
+  "semana": "07",
+  "titulo": "Code review y convenciones",
+  "checks": [
+    {
+      "id": "hook-commit-msg",
+      "descripcion": "Existe .githooks/commit-msg versionado",
+      "api": "repos/{repo}/contents/.githooks/commit-msg",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/01-commits-convencionales.md, paso 2"
+    },
+    {
+      "id": "workflow-validar-pr",
+      "descripcion": "Existe .github/workflows/validar-pr.yml",
+      "api": "repos/{repo}/contents/.github/workflows/validar-pr.yml",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/02-validar-titulos-de-pr.md, paso 2"
+    },
+    {
+      "id": "codeowners-sin-errores",
+      "descripcion": "CODEOWNERS existe y no tiene errores de validación",
+      "api": "repos/{repo}/codeowners/errors",
+      "jq": "(.errors | length) == 0",
+      "pista": "2-practicas/03-codeowners-y-dod.md, paso 2"
+    },
+    {
+      "id": "dod-en-plantilla",
+      "descripcion": "La plantilla de PR incluye la Definition of Done",
+      "api": "repos/{repo}/contents/.github/pull_request_template.md",
+      "jq": "(.content | @base64d | contains(\"Definition of Done\"))",
+      "pista": "2-practicas/03-codeowners-y-dod.md, paso 5"
+    },
+    {
+      "id": "script-auditoria",
+      "descripcion": "scripts/auditoria-prs.sh está en el repositorio",
+      "api": "repos/{repo}/contents/scripts/auditoria-prs.sh",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/04-auditoria-de-review.md, paso 5"
+    },
+    {
+      "id": "titulos-convencionales",
+      "descripcion": "Hay 3 o más PRs mergeados con título convencional",
+      "api": "repos/{repo}/pulls?state=closed&per_page=100",
+      "jq": "[.[] | select(.merged_at != null) | .title | select(test(\"^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\\\\([a-z0-9-]+\\\\))?!?: \"))] | length >= 3",
+      "pista": "2-practicas/02-validar-titulos-de-pr.md"
+    }
+  ]
+}
