@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 430" width="800" height="430" role="img" aria-label="Flujo de triage de un issue: se comprueba si se entiende, si es válido, qué tipo es y cuándo se hará; cada respuesta negativa lleva a un cierre o a pedir información">
+  <title>Las cuatro preguntas del triage</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .box  { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .okb  { fill: #161b22; stroke: #3fb950; stroke-width: 2; }
+    .warn { fill: #161b22; stroke: #d29922; stroke-width: 2; }
+    .errb { fill: #161b22; stroke: #f85149; stroke-width: 2; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .q    { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .no   { font-size: 11px; font-weight: 700; fill: #f85149; }
+    .si   { font-size: 11px; font-weight: 700; fill: #3fb950; }
+    .line { stroke: #58a6ff; stroke-width: 1.5; fill: none; }
+    .lno  { stroke: #f85149; stroke-width: 1.5; fill: none; }
+  </style>
+  <defs>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f85149"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="800" height="430"/>
+  <text class="t h" x="40" y="40">Triage: cuatro preguntas, en orden. La primera que falla, para.</text>
+
+  <!-- cadena principal -->
+  <rect class="box" x="40" y="80" width="160" height="56" rx="8"/>
+  <text class="t q" x="120" y="105" text-anchor="middle">1. ¿Se entiende?</text>
+  <text class="t s" x="120" y="124" text-anchor="middle">¿puedo reproducirlo?</text>
+
+  <rect class="box" x="230" y="80" width="160" height="56" rx="8"/>
+  <text class="t q" x="310" y="105" text-anchor="middle">2. ¿Es válido?</text>
+  <text class="t s" x="310" y="124" text-anchor="middle">¿duplicado? ¿alcance?</text>
+
+  <rect class="box" x="420" y="80" width="160" height="56" rx="8"/>
+  <text class="t q" x="500" y="105" text-anchor="middle">3. ¿Qué es?</text>
+  <text class="t s" x="500" y="124" text-anchor="middle">type: · area:</text>
+
+  <rect class="box" x="610" y="80" width="150" height="56" rx="8"/>
+  <text class="t q" x="685" y="105" text-anchor="middle">4. ¿Cuándo?</text>
+  <text class="t s" x="685" y="124" text-anchor="middle">prio: · milestone</text>
+
+  <line class="line" x1="200" y1="108" x2="228" y2="108" marker-end="url(#ab)"/>
+  <line class="line" x1="390" y1="108" x2="418" y2="108" marker-end="url(#ab)"/>
+  <line class="line" x1="580" y1="108" x2="608" y2="108" marker-end="url(#ab)"/>
+
+  <text class="t si" x="214" y="100" text-anchor="middle">sí</text>
+  <text class="t si" x="404" y="100" text-anchor="middle">sí</text>
+  <text class="t si" x="594" y="100" text-anchor="middle">sí</text>
+
+  <!-- salidas -->
+  <line class="lno" x1="120" y1="136" x2="120" y2="200" marker-end="url(#ar)"/>
+  <text class="t no" x="132" y="170">no</text>
+  <rect class="warn" x="40" y="200" width="160" height="62" rx="8"/>
+  <text class="t s" x="120" y="224" text-anchor="middle">status:necesita-info</text>
+  <text class="t s" x="120" y="244" text-anchor="middle">pedir datos concretos</text>
+
+  <line class="lno" x1="310" y1="136" x2="310" y2="200" marker-end="url(#ar)"/>
+  <text class="t no" x="322" y="170">no</text>
+  <rect class="errb" x="230" y="200" width="160" height="62" rx="8"/>
+  <text class="t s" x="310" y="224" text-anchor="middle">cerrar como</text>
+  <text class="t s" x="310" y="244" text-anchor="middle">not planned</text>
+
+  <!-- destino final -->
+  <line class="line" x1="685" y1="136" x2="685" y2="200" marker-end="url(#ab)"/>
+  <rect class="okb" x="600" y="200" width="170" height="62" rx="8"/>
+  <text class="t s" x="685" y="224" text-anchor="middle">backlog clasificado</text>
+  <text class="t s" x="685" y="244" text-anchor="middle">listo para el Project</text>
+
+  <!-- reglas -->
+  <rect class="box" x="40" y="300" width="720" height="96" rx="8"/>
+  <text class="t q" x="60" y="326">Reglas que evitan discusiones</text>
+  <text class="t s" x="60" y="350">· Duplicado: se cierra el más nuevo, enlazando al viejo. La discusión vive en un solo sitio.</text>
+  <text class="t s" x="60" y="370">· Sin respuesta 14 días tras pedir información: cerrar como not planned, invitando a reabrir.</text>
+  <text class="t s" x="60" y="390">· Objetivo: menos de 2 minutos por issue. Si tardas más, la decisión no es de triage.</text>
+</svg>

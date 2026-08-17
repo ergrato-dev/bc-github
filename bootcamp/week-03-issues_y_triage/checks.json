@@ -1,0 +1,48 @@
+{
+  "semana": "03",
+  "titulo": "Issues y triage",
+  "checks": [
+    {
+      "id": "issue-forms",
+      "descripcion": "Existen 2 o más formularios de issue en .github/ISSUE_TEMPLATE/",
+      "api": "repos/{repo}/contents/.github/ISSUE_TEMPLATE",
+      "jq": "[.[] | select(.name | endswith(\".yml\")) | select(.name != \"config.yml\")] | length >= 2",
+      "pista": "2-practicas/01-issue-forms.md, pasos 2 y 3"
+    },
+    {
+      "id": "config-contact-links",
+      "descripcion": "Existe config.yml con al menos un contact link",
+      "api": "repos/{repo}/contents/.github/ISSUE_TEMPLATE/config.yml",
+      "jq": "(.content | @base64d | contains(\"contact_links\"))",
+      "pista": "2-practicas/01-issue-forms.md, paso 4"
+    },
+    {
+      "id": "labels-descritas",
+      "descripcion": "Hay 10 o más labels propias, todas con descripción",
+      "api": "repos/{repo}/labels?per_page=100",
+      "jq": "(length >= 10) and ([.[] | select((.description // \"\") == \"\")] | length == 0)",
+      "pista": "2-practicas/02-taxonomia-de-labels.md, paso 3"
+    },
+    {
+      "id": "issues-creados",
+      "descripcion": "Hay 12 o más issues creados",
+      "api": "repos/{repo}/issues?state=all&per_page=100",
+      "jq": "[.[] | select(.pull_request == null)] | length >= 12",
+      "pista": "3-proyecto/README.md"
+    },
+    {
+      "id": "sin-issues-huerfanos",
+      "descripcion": "Ningún issue abierto se queda sin ninguna label",
+      "api": "repos/{repo}/issues?state=open&per_page=100",
+      "jq": "[.[] | select(.pull_request == null) | select((.labels | length) == 0)] | length == 0",
+      "pista": "2-practicas/04-triage-con-queries.md, paso 4"
+    },
+    {
+      "id": "milestone-con-fecha",
+      "descripcion": "Existe un milestone con fecha y 5 o más issues asignados",
+      "api": "repos/{repo}/milestones?state=all",
+      "jq": "[.[] | select(.due_on != null) | select((.open_issues + .closed_issues) >= 5)] | length > 0",
+      "pista": "2-practicas/03-sub-issues-y-tasklists.md, paso 6"
+    }
+  ]
+}

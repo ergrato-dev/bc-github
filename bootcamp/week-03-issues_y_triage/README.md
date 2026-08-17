@@ -3,10 +3,6 @@
 > Los issues son la base de datos de tu proyecto. Si no los diseñas, tendrás 200
 > tickets titulados "no funciona".
 
-> [!NOTE]
-> Contenido detallado en preparación. Esta semana ya tiene definidos objetivos,
-> contenidos, tiempos, trucos y entregables.
-
 ## 🎯 Objetivos de la Semana
 
 Al finalizar esta semana serás capaz de:
@@ -27,11 +23,18 @@ Al finalizar esta semana serás capaz de:
 
 ```
 week-03-issues_y_triage/
-├── 1-teoria/     01-anatomia-de-un-issue · 02-issue-forms-yaml
-│                 03-labels-milestones-y-tipos · 04-busqueda-y-triage
-├── 2-practicas/  01-issue-forms · 02-taxonomia-de-labels
-│                 03-sub-issues-y-tasklists · 04-triage-con-queries
-├── 3-proyecto/   El backlog real de tu dominio
+├── 1-teoria/
+│   ├── 01-anatomia-de-un-issue.md        # Ciclo de vida, vinculación, tasklists
+│   ├── 02-issue-forms-yaml.md            # Formularios YAML, tipos de campo, config
+│   ├── 03-labels-milestones-y-tipos.md   # Taxonomías, milestones, sub-issues
+│   └── 04-busqueda-y-triage.md           # Queries, proceso de triage, automatización
+├── 2-practicas/
+│   ├── 01-issue-forms.md                 # Dos formularios y el selector
+│   ├── 02-taxonomia-de-labels.md         # Familias, colores, creación por lote
+│   ├── 03-sub-issues-y-tasklists.md      # Partir un épico
+│   └── 04-triage-con-queries.md          # Sesión de triage completa
+├── 3-proyecto/README.md                  # El backlog real de tu dominio
+├── 0-assets/01-flujo-triage.svg
 ├── 4-recursos/ · 5-glosario/
 ```
 
@@ -41,24 +44,25 @@ week-03-issues_y_triage/
 
 | Archivo | Tema | Duración |
 |---------|------|:--------:|
-| `01-anatomia-de-un-issue.md` | Ciclo de vida, asignación, referencias cruzadas | 25 min |
-| `02-issue-forms-yaml.md` | `.github/ISSUE_TEMPLATE/*.yml`, tipos de campo, `config.yml` | 35 min |
-| `03-labels-milestones-y-tipos.md` | Taxonomías, issue types, sub-issues, tasklists | 30 min |
-| `04-busqueda-y-triage.md` | Sintaxis de búsqueda, saved replies, proceso de triage | 30 min |
+| [01-anatomia-de-un-issue.md](1-teoria/01-anatomia-de-un-issue.md) | Ciclo de vida, asignación, referencias cruzadas | 25 min |
+| [02-issue-forms-yaml.md](1-teoria/02-issue-forms-yaml.md) | `.github/ISSUE_TEMPLATE/*.yml`, tipos de campo, `config.yml` | 35 min |
+| [03-labels-milestones-y-tipos.md](1-teoria/03-labels-milestones-y-tipos.md) | Taxonomías, issue types, sub-issues, tasklists | 30 min |
+| [04-busqueda-y-triage.md](1-teoria/04-busqueda-y-triage.md) | Sintaxis de búsqueda, saved replies, proceso de triage | 30 min |
 
 ### Prácticas
 
 | Práctica | Qué haces | Duración |
 |----------|-----------|:--------:|
-| `01-issue-forms.md` | Creas dos formularios: bug y feature | 50 min |
-| `02-taxonomia-de-labels.md` | Diseñas y aplicas labels por lote con `gh` | 40 min |
-| `03-sub-issues-y-tasklists.md` | Partes un épico en sub-issues | 40 min |
-| `04-triage-con-queries.md` | Triás 15 issues con búsquedas guardadas | 40 min |
+| [01-issue-forms.md](2-practicas/01-issue-forms.md) | Creas dos formularios: bug y feature | 50 min |
+| [02-taxonomia-de-labels.md](2-practicas/02-taxonomia-de-labels.md) | Diseñas y aplicas labels por lote con `gh` | 40 min |
+| [03-sub-issues-y-tasklists.md](2-practicas/03-sub-issues-y-tasklists.md) | Partes un épico en sub-issues | 40 min |
+| [04-triage-con-queries.md](2-practicas/04-triage-con-queries.md) | Triás 15 issues con búsquedas guardadas | 40 min |
 
 ### Proyecto
 
 Tu repositorio pasa a tener un **backlog real**: 12-15 issues de tu dominio,
 etiquetados, priorizados y agrupados en un milestone.
+→ [3-proyecto/README.md](3-proyecto/README.md)
 
 ## ⏱️ Distribución del Tiempo (8 horas)
 
