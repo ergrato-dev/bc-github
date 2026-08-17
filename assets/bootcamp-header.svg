@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 260" width="800" height="260" role="img" aria-label="Bootcamp GitHub Zero to Master">
+  <title>Bootcamp GitHub — Zero to Master</title>
+  <style>
+    .bg    { fill: #0d1117; }
+    .card  { fill: #161b22; stroke: #30363d; stroke-width: 1; }
+    .t     { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .title { font-size: 44px; font-weight: 700; fill: #f0f6fc; }
+    .sub   { font-size: 18px; font-weight: 500; fill: #58a6ff; }
+    .meta  { font-size: 14px; font-weight: 400; fill: #8b949e; }
+    .chip  { font-size: 13px; font-weight: 600; fill: #c9d1d9; }
+  </style>
+
+  <rect class="bg" width="800" height="260" rx="12"/>
+
+  <!-- Octocat-style mark: solid, no gradients -->
+  <g transform="translate(56, 74) scale(2.6)">
+    <path fill="#f0f6fc" d="M16 1C7.7 1 1 7.7 1 16c0 6.6 4.3 12.2 10.3 14.2.75.14 1.03-.33 1.03-.72 0-.35-.01-1.29-.02-2.53-4.18.91-5.06-2.01-5.06-2.01-.68-1.74-1.67-2.2-1.67-2.2-1.37-.93.1-.91.1-.91 1.51.11 2.3 1.55 2.3 1.55 1.34 2.3 3.52 1.63 4.38 1.25.14-.97.52-1.63.95-2.01-3.34-.38-6.85-1.67-6.85-7.44 0-1.64.59-2.99 1.55-4.04-.16-.38-.67-1.91.15-3.99 0 0 1.26-.4 4.13 1.54a14.4 14.4 0 0 1 7.52 0c2.87-1.94 4.13-1.54 4.13-1.54.82 2.08.31 3.61.15 3.99.96 1.05 1.55 2.4 1.55 4.04 0 5.79-3.52 7.06-6.87 7.43.54.47 1.02 1.39 1.02 2.8 0 2.02-.02 3.65-.02 4.15 0 .4.27.87 1.04.72C26.7 28.2 31 22.6 31 16 31 7.7 24.3 1 16 1z"/>
+  </g>
+
+  <text class="t title" x="200" y="94">Bootcamp GitHub</text>
+  <text class="t sub"   x="200" y="126">Zero to Master — GitHub como plataforma de ingeniería</text>
+  <text class="t meta"  x="200" y="154">21 semanas · 168 horas · 8 h/semana · autoestudio</text>
+
+  <g transform="translate(200, 180)">
+    <rect class="card" x="0"   y="0" width="112" height="30" rx="15"/>
+    <text class="t chip" x="56"  y="20" text-anchor="middle">Pull Requests</text>
+
+    <rect class="card" x="122" y="0" width="90"  height="30" rx="15"/>
+    <text class="t chip" x="167" y="20" text-anchor="middle">Actions</text>
+
+    <rect class="card" x="222" y="0" width="94"  height="30" rx="15"/>
+    <text class="t chip" x="269" y="20" text-anchor="middle">Rulesets</text>
+
+    <rect class="card" x="326" y="0" width="106" height="30" rx="15"/>
+    <text class="t chip" x="379" y="20" text-anchor="middle">Seguridad</text>
+
+    <rect class="card" x="442" y="0" width="82"  height="30" rx="15"/>
+    <text class="t chip" x="483" y="20" text-anchor="middle">API</text>
+  </g>
+</svg>

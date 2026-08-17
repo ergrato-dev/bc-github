@@ -1,0 +1,53 @@
+# --- Dependencias -----------------------------------------------------------
+node_modules/
+.pnpm-store/
+
+# --- Build ------------------------------------------------------------------
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# --- Entorno y secretos -----------------------------------------------------
+# Este repo enseña seguridad: nada con credenciales entra nunca al historial.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+!**/0-assets/*.key
+.bc-github
+allowed_signers
+
+# --- Logs y temporales ------------------------------------------------------
+*.log
+npm-debug.log*
+pnpm-debug.log*
+.cache/
+tmp/
+*.tmp
+
+# --- Sistema operativo ------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Editores ---------------------------------------------------------------
+.idea/
+*.swp
+*.swo
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# --- Herramientas del bootcamp ---------------------------------------------
+# Salidas locales de las prácticas: cada estudiante trabaja sobre SU repo,
+# los repos de prueba clonados aquí no se commitean.
+sandbox/
+practicas-locales/
+*.sarif
+scorecard-results.json
+
+# --- Cobertura y tests ------------------------------------------------------
+coverage/
+.nyc_output/
