@@ -1,0 +1,41 @@
+{
+  "semana": "01",
+  "titulo": "Git repaso y setup pro",
+  "checks": [
+    {
+      "id": "repo-publico",
+      "descripcion": "El repositorio existe y es público",
+      "api": "repos/{repo}",
+      "jq": ".private == false",
+      "pista": "3-proyecto/README.md — crea el repo con gh repo create --public"
+    },
+    {
+      "id": "repo-descripcion",
+      "descripcion": "Tiene una descripción de más de 10 caracteres",
+      "api": "repos/{repo}",
+      "jq": "(.description // \"\") | length > 10",
+      "pista": "3-proyecto/README.md — gh repo edit --description \"...\""
+    },
+    {
+      "id": "rama-main",
+      "descripcion": "Su rama por defecto se llama main",
+      "api": "repos/{repo}",
+      "jq": ".default_branch == \"main\"",
+      "pista": "3-proyecto/README.md, sección Errores comunes"
+    },
+    {
+      "id": "commits-firmados",
+      "descripcion": "Tiene al menos 3 commits firmados (verified)",
+      "api": "repos/{repo}/commits",
+      "jq": "[.[] | select(.commit.verification.verified)] | length >= 3",
+      "pista": "2-practicas/04-firmas-y-gh.md, pasos 3 y 4"
+    },
+    {
+      "id": "perfil-readme",
+      "descripcion": "Tu perfil README existe (repositorio <tu-usuario>/<tu-usuario>)",
+      "api": "repos/{owner}/{owner}/contents/README.md",
+      "jq": ".type == \"file\"",
+      "pista": "3-proyecto/README.md — gh repo create <tu-usuario> --public --add-readme"
+    }
+  ]
+}

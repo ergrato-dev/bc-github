@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" role="img" aria-label="Flujo de firma de un commit: la clave privada firma en local, GitHub verifica con la clave pública registrada como signing y muestra la etiqueta Verified">
+  <title>Flujo de firma y verificación de un commit</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .box  { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .okb  { fill: #161b22; stroke: #3fb950; stroke-width: 2; }
+    .errb { fill: #161b22; stroke: #f85149; stroke-width: 2; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .lbl  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .ok   { font-size: 13px; font-weight: 700; fill: #3fb950; }
+    .err  { font-size: 13px; font-weight: 700; fill: #f85149; }
+    .num  { font-size: 12px; font-weight: 700; fill: #0d1117; }
+    .dot  { fill: #58a6ff; }
+    .line { stroke: #58a6ff; stroke-width: 1.5; fill: none; }
+  </style>
+  <defs>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#58a6ff"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="800" height="400"/>
+
+  <text class="t h" x="40" y="40">De la clave privada a la etiqueta Verified</text>
+
+  <!-- 1. local -->
+  <rect class="box" x="40" y="70" width="220" height="110" rx="8"/>
+  <circle class="dot" cx="60" cy="92" r="10"/><text class="t num" x="60" y="96" text-anchor="middle">1</text>
+  <text class="t lbl" x="80" y="97">Tu máquina</text>
+  <text class="t s" x="56" y="122">commit.gpgsign = true</text>
+  <text class="t s" x="56" y="142">gpg.format = ssh</text>
+  <text class="t s" x="56" y="162">firma con id_ed25519 (privada)</text>
+
+  <!-- arrow -->
+  <line class="line" x1="260" y1="125" x2="330" y2="125" marker-end="url(#a2)"/>
+  <text class="t s" x="295" y="112" text-anchor="middle">push</text>
+
+  <!-- 2. github -->
+  <rect class="box" x="330" y="70" width="240" height="110" rx="8"/>
+  <circle class="dot" cx="350" cy="92" r="10"/><text class="t num" x="350" y="96" text-anchor="middle">2</text>
+  <text class="t lbl" x="370" y="97">GitHub verifica</text>
+  <text class="t s" x="346" y="122">busca la clave pública</text>
+  <text class="t s" x="346" y="142">registrada como signing</text>
+  <text class="t s" x="346" y="162">y el email del firmante</text>
+
+  <!-- arrow -->
+  <line class="line" x1="570" y1="125" x2="640" y2="125" marker-end="url(#a2)"/>
+
+  <!-- 3. resultado ok -->
+  <rect class="okb" x="640" y="86" width="120" height="78" rx="8"/>
+  <circle class="dot" cx="660" cy="106" r="10"/><text class="t num" x="660" y="110" text-anchor="middle">3</text>
+  <text class="t ok" x="700" y="134" text-anchor="middle">Verified</text>
+  <text class="t s" x="700" y="154" text-anchor="middle">reason: valid</text>
+
+  <!-- claves registradas -->
+  <text class="t h" x="40" y="236">La misma clave, registrada dos veces</text>
+  <rect class="box" x="40" y="256" width="340" height="60" rx="8"/>
+  <text class="t lbl" x="60" y="280">type: authentication</text>
+  <text class="t s" x="60" y="302">habilita git push · NO verifica firmas</text>
+
+  <rect class="okb" x="400" y="256" width="340" height="60" rx="8"/>
+  <text class="t lbl" x="420" y="280">type: signing</text>
+  <text class="t s" x="420" y="302">habilita Verified · NO sirve para push</text>
+
+  <!-- errores -->
+  <rect class="errb" x="40" y="336" width="700" height="44" rx="8"/>
+  <text class="t err" x="60" y="354">Si falta la entrada signing:</text>
+  <text class="t s" x="238" y="354">el commit se firma igual, pero GitHub lo muestra como Unverified</text>
+  <text class="t s" x="60" y="372">Si user.email no está verificado en tu cuenta: reason = unverified_email</text>
+</svg>
