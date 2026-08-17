@@ -3,10 +3,6 @@
 > Un repositorio no es una carpeta con código: es la interfaz por la que otra
 > persona decide si usa tu proyecto o cierra la pestaña.
 
-> [!NOTE]
-> Contenido detallado en preparación. Esta semana ya tiene definidos objetivos,
-> contenidos, tiempos, trucos y entregables.
-
 ## 🎯 Objetivos de la Semana
 
 Al finalizar esta semana serás capaz de:
@@ -28,11 +24,18 @@ Al finalizar esta semana serás capaz de:
 
 ```
 week-02-repositorio_como_producto/
-├── 1-teoria/     01-anatomia-de-un-repo · 02-markdown-gfm · 03-licencias
-│                 04-busqueda-y-blame
-├── 2-practicas/  01-readme-que-se-lee · 02-gitattributes-y-codeowners
-│                 03-markdown-avanzado · 04-pages-en-un-clic
-├── 3-proyecto/   La documentación de tu repositorio
+├── 1-teoria/
+│   ├── 01-anatomia-de-un-repo.md        # Archivos especiales, README de embudo
+│   ├── 02-markdown-gfm.md               # Alerts, Mermaid, colapsables, permalinks
+│   ├── 03-licencias-y-gitattributes.md  # Licencias, .gitignore, .gitattributes, CODEOWNERS
+│   └── 04-busqueda-y-blame.md           # Búsqueda de código, blame, historia
+├── 2-practicas/
+│   ├── 01-readme-que-se-lee.md          # README de embudo + comunidad al 100%
+│   ├── 02-gitattributes-y-codeowners.md # EOL, linguist y enrutado de revisores
+│   ├── 03-markdown-avanzado.md          # Mermaid, alerts, permalinks
+│   └── 04-pages-en-un-clic.md           # Publicar en GitHub Pages
+├── 3-proyecto/README.md                 # Tu repositorio, presentable
+├── 0-assets/01-anatomia-repositorio.svg
 ├── 4-recursos/ · 5-glosario/
 ```
 
@@ -42,24 +45,25 @@ week-02-repositorio_como_producto/
 
 | Archivo | Tema | Duración |
 |---------|------|:--------:|
-| `01-anatomia-de-un-repo.md` | README, LICENSE, topics, community profile | 30 min |
-| `02-markdown-gfm.md` | Alerts, Mermaid, footnotes, colapsables, permalinks | 30 min |
-| `03-licencias-y-gitattributes.md` | Elegir licencia, EOL, linguist, `.gitignore` | 30 min |
-| `04-busqueda-y-blame.md` | Sintaxis de búsqueda de código, `blame`, historia | 30 min |
+| [01-anatomia-de-un-repo.md](1-teoria/01-anatomia-de-un-repo.md) | README, LICENSE, topics, community profile | 30 min |
+| [02-markdown-gfm.md](1-teoria/02-markdown-gfm.md) | Alerts, Mermaid, footnotes, colapsables, permalinks | 30 min |
+| [03-licencias-y-gitattributes.md](1-teoria/03-licencias-y-gitattributes.md) | Elegir licencia, EOL, linguist, `.gitignore` | 30 min |
+| [04-busqueda-y-blame.md](1-teoria/04-busqueda-y-blame.md) | Sintaxis de búsqueda de código, `blame`, historia | 30 min |
 
 ### Prácticas
 
 | Práctica | Qué haces | Duración |
 |----------|-----------|:--------:|
-| `01-readme-que-se-lee.md` | Reescribes tu README con estructura de embudo | 50 min |
-| `02-gitattributes-y-codeowners.md` | Normalizas EOL y enrutas revisores | 45 min |
-| `03-markdown-avanzado.md` | Diagrama Mermaid, alerts y colapsables | 40 min |
-| `04-pages-en-un-clic.md` | Publicas el proyecto en GitHub Pages | 30 min |
+| [01-readme-que-se-lee.md](2-practicas/01-readme-que-se-lee.md) | Reescribes tu README con estructura de embudo | 50 min |
+| [02-gitattributes-y-codeowners.md](2-practicas/02-gitattributes-y-codeowners.md) | Normalizas EOL y enrutas revisores | 45 min |
+| [03-markdown-avanzado.md](2-practicas/03-markdown-avanzado.md) | Diagrama Mermaid, alerts y colapsables | 40 min |
+| [04-pages-en-un-clic.md](2-practicas/04-pages-en-un-clic.md) | Publicas el proyecto en GitHub Pages | 30 min |
 
 ### Proyecto
 
 Tu repositorio pasa el **community profile** al 100%: README, LICENSE,
 CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, topics y descripción.
+→ [3-proyecto/README.md](3-proyecto/README.md)
 
 ## ⏱️ Distribución del Tiempo (8 horas)
 

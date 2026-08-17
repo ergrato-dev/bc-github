@@ -1,0 +1,48 @@
+{
+  "semana": "02",
+  "titulo": "El repositorio como producto",
+  "checks": [
+    {
+      "id": "community-profile",
+      "descripcion": "El perfil de comunidad está al 100%",
+      "api": "repos/{repo}/community/profile",
+      "jq": ".health_percentage >= 100",
+      "pista": "2-practicas/01-readme-que-se-lee.md, paso 5"
+    },
+    {
+      "id": "gitattributes",
+      "descripcion": "Existe .gitattributes en la rama por defecto",
+      "api": "repos/{repo}/contents/.gitattributes",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/02-gitattributes-y-codeowners.md, paso 2"
+    },
+    {
+      "id": "codeowners-valido",
+      "descripcion": "Existe CODEOWNERS sin errores de validación",
+      "api": "repos/{repo}/codeowners/errors",
+      "jq": "(.errors | length) == 0",
+      "pista": "2-practicas/02-gitattributes-y-codeowners.md, paso 4"
+    },
+    {
+      "id": "topics",
+      "descripcion": "El repositorio tiene 3 o más topics",
+      "api": "repos/{repo}/topics",
+      "jq": "(.names | length) >= 3",
+      "pista": "2-practicas/01-readme-que-se-lee.md, paso 4"
+    },
+    {
+      "id": "descripcion-y-homepage",
+      "descripcion": "Tiene descripción y homepage configurados",
+      "api": "repos/{repo}",
+      "jq": "((.description // \"\") | length > 10) and ((.homepage // \"\") | length > 0)",
+      "pista": "2-practicas/04-pages-en-un-clic.md, paso 4"
+    },
+    {
+      "id": "pages-desplegado",
+      "descripcion": "GitHub Pages está desplegado (status: built)",
+      "api": "repos/{repo}/pages",
+      "jq": ".status == \"built\"",
+      "pista": "2-practicas/04-pages-en-un-clic.md, paso 2"
+    }
+  ]
+}
