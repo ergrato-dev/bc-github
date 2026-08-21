@@ -4,7 +4,7 @@
 > terminar, `reset --hard` deja de dar miedo.
 
 **Duración estimada**: 50 min
-**Prerrequisitos**: [Teoría 01](../1-teoria/01-modelo-mental-de-git.md) y [02](../1-teoria/02-historia-quirurgica.md)
+**Prerrequisitos**: [Teoría 01](../1-teoria/01-modelo-mental-de-git.md) y [03](../1-teoria/03-rescate-y-arqueologia.md)
 
 ## Contexto
 

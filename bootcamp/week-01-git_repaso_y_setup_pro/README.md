@@ -30,10 +30,13 @@ Al finalizar esta semana serás capaz de:
 ```
 week-01-git_repaso_y_setup_pro/
 ├── 1-teoria/
-│   ├── 01-modelo-mental-de-git.md   # Objetos, refs, HEAD, índice, el DAG
-│   ├── 02-historia-quirurgica.md    # rebase -i, cherry-pick, reflog, bisect, worktree
-│   ├── 03-identidad-y-firmas.md     # SSH, commits firmados, email privado
-│   └── 04-gh-cli-y-credenciales.md  # gh CLI, tokens, qué usar cuándo
+│   ├── 01-modelo-mental-de-git.md      # Objetos, refs, HEAD, índice, el DAG
+│   ├── 02-reescribir-historia.md       # amend, rebase -i, autosquash, --onto, force-with-lease
+│   ├── 03-rescate-y-arqueologia.md     # reflog, fsck, stash, cherry-pick, pickaxe
+│   ├── 04-bisect-y-worktree.md         # Búsqueda binaria del bug, varias ramas a la vez
+│   ├── 05-identidad-y-firmas.md        # SSH, commits firmados, modo vigilante, email privado
+│   ├── 06-gh-cli.md                    # gh, gh api, --json/--jq, alias y extensiones
+│   └── 07-credenciales-y-tokens.md     # GITHUB_TOKEN, PAT, GitHub App, filtraciones
 ├── 2-practicas/
 │   ├── 01-rescate-con-reflog.md     # Destruir trabajo y recuperarlo
 │   ├── 02-historia-limpia.md        # rebase -i y autosquash
@@ -54,10 +57,13 @@ week-01-git_repaso_y_setup_pro/
 
 | Archivo | Tema | Duración |
 |---------|------|:--------:|
-| [01-modelo-mental-de-git.md](1-teoria/01-modelo-mental-de-git.md) | Objetos, refs, índice y el grafo | 30 min |
-| [02-historia-quirurgica.md](1-teoria/02-historia-quirurgica.md) | Reescribir, rescatar y bisecar | 35 min |
-| [03-identidad-y-firmas.md](1-teoria/03-identidad-y-firmas.md) | SSH, firmas y `Verified` | 30 min |
-| [04-gh-cli-y-credenciales.md](1-teoria/04-gh-cli-y-credenciales.md) | `gh` y los cuatro tipos de credencial | 25 min |
+| [01-modelo-mental-de-git.md](1-teoria/01-modelo-mental-de-git.md) | Objetos, refs, índice, el grafo y cómo nombrar commits | 25 min |
+| [02-reescribir-historia.md](1-teoria/02-reescribir-historia.md) | `amend`, `rebase -i`, `--autosquash`, `--onto`, forzar sin destruir | 25 min |
+| [03-rescate-y-arqueologia.md](1-teoria/03-rescate-y-arqueologia.md) | `reflog`, `fsck`, `stash`, `cherry-pick`, buscar en la historia | 20 min |
+| [04-bisect-y-worktree.md](1-teoria/04-bisect-y-worktree.md) | Búsqueda binaria del bug y varias ramas a la vez | 20 min |
+| [05-identidad-y-firmas.md](1-teoria/05-identidad-y-firmas.md) | SSH, firmas, `Verified` y modo vigilante | 25 min |
+| [06-gh-cli.md](1-teoria/06-gh-cli.md) | `gh`, `gh api`, salidas en JSON, alias y extensiones | 20 min |
+| [07-credenciales-y-tokens.md](1-teoria/07-credenciales-y-tokens.md) | Los cuatro tipos de credencial y qué hacer ante una filtración | 20 min |
 
 ### Prácticas
 
@@ -78,12 +84,12 @@ semanas. → [3-proyecto/README.md](3-proyecto/README.md)
 
 | Actividad | Tiempo |
 |-----------|-------:|
-| Teoría (4 archivos) | 2 h |
+| Teoría (7 archivos) | 2 h 35 min |
 | Práctica 01 — Rescate con reflog | 50 min |
 | Práctica 02 — Historia limpia | 50 min |
 | Práctica 03 — Bisect y worktree | 45 min |
 | Práctica 04 — Firmas y `gh` | 45 min |
-| Proyecto — Repositorio hilo conductor | 2 h |
+| Proyecto — Repositorio hilo conductor | 1 h 45 min |
 | Revisión y verificación | 30 min |
 | **Total** | **8 h** |
 

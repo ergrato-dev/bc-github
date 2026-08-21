@@ -3,7 +3,7 @@
 > Seis commits que nadie puede leer se convierten en dos que se explican solos.
 
 **Duración estimada**: 50 min
-**Prerrequisitos**: [Práctica 01](01-rescate-con-reflog.md) completada
+**Prerrequisitos**: [Teoría 02](../1-teoria/02-reescribir-historia.md), [Práctica 01](01-rescate-con-reflog.md) completada
 
 ## Contexto
 

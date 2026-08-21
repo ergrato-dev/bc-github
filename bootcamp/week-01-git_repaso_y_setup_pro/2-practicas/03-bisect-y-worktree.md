@@ -4,7 +4,7 @@
 > pruebas, automáticas.
 
 **Duración estimada**: 45 min
-**Prerrequisitos**: [Teoría 02](../1-teoria/02-historia-quirurgica.md)
+**Prerrequisitos**: [Teoría 04](../1-teoria/04-bisect-y-worktree.md)
 
 ## Contexto
 

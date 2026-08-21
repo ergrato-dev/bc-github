@@ -4,7 +4,7 @@
 > y manejas GitHub sin abrir el navegador.
 
 **Duración estimada**: 45 min
-**Prerrequisitos**: [Teoría 03](../1-teoria/03-identidad-y-firmas.md) y [04](../1-teoria/04-gh-cli-y-credenciales.md), `gh` instalado
+**Prerrequisitos**: [Teoría 05](../1-teoria/05-identidad-y-firmas.md), [06](../1-teoria/06-gh-cli.md) y [07](../1-teoria/07-credenciales-y-tokens.md), `gh` instalado
 
 ## Contexto
 

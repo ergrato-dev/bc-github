@@ -152,7 +152,7 @@ entre paréntesis cuando aplica.
 2. `README.md` con las 10 secciones y la navegación anterior/siguiente correcta
 3. `rubrica-evaluacion.md` con cuestionario + respuestas en `<details>`
 4. `checks.json` con las comprobaciones de la semana (probadas con `gh api`)
-5. Teoría en `1-teoria/`, un archivo por concepto, bajo 200 líneas
+5. Teoría en `1-teoria/`, un archivo por concepto (~250 líneas), sin cupo de archivos
 6. Prácticas en `2-practicas/`, cada paso con su comando de verificación
 7. `3-proyecto/README.md` con la capa que se añade al repo hilo conductor
 8. Recursos en las tres subcarpetas, cada uno con su justificación

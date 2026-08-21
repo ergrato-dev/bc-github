@@ -152,7 +152,13 @@ bootcamp/week-XX-tema_principal/
 ### 1. **Teoría** (`1-teoria/`)
 
 - Archivos markdown con explicaciones conceptuales **en español**
-- **Extensión objetivo: ~150 líneas por archivo** (máximo duro: 200 — dividir si no cabe)
+- **El número de archivos de teoría es libre**: los que pida el temario, no un
+  cupo fijo. Antes había cuatro por semana y eso comprimía el contenido; ahora
+  siete u ocho es normal. **Nunca se sacrifica profundidad para que quepa**
+- **Extensión por archivo: ~250 líneas** (rango sano 200-300). Si un archivo se
+  va de ahí, el problema es que mezcla dos temas: divídelo en dos archivos, no
+  recortes el contenido
+- Un archivo = un concepto. Si el título necesita una "y", sospecha
 - Cada feature se explica en este orden: **qué problema resuelve → cómo se
   configura → antipatrones → trucos**
 - Ejemplos con `gh` CLI y con la UI web (la UI cambia; el CLI es estable)
@@ -473,7 +479,7 @@ respuestas en una sección colapsable (`<details>`) al final de la rúbrica.
 
 - [ ] Estructura de carpetas completa
 - [ ] `README.md` con las 10 secciones obligatorias (incluida `🎩 Trucos y atajos`)
-- [ ] Teoría en `1-teoria/`, archivos bajo 200 líneas
+- [ ] Teoría en `1-teoria/`, un archivo por concepto (~250 líneas cada uno)
 - [ ] Prácticas con comando de verificación en cada paso
 - [ ] Proyecto que añade una capa al repo hilo conductor
 - [ ] `checks.json` con las verificaciones automáticas
