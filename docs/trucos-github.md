@@ -182,6 +182,34 @@ Los consejos genéricos de productividad no entran.
 
 ---
 
-> Las secciones de las semanas 08 a 21 se añaden a medida que se publica cada
+## Semana 08 — Gobernanza: rulesets y merge queue
+
+→ [Semana 08](../bootcamp/week-08-gobernanza_rulesets_y_merge_queue/README.md)
+
+| Truco | Cómo |
+|-------|------|
+| Reglas efectivas de una rama | `gh api repos/{owner}/{repo}/rules/branches/main --jq '[.[].type]'` |
+| El borrador que sí tienes | `enforcement: disabled` — `evaluate` requiere Enterprise |
+| Los rulesets se apilan | Varios pueden aplicar a la vez; se suman, no se sustituyen |
+| Versiona la gobernanza | El JSON en `.github/rulesets/`, y se envía con `--input` |
+| Exportar un ruleset limpio | `gh api repos/{owner}/{repo}/rulesets/<id> --jq 'del(.id, .node_id, .created_at, .updated_at, .source, .source_type, ._links)'` |
+| El `context` es el `name:` del job | Léelo con `gh pr checks --json name`, no lo deduzcas |
+| Trabajando solo, aprobaciones a 0 | Con 1, GitHub no te deja aprobar tu propio PR |
+| Escape sin bypass | `disabled` → arreglas → `active`: queda en el historial |
+| Bypass para el bot, no para ti | Un `always` para tu usuario invalida el ruleset |
+| Antes de exigir firmas | `git log -1 --format='%G?'` tiene que devolver `G` |
+| El ruleset tiene historial | `gh api repos/{owner}/{repo}/rulesets/<id>/history` |
+| Rule suites, el log del ruleset | `gh api repos/{owner}/{repo}/rulesets/rule-suites` |
+| Tu ID numérico | `gh api user --jq .id` — lo piden bypass actors y environments |
+| Reglas de todos tus environments | `gh api repos/{owner}/{repo}/environments --jq '.environments[] \| {name, reglas: [.protection_rules[].type]}'` |
+| `PUT` de environment reemplaza | Manda el objeto completo o pierdes los revisores |
+| Secretos por la entrada estándar | `printf '<valor>' \| gh secret set NOMBRE --env production` |
+| Aprobar un despliegue por API | `POST repos/{owner}/{repo}/actions/runs/<id>/pending_deployments` |
+| Las ramas `gh-readonly-queue/*` | Son del merge queue: no las toques ni las protejas |
+| Sin push rules, check requerido | Un workflow que falla + `required_status_checks` |
+
+---
+
+> Las secciones de las semanas 09 a 21 se añaden a medida que se publica cada
 > semana. Si has hecho una semana y su sección no está aquí,
 > [abre un issue](https://github.com/ergrato-dev/bc-github/issues).

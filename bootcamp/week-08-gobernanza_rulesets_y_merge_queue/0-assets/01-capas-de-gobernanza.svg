@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420" width="820" height="420" role="img" aria-label="Tres capas de gobernanza: el acuerdo escrito de la Semana 07 que se puede ignorar, el ruleset de la Semana 08 que bloquea en el servidor, y el check de CI de la Semana 09 que cubre lo que el ruleset no puede exigir">
+  <title>Las tres capas de gobernanza de un repositorio</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .warn { fill: #d29922; }
+    .ok   { fill: #3fb950; }
+    .acc  { fill: #58a6ff; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+  </style>
+
+  <rect class="bg" width="820" height="420"/>
+  <text class="t h" x="40" y="40">¿Qué pasa cuando alguien no cumple la regla?</text>
+
+  <!-- Capa 1 -->
+  <rect class="surf" x="40" y="68" width="740" height="92" rx="8"/>
+  <rect x="40" y="68" width="6" height="92" rx="3" class="warn"/>
+  <text class="t cap" x="68" y="94">Semana 07 · el acuerdo escrito</text>
+  <text class="t s"   x="68" y="116">CONTRIBUTING.md · CODEOWNERS · Definition of Done</text>
+  <text class="t lbl" x="68" y="140">Depende de que alguien lo lea y lo recuerde. Se puede ignorar sin consecuencia.</text>
+  <text class="t cap warn" x="640" y="118" text-anchor="end">se ignora</text>
+
+  <!-- flecha -->
+  <path class="e" d="M410 160 L410 186" marker-end="url(#a)"/>
+
+  <!-- Capa 2 -->
+  <rect class="surf" x="40" y="192" width="740" height="92" rx="8"/>
+  <rect x="40" y="192" width="6" height="92" rx="3" class="acc"/>
+  <text class="t cap" x="68" y="218">Semana 08 · el ruleset</text>
+  <text class="t s"   x="68" y="240">pull_request · required_status_checks · required_signatures · non_fast_forward</text>
+  <text class="t lbl" x="68" y="264">Lo aplica el servidor de GitHub. El push se rechaza con GH013 antes de llegar.</text>
+  <text class="t cap acc" x="640" y="242" text-anchor="end">bloquea</text>
+
+  <!-- flecha -->
+  <path class="e" d="M410 284 L410 310" marker-end="url(#a)"/>
+
+  <!-- Capa 3 -->
+  <rect class="surf" x="40" y="316" width="740" height="80" rx="8"/>
+  <rect x="40" y="316" width="6" height="80" rx="3" class="ok"/>
+  <text class="t cap" x="68" y="342">Semana 09 · el check de CI</text>
+  <text class="t s"   x="68" y="364">Lo que tu plan no ofrece como regla: tamaño de archivo, formato del título, lo que sea</text>
+  <text class="t lbl" x="68" y="386">Un workflow que falla + el ruleset que lo exige = una regla que no existía.</text>
+  <text class="t cap ok" x="640" y="366" text-anchor="end">falla el PR</text>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#30363d"/>
+    </marker>
+  </defs>
+</svg>

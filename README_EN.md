@@ -128,8 +128,18 @@ bootcamp/week-XX-topic/
 
 **Account required**: GitHub **Free** is enough. All practice happens on
 **public repositories**, where Actions, rulesets, CodeQL, secret scanning,
-Projects v2, Pages and GHCR are available at no cost. Team/Enterprise-only
-features (SAML, EMU, advanced runner groups) are covered conceptually in Week 17.
+Projects v2, Pages and GHCR are available at no cost.
+
+Some features are out of reach on Free. They are covered conceptually, together
+with the alternative you can actually use:
+
+| Feature | Requires | Covered in |
+|---------|----------|------------|
+| Push rulesets (size, paths, extensions) | Team+ and a private repo | Week 08 — replaced by a required check |
+| Merge queue | Organization-owned repository | Week 08 — theory and decision criteria |
+| Metadata rules (`commit_message_pattern`) | Enterprise organization | Week 08 — replaced by CI validation |
+| Ruleset `evaluate` mode | Enterprise | Week 08 — replaced by `disabled` |
+| SAML, EMU, advanced runner groups | Enterprise | Week 17 |
 
 ---
 

@@ -1,0 +1,90 @@
+{
+  "semana": "08",
+  "titulo": "Gobernanza: rulesets y merge queue",
+  "checks": [
+    {
+      "id": "ruleset-activo",
+      "descripcion": "Existe al menos un ruleset en modo active",
+      "api": "repos/{repo}/rulesets",
+      "jq": "any(.[]; .enforcement == \"active\")",
+      "pista": "2-practicas/01-primer-ruleset.md, paso 5"
+    },
+    {
+      "id": "ruleset-versionado",
+      "descripcion": "El ruleset está versionado en .github/rulesets/main-proteccion.json",
+      "api": "repos/{repo}/contents/.github/rulesets/main-proteccion.json",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/01-primer-ruleset.md, paso 2"
+    },
+    {
+      "id": "pr-obligatorio",
+      "descripcion": "main exige pull request antes de mergear",
+      "api": "repos/{repo}/rules/branches/main",
+      "jq": "any(.[]; .type == \"pull_request\")",
+      "pista": "2-practicas/01-primer-ruleset.md, paso 5"
+    },
+    {
+      "id": "revision-de-code-owners",
+      "descripcion": "main exige revisión de code owners",
+      "api": "repos/{repo}/rules/branches/main",
+      "jq": "any(.[]; .type == \"pull_request\" and .parameters.require_code_owner_review == true)",
+      "pista": "2-practicas/01-primer-ruleset.md, paso 2"
+    },
+    {
+      "id": "force-push-bloqueado",
+      "descripcion": "main no admite force push",
+      "api": "repos/{repo}/rules/branches/main",
+      "jq": "any(.[]; .type == \"non_fast_forward\")",
+      "pista": "2-practicas/03-proteger-la-historia.md, paso 1"
+    },
+    {
+      "id": "borrado-bloqueado",
+      "descripcion": "main no se puede borrar",
+      "api": "repos/{repo}/rules/branches/main",
+      "jq": "any(.[]; .type == \"deletion\")",
+      "pista": "2-practicas/03-proteger-la-historia.md, paso 2"
+    },
+    {
+      "id": "status-check-requerido",
+      "descripcion": "main exige al menos un status check",
+      "api": "repos/{repo}/rules/branches/main",
+      "jq": "any(.[]; .type == \"required_status_checks\" and (.parameters.required_status_checks | length) > 0)",
+      "pista": "2-practicas/02-checks-y-firmas-obligatorios.md, paso 4"
+    },
+    {
+      "id": "firmas-obligatorias",
+      "descripcion": "main exige commits firmados",
+      "api": "repos/{repo}/rules/branches/main",
+      "jq": "any(.[]; .type == \"required_signatures\")",
+      "pista": "2-practicas/02-checks-y-firmas-obligatorios.md, paso 4"
+    },
+    {
+      "id": "workflow-tamano-archivos",
+      "descripcion": "Existe .github/workflows/tamano-de-archivos.yml",
+      "api": "repos/{repo}/contents/.github/workflows/tamano-de-archivos.yml",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/03-proteger-la-historia.md, paso 5"
+    },
+    {
+      "id": "environment-con-revisor",
+      "descripcion": "Hay un environment con revisores obligatorios",
+      "api": "repos/{repo}/environments",
+      "jq": "any(.environments[].protection_rules[]; .type == \"required_reviewers\")",
+      "pista": "2-practicas/04-environments.md, paso 2"
+    },
+    {
+      "id": "environment-con-politica-de-ramas",
+      "descripcion": "Ese environment limita desde qué ramas se despliega",
+      "api": "repos/{repo}/environments",
+      "jq": "any(.environments[].protection_rules[]; .type == \"branch_policy\")",
+      "pista": "2-practicas/04-environments.md, paso 2"
+    },
+    {
+      "id": "gobernanza-documentada",
+      "descripcion": "CONTRIBUTING.md documenta la gobernanza de main",
+      "api": "repos/{repo}/contents/CONTRIBUTING.md",
+      "jq": "(.content | @base64d | test(\"Gobernanza de .main.\"))",
+      "pista": "2-practicas/02-checks-y-firmas-obligatorios.md, paso 8"
+    }
+  ]
+}

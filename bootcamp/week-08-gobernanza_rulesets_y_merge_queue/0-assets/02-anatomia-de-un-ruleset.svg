@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 400" width="820" height="400" role="img" aria-label="Anatomía de un ruleset: el target y las condiciones dicen a qué refs se aplica, el enforcement dice con cuánta fuerza, las reglas dicen qué se exige y los bypass actors dicen quién puede saltárselas">
+  <title>Anatomía de un ruleset</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+    .warn { fill: #d29922; }
+    .ok   { fill: #3fb950; }
+    .err  { fill: #f85149; }
+  </style>
+
+  <rect class="bg" width="820" height="400"/>
+  <text class="t h" x="40" y="40">Cuatro preguntas, cuatro campos</text>
+
+  <!-- A qué -->
+  <rect class="surf" x="40" y="64" width="360" height="110" rx="8"/>
+  <text class="t cap"  x="64" y="90">1 · ¿A qué se aplica?</text>
+  <text class="t mono" x="64" y="112">target · conditions.ref_name</text>
+  <text class="t s"    x="64" y="134">Patrones, no ramas sueltas</text>
+  <text class="t mono" x="64" y="156">include: ["~DEFAULT_BRANCH"]</text>
+
+  <!-- Con cuánta fuerza -->
+  <rect class="surf" x="420" y="64" width="360" height="110" rx="8"/>
+  <text class="t cap"  x="444" y="90">2 · ¿Con cuánta fuerza?</text>
+  <text class="t mono" x="444" y="112">enforcement</text>
+  <text class="t s"    x="444" y="134">disabled · evaluate · active</text>
+  <text class="t lbl warn" x="444" y="156">evaluate solo con GitHub Enterprise</text>
+
+  <!-- Qué exige -->
+  <rect class="surf" x="40" y="190" width="360" height="140" rx="8"/>
+  <text class="t cap"  x="64" y="216">3 · ¿Qué exige?</text>
+  <text class="t mono" x="64" y="238">rules[]</text>
+  <text class="t s"    x="64" y="262">pull_request</text>
+  <text class="t s"    x="64" y="282">required_status_checks</text>
+  <text class="t s"    x="64" y="302">required_signatures</text>
+  <text class="t s"    x="64" y="322">non_fast_forward · deletion</text>
+
+  <!-- Quién se la salta -->
+  <rect class="surf" x="420" y="190" width="360" height="140" rx="8"/>
+  <text class="t cap"  x="444" y="216">4 · ¿Quién puede saltársela?</text>
+  <text class="t mono" x="444" y="238">bypass_actors[]</text>
+  <text class="t s ok"   x="444" y="262">Integration — el bot de releases</text>
+  <text class="t s"      x="444" y="282">Team · RepositoryRole — en orgs</text>
+  <text class="t s err"  x="444" y="302">User (tú, "por comodidad")</text>
+  <text class="t lbl"    x="444" y="322">Vacío es la respuesta correcta casi siempre</text>
+
+  <text class="t lbl" x="40" y="366">Varios rulesets sobre la misma rama se SUMAN: la rama queda sujeta a la unión de todas sus reglas.</text>
+  <text class="t lbl" x="40" y="386">No hay prioridad ni "gana el último", a diferencia de CODEOWNERS.</text>
+</svg>

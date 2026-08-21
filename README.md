@@ -148,9 +148,18 @@ bootcamp/week-XX-tema_principal/
 
 **Cuenta requerida**: GitHub **Free** es suficiente. Todas las prácticas se hacen
 sobre **repositorios públicos**, donde Actions, rulesets, CodeQL, secret
-scanning, Projects v2, Pages y GHCR están disponibles sin costo. Las features
-exclusivas de Team/Enterprise (SAML, EMU, runner groups avanzados) se estudian a
-nivel conceptual en la Semana 17.
+scanning, Projects v2, Pages y GHCR están disponibles sin costo.
+
+Algunas features sí quedan fuera del plan Free y se estudian a nivel conceptual,
+con la alternativa que sí puedes usar:
+
+| Feature | Requiere | Dónde se estudia |
+|---------|----------|------------------|
+| Push rulesets (tamaño, rutas, extensiones) | Team+ y repo privado | Semana 08 — sustituida por un check requerido |
+| Merge queue | Repositorio de una organización | Semana 08 — teoría y criterio de decisión |
+| Metadata rules (`commit_message_pattern`) | Organización en Enterprise | Semana 08 — sustituida por validación en CI |
+| Modo `evaluate` de un ruleset | Enterprise | Semana 08 — sustituido por `disabled` |
+| SAML, EMU, runner groups avanzados | Enterprise | Semana 17 |
 
 ---
 
