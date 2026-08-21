@@ -4,7 +4,7 @@
 > archivos generados de las estadísticas y enrutar revisores por ruta.
 
 **Duración estimada**: 45 min
-**Prerrequisitos**: [Teoría 03](../1-teoria/03-licencias-y-gitattributes.md)
+**Prerrequisitos**: [Teoría 01](../1-teoria/01-anatomia-de-un-repo.md) y [05](../1-teoria/05-gitignore-y-gitattributes.md)
 
 ## Contexto
 

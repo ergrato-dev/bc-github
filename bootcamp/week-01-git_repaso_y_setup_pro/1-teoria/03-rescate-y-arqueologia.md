@@ -208,7 +208,7 @@ git show a1b2c3d --stat              # qué tocó ese commit, sin leer el diff e
 ```
 
 `git blame` y la búsqueda de código en la interfaz de GitHub son la
-[Semana 02](../../week-02-repositorio_como_producto/1-teoria/04-busqueda-y-blame.md).
+[Semana 02](../../week-02-repositorio_como_producto/1-teoria/07-blame-e-historia.md).
 
 ## 7. Antipatrones
 

@@ -4,7 +4,7 @@
 > código que no se rompen nunca.
 
 **Duración estimada**: 40 min
-**Prerrequisitos**: [Teoría 02](../1-teoria/02-markdown-gfm.md)
+**Prerrequisitos**: [Teoría 03](../1-teoria/03-markdown-gfm.md)
 
 ## Contexto
 

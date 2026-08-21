@@ -4,7 +4,7 @@
 > comprobar, con datos, que el perfil de comunidad está al 100%.
 
 **Duración estimada**: 50 min
-**Prerrequisitos**: [Teoría 01](../1-teoria/01-anatomia-de-un-repo.md), repo de la Semana 01
+**Prerrequisitos**: [Teoría 01](../1-teoria/01-anatomia-de-un-repo.md) y [02](../1-teoria/02-readme-y-documentacion.md), repo de la Semana 01
 
 ## Contexto
 

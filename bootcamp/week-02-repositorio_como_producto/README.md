@@ -25,10 +25,13 @@ Al finalizar esta semana serás capaz de:
 ```
 week-02-repositorio_como_producto/
 ├── 1-teoria/
-│   ├── 01-anatomia-de-un-repo.md        # Archivos especiales, README de embudo
-│   ├── 02-markdown-gfm.md               # Alerts, Mermaid, colapsables, permalinks
-│   ├── 03-licencias-y-gitattributes.md  # Licencias, .gitignore, .gitattributes, CODEOWNERS
-│   └── 04-busqueda-y-blame.md           # Búsqueda de código, blame, historia
+│   ├── 01-anatomia-de-un-repo.md        # Archivos especiales, repo .github, CODEOWNERS, ajustes
+│   ├── 02-readme-y-documentacion.md     # Embudo, badges, docs/ vs wiki vs Pages
+│   ├── 03-markdown-gfm.md               # Alerts, Mermaid, colapsables, permalinks, HTML
+│   ├── 04-licencias.md                  # Elegir licencia, SPDX, dependencias, DCO/CLA
+│   ├── 05-gitignore-y-gitattributes.md  # Ignorar, EOL, linguist, diff y merge drivers
+│   ├── 06-busqueda-de-codigo.md         # Calificadores, regex, gh search, auditorías
+│   └── 07-blame-e-historia.md           # blame, ignore-revs, compare, Insights
 ├── 2-practicas/
 │   ├── 01-readme-que-se-lee.md          # README de embudo + comunidad al 100%
 │   ├── 02-gitattributes-y-codeowners.md # EOL, linguist y enrutado de revisores
@@ -45,10 +48,13 @@ week-02-repositorio_como_producto/
 
 | Archivo | Tema | Duración |
 |---------|------|:--------:|
-| [01-anatomia-de-un-repo.md](1-teoria/01-anatomia-de-un-repo.md) | README, LICENSE, topics, community profile | 30 min |
-| [02-markdown-gfm.md](1-teoria/02-markdown-gfm.md) | Alerts, Mermaid, footnotes, colapsables, permalinks | 30 min |
-| [03-licencias-y-gitattributes.md](1-teoria/03-licencias-y-gitattributes.md) | Elegir licencia, EOL, linguist, `.gitignore` | 30 min |
-| [04-busqueda-y-blame.md](1-teoria/04-busqueda-y-blame.md) | Sintaxis de búsqueda de código, `blame`, historia | 30 min |
+| [01-anatomia-de-un-repo.md](1-teoria/01-anatomia-de-un-repo.md) | Archivos especiales, repo `.github`, `CODEOWNERS`, ajustes, community profile | 25 min |
+| [02-readme-y-documentacion.md](1-teoria/02-readme-y-documentacion.md) | README de embudo, badges, dónde vive la doc, GitHub Pages | 25 min |
+| [03-markdown-gfm.md](1-teoria/03-markdown-gfm.md) | Alerts, Mermaid, colapsables, permalinks, qué HTML sobrevive | 25 min |
+| [04-licencias.md](1-teoria/04-licencias.md) | Permisiva vs copyleft, SPDX, dependencias, DCO y CLA | 20 min |
+| [05-gitignore-y-gitattributes.md](1-teoria/05-gitignore-y-gitattributes.md) | Ignorar bien, EOL, `linguist`, diff y merge drivers | 25 min |
+| [06-busqueda-de-codigo.md](1-teoria/06-busqueda-de-codigo.md) | Calificadores, regex, `gh search`, auditar una organización | 25 min |
+| [07-blame-e-historia.md](1-teoria/07-blame-e-historia.md) | De la línea al PR, `.git-blame-ignore-revs`, `compare` | 20 min |
 
 ### Prácticas
 
@@ -69,10 +75,10 @@ CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, topics y descripción.
 
 | Actividad | Tiempo |
 |-----------|-------:|
-| Teoría (4 archivos) | 2 h |
+| Teoría (7 archivos) | 2 h 45 min |
 | Prácticas (4) | 2 h 45 min |
-| Proyecto | 2 h 30 min |
-| Revisión y verificación | 45 min |
+| Proyecto | 2 h |
+| Revisión y verificación | 30 min |
 | **Total** | **8 h** |
 
 ## 🎩 Trucos y atajos

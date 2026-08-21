@@ -4,7 +4,7 @@
 > historia que el código.
 
 **Duración estimada**: 30 min
-**Prerrequisitos**: repositorio público de la Semana 01
+**Prerrequisitos**: [Teoría 02](../1-teoria/02-readme-y-documentacion.md), repositorio público de la Semana 01
 
 ## Contexto
 
