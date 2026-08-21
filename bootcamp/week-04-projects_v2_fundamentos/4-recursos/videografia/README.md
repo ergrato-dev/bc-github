@@ -1,12 +1,33 @@
 # Videografía — Semana 04
 
-| Recurso | Duración | Por qué vale la pena |
-|---------|:--------:|----------------------|
-| [GitHub Projects overview (GitHub)](https://www.youtube.com/watch?v=D5W7JcbnRWo) | ~10 min | Recorrido por items, campos y vistas |
-| [Projects v2: tables, boards and roadmaps](https://www.youtube.com/watch?v=NCkNbSSTPWA) | ~12 min | Los tres layouts comparados sobre los mismos datos |
-| [Iteration fields and sprint planning](https://www.youtube.com/watch?v=SkKvVvxBBnE) | ~8 min | Configuración de duración, descansos y filtros relativos |
-| [Automating GitHub Projects](https://www.youtube.com/watch?v=Uk-A1Q3XdGY) | ~15 min | Workflows integrados y el salto a Actions |
-| [GitHub GraphQL API basics](https://www.youtube.com/watch?v=6xoOHhff_R0) | ~14 min | Queries, variables y fragmentos: lo que usas en la práctica 04 |
+Todos los enlaces de esta lista se comprobaron en agosto de 2026.
+
+## Primer contacto
+
+| Recurso | Autor | Por qué vale la pena |
+|---------|-------|----------------------|
+| [Using Projects for feature planning](https://www.youtube.com/watch?v=yFQ-p6wMS_Y) | GitHub | La versión oficial, sobre un caso de planificación real |
+| [Getting started with GitHub Projects](https://www.youtube.com/watch?v=lzpcyYIbHqE) | Mickey Gousset | Recorrido por items, campos y vistas, más pausado |
+
+## Vistas
+
+| Recurso | Autor | Por qué vale la pena |
+|---------|-------|----------------------|
+| [Using GitHub Projects: Table, Board, and Roadmap view](https://www.youtube.com/watch?v=iIRbEQZ2gEI) | Brandan Jones | Los tres layouts comparados sobre los mismos datos |
+| [Learn how to use Project Roadmaps — GitHub Checkout](https://www.youtube.com/watch?v=D80u__nYYWw) | GitHub | El roadmap en detalle: fechas, dependencias y qué campo alimenta cada eje |
+
+## Campos de iteración
+
+| Recurso | Autor | Por qué vale la pena |
+|---------|-------|----------------------|
+| [Using the iteration field with GitHub Projects](https://www.youtube.com/watch?v=iFrJs8abTWg) | Mickey Gousset | Duración, descansos y filtros relativos (`@current`, `@previous`) |
+| [Scrum with GitHub Projects: Sprint Planning & Creating Iterations](https://www.youtube.com/watch?v=rtoruU-byHY) | Benjamin Day | El campo de iteración dentro de un proceso completo, no aislado |
+
+## GraphQL
+
+| Recurso | Autor | Por qué vale la pena |
+|---------|-------|----------------------|
+| [Advanced patterns for GitHub's GraphQL API](https://www.youtube.com/watch?v=i5pIszu9MeM) | GitHub | Queries, variables y fragmentos: exactamente lo que usas en la práctica 04 |
 
 ## Cómo verlos
 

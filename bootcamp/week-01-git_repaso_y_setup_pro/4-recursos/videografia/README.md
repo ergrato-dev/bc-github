@@ -1,16 +1,28 @@
 # Videografía — Semana 01
 
 Complementos en vídeo. Ninguno sustituye a hacer las prácticas: verlas no es
-saberlas.
+saberlas. Todos los enlaces se comprobaron en agosto de 2026.
 
-| Recurso | Duración | Por qué vale la pena |
-|---------|:--------:|----------------------|
-| [Git Internals — how Git works (Fireship)](https://www.youtube.com/watch?v=e9lnsKot_SQ) | ~10 min | Objetos y grafo en diez minutos. Buen primer contacto antes de la teoría 01 |
-| [So You Think You Know Git (Scott Chacon, FOSDEM)](https://www.youtube.com/watch?v=aolI_Rz0ZqY) | ~50 min | Del autor de Pro Git: `rerere`, `bisect`, `worktree`, hooks. Es el vídeo de la semana si solo ves uno |
-| [Git MERGE vs REBASE (The Modern Coder)](https://www.youtube.com/watch?v=0chZFIZLR_0) | ~15 min | Visualiza qué le hace cada uno al grafo |
-| [How to Use Git Bisect (Git Tower)](https://www.youtube.com/watch?v=P3ZR_s3NFvM) | ~7 min | Bisect manual y automático, corto y al grano |
-| [GitHub CLI overview (GitHub)](https://www.youtube.com/watch?v=BII6ZY2Rnlc) | ~10 min | Recorrido por `gh` desde cero |
-| [Signing commits with SSH keys](https://www.youtube.com/watch?v=WdSCyfXWQmU) | ~8 min | El flujo con `gpg.format ssh` paso a paso |
+## Cómo funciona Git por dentro
+
+| Recurso | Autor | Por qué vale la pena |
+|---------|-------|----------------------|
+| [How Git Works: Explained in 4 Minutes](https://www.youtube.com/watch?v=e9lnsKot_SQ) | ByteByteGo | Objetos y grafo en cuatro minutos. Buen primer contacto antes de la teoría 01 |
+| [So You Think You Know Git — FOSDEM 2024](https://www.youtube.com/watch?v=aolI_Rz0ZqY) | Scott Chacon (GitButler) | Del autor de Pro Git: `rerere`, `bisect`, `worktree`, hooks. **Es el vídeo de la semana si solo ves uno** |
+
+## Operaciones quirúrgicas
+
+| Recurso | Autor | Por qué vale la pena |
+|---------|-------|----------------------|
+| [Git MERGE vs REBASE: Everything You Need to Know](https://www.youtube.com/watch?v=0chZFIZLR_0) | ByteByteGo | Visualiza qué le hace cada uno al grafo |
+| [Using Git Bisect](https://www.youtube.com/watch?v=P3ZR_s3NFvM) | Andy Van Slaars | Bisect manual y automático, corto y al grano |
+
+## Herramientas y setup
+
+| Recurso | Autor | Por qué vale la pena |
+|---------|-------|----------------------|
+| [GitHub CLI (gh) — How to manage repositories more efficiently](https://www.youtube.com/watch?v=BII6ZY2Rnlc) | DevOps & AI Toolkit | Recorrido por `gh` desde cero |
+| [Simplify signing Git commits and tags with SSH keys](https://www.youtube.com/watch?v=uhy_ojFqLg0) | GitHub (Git Merge 2022) | El flujo con `gpg.format ssh` paso a paso, que es el prerrequisito de media Semana 08 |
 
 ## Cómo verlos
 
