@@ -1,0 +1,32 @@
+# ============================================================
+# Semana 11 — Dependabot para las actions
+# ============================================================
+# Un SHA no caduca, pero se queda viejo. Esto abre un PR
+# semanal con los pines nuevos y el comentario del tag ya
+# actualizado.
+#
+# Va en la RAÍZ de .github/, no en .github/workflows/.
+# ============================================================
+
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    # ============================================
+    # PASO 5 (Práctica 01): agrupar y etiquetar los PR
+    # ============================================
+    # Sin groups son siete PR por semana; con groups, uno.
+    # El prefix hace que el PR pase tu propio validar-pr.yml
+    # de la Semana 07.
+    # Descomenta las siguientes líneas:
+    # groups:
+    #   actions:
+    #     patterns: ["*"]
+    # commit-message:
+    #   prefix: "ci"
+    # labels:
+    #   - dependencias
+    open-pull-requests-limit: 5

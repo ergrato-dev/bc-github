@@ -1,0 +1,143 @@
+# ============================================================
+# Semana 11 — Despliegue del sitio a GitHub Pages
+# ============================================================
+# Cuatro jobs, cuatro responsabilidades: construir, validar,
+# desplegar y verificar. Se completa en las prácticas 03 y 04.
+#
+# Lo que ya viene puesto y no se toca:
+#   - permissions mínimas, ampliadas solo en el job que las necesita
+#   - actions de terceros pinneadas por SHA, con el tag en comentario
+#   - concurrency SIN cancelación: un despliegue a medias es peor que esperar
+# ============================================================
+
+name: Desplegar el sitio
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "sitio/**"
+      - ".github/workflows/deploy-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: despliegue-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  # ---------------------------------------------------------
+  # 1. CONSTRUIR — una sola vez, y de aquí sale el artefacto
+  #    que se despliega. No se reconstruye más adelante.
+  # ---------------------------------------------------------
+  construir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Preparar el sitio y sellar la versión
+        run: |
+          mkdir -p _sitio
+          cp -r sitio/. _sitio/
+          sed -i "s/__VERSION__/${GITHUB_SHA:0:7}/" _sitio/index.html
+          sed -i "s/__FECHA__/$(date -u +%Y-%m-%dT%H:%M:%SZ)/" _sitio/index.html
+
+      # ============================================
+      # PASO 2 (Práctica 03): subir el artefacto de Pages
+      # ============================================
+      # Descomenta las siguientes líneas:
+      # - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+      #   with:
+      #     path: _sitio
+
+  # ---------------------------------------------------------
+  # 2. VALIDAR — comprueba el ARTEFACTO, no el código fuente.
+  #    Usa el environment staging para leer sus variables y
+  #    dejar registro del paso por la primera puerta.
+  # ---------------------------------------------------------
+  validar:
+    needs: construir
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # ============================================
+    # PASO 1 (Práctica 04): declarar el environment de validación
+    # ============================================
+    # Descomenta las siguientes líneas:
+    # environment:
+    #   name: staging
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: github-pages
+          path: descarga
+
+      # ============================================
+      # PASO 2 (Práctica 04): abrir el artefacto y comprobarlo
+      # ============================================
+      # El artefacto de Pages es un tar. Descomenta y completa:
+      # - name: Comprobar el contenido del artefacto
+      #   env:
+      #     ENTORNO: ${{ vars.SITE_ENTORNO }}
+      #   run: |
+      #     mkdir -p extraido
+      #     tar -xf descarga/artifact.tar -C extraido
+      #     test -f extraido/index.html
+      #     grep -q "${GITHUB_SHA:0:7}" extraido/index.html
+      #     echo "Artefacto validado para $ENTORNO" >> "$GITHUB_STEP_SUMMARY"
+
+  # ---------------------------------------------------------
+  # 3. DESPLEGAR — el único job con permisos de escritura, y
+  #    solo los dos que Pages necesita.
+  # ---------------------------------------------------------
+  desplegar:
+    needs: validar
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    # ============================================
+    # PASO 3 (Práctica 03): declarar el environment de Pages
+    # ============================================
+    # La url sale del output de la action: así queda enlazada
+    # en el run y en la portada del repositorio.
+    # Descomenta las siguientes líneas:
+    # environment:
+    #   name: github-pages
+    #   url: ${{ steps.despliegue.outputs.page_url }}
+    outputs:
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      # ============================================
+      # PASO 4 (Práctica 03): publicar el artefacto
+      # ============================================
+      # Descomenta las siguientes líneas:
+      # - id: despliegue
+      #   uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
+      - run: echo "Sin el PASO 4 este job no publica nada"
+
+  # ---------------------------------------------------------
+  # 4. VERIFICAR — que el sitio responde de verdad. Sin esto,
+  #    verde solo significa "la subida terminó".
+  # ---------------------------------------------------------
+  verificar:
+    needs: desplegar
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # ============================================
+      # PASO 5 (Práctica 03): smoke test contra la URL publicada
+      # ============================================
+      # Descomenta las siguientes líneas:
+      # - name: Comprobar que el sitio responde
+      #   env:
+      #     URL: ${{ needs.desplegar.outputs.url }}
+      #   run: |
+      #     CODIGO=$(curl -sS -o /dev/null -w '%{http_code}' --retry 5 --retry-delay 5 "$URL")
+      #     [ "$CODIGO" = "200" ] || { echo "El sitio responde $CODIGO"; exit 1; }
+      #     echo "Publicado y respondiendo: $URL" >> "$GITHUB_STEP_SUMMARY"
+      - run: echo "Sin el PASO 5 nadie comprueba que el sitio carga"

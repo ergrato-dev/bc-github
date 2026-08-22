@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 470" width="880" height="470" role="img" aria-label="Superficie de ataque de un pipeline: en un mismo run conviven código del propio repositorio, actions de terceros, dependencias del build y el payload del evento; quien controla ese run se lleva el GITHUB_TOKEN, los secretos del job, los artefactos, la caché, el destino del despliegue y la máquina si el runner es self-hosted">
+  <title>Qué corre dentro de un run y qué se lleva quien lo controla</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .inner{ fill: #0d1117; stroke: #30363d; stroke-width: 1; }
+    .risk { fill: #0d1117; stroke: #f85149; stroke-width: 1.5; }
+    .hi   { fill: #0d1117; stroke: #58a6ff; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .warn { font-size: 11px; fill: #f85149; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+    .er   { stroke: #f85149; stroke-width: 2; fill: none; }
+  </style>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#30363d"/>
+    </marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#f85149"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="880" height="470"/>
+  <text class="t h" x="40" y="36">Un run, cuatro procedencias y un solo proceso</text>
+
+  <!-- Entradas -->
+  <text class="t lbl" x="40" y="66">Código que se ejecuta en el mismo runner</text>
+
+  <rect class="inner" x="40" y="80" width="228" height="48" rx="6"/>
+  <text class="t cap" x="58" y="102">Tu repositorio</text>
+  <text class="t lbl" x="58" y="119">workflows y scripts propios</text>
+
+  <rect class="inner" x="40" y="140" width="228" height="48" rx="6"/>
+  <text class="t cap" x="58" y="162">Actions de terceros</text>
+  <text class="t mono" x="58" y="179">uses: owner/action@ref</text>
+
+  <rect class="inner" x="40" y="200" width="228" height="48" rx="6"/>
+  <text class="t cap" x="58" y="222">Dependencias del build</text>
+  <text class="t lbl" x="58" y="239">lockfile, scripts de instalación</text>
+
+  <rect class="risk" x="40" y="260" width="228" height="48" rx="6"/>
+  <text class="t cap"  x="58" y="282">Payload del evento</text>
+  <text class="t warn" x="58" y="299">lo escribe cualquiera</text>
+
+  <path class="e"  d="M268 104 H352" marker-end="url(#a)"/>
+  <path class="e"  d="M268 164 H352" marker-end="url(#a)"/>
+  <path class="e"  d="M268 224 H352" marker-end="url(#a)"/>
+  <path class="er" d="M268 284 H352" marker-end="url(#ar)"/>
+
+  <!-- Runner -->
+  <rect class="hi" x="356" y="80" width="196" height="228" rx="8"/>
+  <text class="t cap"  x="376" y="106">Runner del job</text>
+  <text class="t lbl"  x="376" y="124">un proceso, un entorno</text>
+  <text class="t mono" x="376" y="152">GITHUB_TOKEN</text>
+  <text class="t mono" x="376" y="172">secrets del job</text>
+  <text class="t mono" x="376" y="192">artifacts y caché</text>
+  <text class="t mono" x="376" y="212">credenciales del destino</text>
+  <text class="t lbl"  x="376" y="242">Sin separación entre las</text>
+  <text class="t lbl"  x="376" y="258">cuatro procedencias:</text>
+  <text class="t lbl"  x="376" y="274">si una es hostil,</text>
+  <text class="t lbl"  x="376" y="290">lo es el run entero.</text>
+
+  <path class="er" d="M552 194 H636" marker-end="url(#ar)"/>
+
+  <!-- Botín -->
+  <rect class="risk" x="640" y="80" width="200" height="228" rx="8"/>
+  <text class="t cap"  x="660" y="106">Lo que se lleva</text>
+  <text class="t s"    x="660" y="132">1. El token, con sus permisos</text>
+  <text class="t s"    x="660" y="154">2. Los secretos del job</text>
+  <text class="t s"    x="660" y="176">3. Los artefactos</text>
+  <text class="t s"    x="660" y="198">4. La caché (envenenable)</text>
+  <text class="t s"    x="660" y="220">5. El destino del despliegue</text>
+  <text class="t s"    x="660" y="242">6. La máquina, si es</text>
+  <text class="t s"    x="660" y="258">    self-hosted persistente</text>
+  <text class="t warn" x="660" y="288">Sin intervención humana</text>
+
+  <!-- Defensas -->
+  <rect class="surf" x="40" y="336" width="800" height="104" rx="8"/>
+  <text class="t cap" x="60" y="360">Dónde se defiende cada frontera</text>
+
+  <text class="t cap"  x="60" y="388">Disparo</text>
+  <text class="t lbl"  x="60" y="406">quién hace que corra</text>
+  <text class="t mono" x="60" y="424">aprobación de forks · permissions</text>
+
+  <text class="t cap"  x="330" y="388">Ejecución</text>
+  <text class="t lbl"  x="330" y="406">qué código corre</text>
+  <text class="t mono" x="330" y="424">pin por SHA · allowed_actions</text>
+
+  <text class="t cap"  x="600" y="388">Destino</text>
+  <text class="t lbl"  x="600" y="406">a dónde llega</text>
+  <text class="t mono" x="600" y="424">environments · OIDC</text>
+</svg>

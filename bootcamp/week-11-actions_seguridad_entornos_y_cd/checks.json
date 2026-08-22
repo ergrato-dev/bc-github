@@ -1,0 +1,132 @@
+{
+  "semana": "11",
+  "titulo": "Actions: seguridad, entornos y CD",
+  "checks": [
+    {
+      "id": "token-por-defecto-de-lectura",
+      "descripcion": "El GITHUB_TOKEN por defecto es de solo lectura",
+      "api": "repos/{repo}/actions/permissions/workflow",
+      "jq": ".default_workflow_permissions == \"read\"",
+      "pista": "2-practicas/01-endurecer-los-workflows.md, paso 2"
+    },
+    {
+      "id": "workflows-no-aprueban-pr",
+      "descripcion": "Los workflows no pueden aprobar pull requests",
+      "api": "repos/{repo}/actions/permissions/workflow",
+      "jq": ".can_approve_pull_request_reviews == false",
+      "pista": "2-practicas/01-endurecer-los-workflows.md, paso 2"
+    },
+    {
+      "id": "pinning-por-sha-obligatorio",
+      "descripcion": "El repositorio exige pinnear las actions por SHA completo",
+      "api": "repos/{repo}/actions/permissions",
+      "jq": ".sha_pinning_required == true",
+      "pista": "2-practicas/01-endurecer-los-workflows.md, paso 5"
+    },
+    {
+      "id": "aprobacion-de-forks",
+      "descripcion": "Los PR de contribuidores externos necesitan aprobación para ejecutar workflows",
+      "api": "repos/{repo}/actions/permissions/fork-pr-contributor-approval",
+      "jq": ".approval_policy == \"all_external_contributors\"",
+      "pista": "2-practicas/01-endurecer-los-workflows.md, paso 7"
+    },
+    {
+      "id": "dependabot-para-actions",
+      "descripcion": "Existe .github/dependabot.yml con el ecosistema github-actions",
+      "api": "repos/{repo}/contents/.github/dependabot.yml",
+      "jq": "(.content | @base64d | test(\"(?m)package-ecosystem: *[\\\"']?github-actions\"))",
+      "pista": "2-practicas/01-endurecer-los-workflows.md, paso 4"
+    },
+    {
+      "id": "workflow-de-claims-oidc",
+      "descripcion": "El workflow oidc-claims.yml pide un token de identidad",
+      "api": "repos/{repo}/contents/.github/workflows/oidc-claims.yml",
+      "jq": "(.content | @base64d | test(\"(?m)^ *id-token: *write\"))",
+      "pista": "2-practicas/02-oidc-y-claims.md, paso 1"
+    },
+    {
+      "id": "sub-claim-por-defecto",
+      "descripcion": "La personalización del sub del token OIDC está en su valor por defecto",
+      "api": "repos/{repo}/actions/oidc/customization/sub",
+      "jq": ".use_default == true",
+      "pista": "2-practicas/02-oidc-y-claims.md, paso 5"
+    },
+    {
+      "id": "workflow-de-despliegue-existe",
+      "descripcion": "Existe .github/workflows/deploy-pages.yml",
+      "api": "repos/{repo}/contents/.github/workflows/deploy-pages.yml",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/03-environments-y-pages.md, paso 2"
+    },
+    {
+      "id": "despliegue-con-permisos-minimos",
+      "descripcion": "El workflow de despliegue declara pages: write e id-token: write",
+      "api": "repos/{repo}/contents/.github/workflows/deploy-pages.yml",
+      "jq": "(.content | @base64d) as $y | ($y | test(\"(?m)^ *pages: *write\")) and ($y | test(\"(?m)^ *id-token: *write\"))",
+      "pista": "2-practicas/03-environments-y-pages.md, paso 3"
+    },
+    {
+      "id": "despliegue-sin-tags-flotantes",
+      "descripcion": "El workflow de despliegue no referencia ninguna action por tag o rama",
+      "api": "repos/{repo}/contents/.github/workflows/deploy-pages.yml",
+      "jq": "(.content | @base64d | test(\"uses: *[A-Za-z0-9._-]+/[^@\\n]+@(?![0-9a-f]{40})\") | not)",
+      "pista": "2-practicas/01-endurecer-los-workflows.md, paso 3"
+    },
+    {
+      "id": "despliegue-sin-cancelacion",
+      "descripcion": "El despliegue se encola en vez de cancelarse (cancel-in-progress: false)",
+      "api": "repos/{repo}/contents/.github/workflows/deploy-pages.yml",
+      "jq": "(.content | @base64d | test(\"(?m)^ *cancel-in-progress: *false\"))",
+      "pista": "1-teoria/05-environments-como-puerta-de-despliegue.md, sección 6"
+    },
+    {
+      "id": "pages-publicado-por-workflow",
+      "descripcion": "GitHub Pages se publica desde un workflow de Actions",
+      "api": "repos/{repo}/pages",
+      "jq": ".build_type == \"workflow\"",
+      "pista": "2-practicas/03-environments-y-pages.md, paso 1"
+    },
+    {
+      "id": "sitio-en-el-repositorio",
+      "descripcion": "Existe el contenido publicable en sitio/index.html",
+      "api": "repos/{repo}/contents/sitio/index.html",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/03-environments-y-pages.md, paso 2"
+    },
+    {
+      "id": "environment-de-produccion-con-revisor",
+      "descripcion": "El environment github-pages exige revisión antes de publicar",
+      "api": "repos/{repo}/environments/github-pages",
+      "jq": "any(.protection_rules[]; .type == \"required_reviewers\")",
+      "pista": "2-practicas/03-environments-y-pages.md, paso 4"
+    },
+    {
+      "id": "environment-con-politica-de-ramas",
+      "descripcion": "El environment github-pages solo despliega desde ramas protegidas",
+      "api": "repos/{repo}/environments/github-pages",
+      "jq": ".deployment_branch_policy.protected_branches == true",
+      "pista": "2-practicas/03-environments-y-pages.md, paso 4"
+    },
+    {
+      "id": "environment-de-validacion",
+      "descripcion": "Existe el environment staging",
+      "api": "repos/{repo}/environments/staging",
+      "jq": ".name == \"staging\"",
+      "pista": "2-practicas/04-cd-con-promocion.md, paso 1"
+    },
+    {
+      "id": "despliegue-registrado",
+      "descripcion": "Hay al menos un despliegue registrado en github-pages",
+      "api": "repos/{repo}/deployments?environment=github-pages",
+      "jq": "length > 0",
+      "pista": "2-practicas/03-environments-y-pages.md, paso 5"
+    },
+    {
+      "id": "procedimiento-de-despliegue-documentado",
+      "descripcion": "Existe docs/despliegue.md con el procedimiento y el rollback",
+      "api": "repos/{repo}/contents/docs/despliegue.md",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/04-cd-con-promocion.md, paso 6"
+    }
+  ]
+}

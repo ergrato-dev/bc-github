@@ -1,0 +1,71 @@
+# ============================================================
+# Semana 11 — Leer los claims de un token OIDC
+# ============================================================
+# Este workflow no despliega nada. Pide un token de identidad
+# a GitHub y enseña lo que lleva dentro, que es lo que tendrás
+# que condicionar en el proveedor cloud.
+#
+# id-token: write NO da permisos sobre el repositorio: solo
+# permite pedir el token. Lo que ese token abra lo decide el
+# otro lado.
+# ============================================================
+
+name: Claims OIDC
+
+on:
+  workflow_dispatch:
+    inputs:
+      audiencia:
+        description: Audiencia (aud) que se pide para el token
+        type: string
+        required: false
+        default: bc-github
+
+permissions:
+  contents: read
+
+jobs:
+  claims:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      # ============================================
+      # PASO 1 (Práctica 02): permitir pedir el token de identidad
+      # ============================================
+      # Descomenta la siguiente línea:
+      # id-token: write
+
+    # ============================================
+    # PASO 3 (Práctica 02): repetir con environment y comparar el sub
+    # ============================================
+    # Descomenta las siguientes líneas cuando llegues al paso 3:
+    # environment:
+    #   name: staging
+
+    steps:
+      # ============================================
+      # PASO 2 (Práctica 02): pedir el token y leer el payload
+      # ============================================
+      # El token viaja por variable de entorno, nunca en la
+      # línea de comandos. Y se enmascara ANTES de tocarlo.
+      # Descomenta las siguientes líneas:
+      # - name: Pedir el token y mostrar los claims
+      #   env:
+      #     AUDIENCIA: ${{ inputs.audiencia }}
+      #   run: |
+      #     RESPUESTA=$(curl -sS \
+      #       -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+      #       "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=$AUDIENCIA")
+      #     TOKEN=$(echo "$RESPUESTA" | jq -r '.value')
+      #     echo "::add-mask::$TOKEN"
+      #     # El payload es base64url y suele venir sin relleno: hay que
+      #     # reponerlo antes de decodificar.
+      #     CLAIMS=$(echo "$TOKEN" | cut -d. -f2 | python3 -c \
+      #       'import sys,base64; d=sys.stdin.read().strip(); sys.stdout.write(base64.urlsafe_b64decode(d + "=" * (-len(d) % 4)).decode())')
+      #     {
+      #       echo '```json'
+      #       echo "$CLAIMS" | jq '{sub, aud, iss, repository, ref, environment, workflow_ref, job_workflow_ref, runner_environment}'
+      #       echo '```'
+      #     } >> "$GITHUB_STEP_SUMMARY"
+      - run: echo "Completa el PASO 1 y el PASO 2 en la práctica 02"

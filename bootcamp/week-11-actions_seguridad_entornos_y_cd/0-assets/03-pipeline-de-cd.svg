@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" role="img" aria-label="Pipeline de entrega continua: el job construir genera un artefacto único, el job validar lo comprueba en el environment staging, una puerta con revisor obligatorio detiene el despliegue antes de ejecutar ningún step, el job desplegar publica el mismo artefacto y el job verificar hace un smoke test; el rollback consiste en relanzar el run anterior">
+  <title>Construir una vez, validar, aprobar, desplegar y verificar</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .inner{ fill: #0d1117; stroke: #30363d; stroke-width: 1; }
+    .gate { fill: #0d1117; stroke: #d29922; stroke-width: 1.5; }
+    .ok   { fill: #0d1117; stroke: #3fb950; stroke-width: 1.5; }
+    .hi   { fill: #0d1117; stroke: #58a6ff; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .warn { font-size: 11px; fill: #d29922; }
+    .good { font-size: 11px; fill: #3fb950; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+    .ey   { stroke: #d29922; stroke-width: 2; fill: none; }
+    .eg   { stroke: #3fb950; stroke-width: 2; fill: none; stroke-dasharray: 4 4; }
+  </style>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#30363d"/>
+    </marker>
+    <marker id="ay" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#d29922"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="880" height="420"/>
+  <text class="t h" x="40" y="36">Un artefacto, dos puertas, cuatro responsabilidades</text>
+
+  <!-- Construir -->
+  <rect class="hi" x="40" y="70" width="180" height="96" rx="8"/>
+  <text class="t cap"  x="58" y="94">1. Construir</text>
+  <text class="t lbl"  x="58" y="112">push a main</text>
+  <text class="t mono" x="58" y="132">upload-pages-artifact</text>
+  <text class="t lbl"  x="58" y="152">se ejecuta una sola vez</text>
+
+  <path class="e" d="M220 118 H272" marker-end="url(#a)"/>
+  <text class="t mono" x="222" y="110">artefacto</text>
+
+  <!-- Validar -->
+  <rect class="surf" x="276" y="70" width="180" height="96" rx="8"/>
+  <text class="t cap"  x="294" y="94">2. Validar</text>
+  <text class="t lbl"  x="294" y="112">environment: staging</text>
+  <text class="t lbl"  x="294" y="132">abre el tar y comprueba</text>
+  <text class="t lbl"  x="294" y="152">el sello del commit</text>
+
+  <path class="ey" d="M456 118 H508" marker-end="url(#ay)"/>
+
+  <!-- Puerta -->
+  <rect class="gate" x="512" y="70" width="150" height="96" rx="8"/>
+  <text class="t cap"  x="530" y="94">Puerta</text>
+  <text class="t warn" x="530" y="112">required_reviewers</text>
+  <text class="t lbl"  x="530" y="132">el job espera ANTES</text>
+  <text class="t lbl"  x="530" y="152">del primer step</text>
+
+  <path class="ey" d="M662 118 H714" marker-end="url(#ay)"/>
+
+  <!-- Desplegar -->
+  <rect class="ok" x="718" y="70" width="122" height="96" rx="8"/>
+  <text class="t cap"  x="736" y="94">3. Desplegar</text>
+  <text class="t lbl"  x="736" y="112">github-pages</text>
+  <text class="t mono" x="736" y="132">pages: write</text>
+  <text class="t mono" x="736" y="150">id-token: write</text>
+
+  <!-- Verificar -->
+  <rect class="surf" x="718" y="200" width="122" height="88" rx="8"/>
+  <text class="t cap" x="736" y="224">4. Verificar</text>
+  <text class="t lbl" x="736" y="242">smoke test</text>
+  <text class="t lbl" x="736" y="260">contra la URL</text>
+  <text class="t lbl" x="736" y="278">publicada</text>
+
+  <path class="e" d="M779 166 V192" marker-end="url(#a)"/>
+
+  <!-- Rollback -->
+  <rect class="inner" x="40" y="200" width="416" height="88" rx="8"/>
+  <text class="t cap"  x="58" y="224">Volver atrás</text>
+  <text class="t mono" x="58" y="248">gh run rerun &lt;id-del-run-bueno&gt;</text>
+  <text class="t lbl"  x="58" y="270">Republica el artefacto anterior, mientras siga dentro de la retención.</text>
+
+  <path class="eg" d="M718 244 H462" marker-end="url(#ag)"/>
+  <text class="t good" x="486" y="236">si el smoke test falla</text>
+
+  <!-- Nota -->
+  <rect class="surf" x="40" y="316" width="800" height="72" rx="8"/>
+  <text class="t cap"  x="60" y="340">La regla que sostiene todo lo demás</text>
+  <text class="t s"    x="60" y="364">El artefacto que se publica es exactamente el que se validó: no se reconstruye por entorno.</text>
+  <text class="t lbl"  x="60" y="382">Reconstruir para producción produce un binario que nadie ha probado.</text>
+</svg>

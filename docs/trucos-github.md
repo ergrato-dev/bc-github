@@ -265,6 +265,38 @@ Los consejos genéricos de productividad no entran.
 
 ---
 
-> Las secciones de las semanas 11 a 21 se añaden a medida que se publica cada
+## Semana 11 — Actions: seguridad, entornos y CD
+
+→ [Semana 11](../bootcamp/week-11-actions_seguridad_entornos_y_cd/README.md)
+
+| Truco | Cómo |
+|-------|------|
+| Auditar las políticas del repositorio | `gh api repos/{owner}/{repo}/actions/permissions` y sus tres hermanas |
+| La red que salva del olvido | `default_workflow_permissions=read`: el workflow sin `permissions:` nace de lectura |
+| Que ningún bot apruebe PR | `can_approve_pull_request_reviews=false` |
+| Encontrar lo que no está pinneado | `grep -rn "uses:" .github \| grep -v "@[0-9a-f]\{40\}"` |
+| El SHA de un tag | `gh api repos/OWNER/REPO/tags --jq '.[] \| select(.name=="v1") \| .commit.sha'` |
+| Hacer obligatorio el pinning | `-F sha_pinning_required=true` — pinnea antes, activa después |
+| Actions del propio repo sin `checkout` | `uses: $/.github/actions/<nombre>` (julio 2026, runner 2.336.0+) |
+| Los reusable workflows quedan fuera de esa política | Siguen admitiendo tags |
+| Enmascarar un valor generado en el run | `echo "::add-mask::$VALOR"` **antes** de usarlo |
+| Comprobar un secreto sin imprimirlo | `[ -z "$TOKEN" ] && exit 1` |
+| Rotar antes de limpiar | Revocar, reemitir, comprobar y **luego** borrar logs |
+| Ver tus claims OIDC | Pedir el token y volcar el payload al `$GITHUB_STEP_SUMMARY` |
+| El claim que vale oro | `environment`: solo existe si el job pasó por la puerta |
+| Condición de confianza estrecha | `sub: repo:OWNER/REPO:environment:production`, nunca con `*` |
+| Consultar el formato de tu `sub` | `gh api repos/{owner}/{repo}/actions/oidc/customization/sub` |
+| Aprobar un despliegue sin navegador | `POST .../actions/runs/<id>/pending_deployments` con `state=approved` |
+| Saber si puedes aprobar tú | El campo `current_user_can_approve` de ese endpoint |
+| Despliegues que no se pisan | `concurrency` con `cancel-in-progress: false` |
+| Rollback en un comando | `gh run rerun <id-del-run-bueno>` |
+| Cuánto dura tu rollback rápido | `gh api repos/{owner}/{repo}/actions/permissions/artifact-and-log-retention` |
+| Frecuencia de despliegue | `gh api --paginate "repos/{owner}/{repo}/deployments?environment=github-pages" --jq 'length'` |
+| Comprobar que no hay runners propios | `gh api repos/{owner}/{repo}/actions/runners --jq .total_count` |
+| Analizar los workflows antes del push | `actionlint` para sintaxis, `zizmor` para seguridad |
+
+---
+
+> Las secciones de las semanas 12 a 21 se añaden a medida que se publica cada
 > semana. Si has hecho una semana y su sección no está aquí,
 > [abre un issue](https://github.com/ergrato-dev/bc-github/issues).
