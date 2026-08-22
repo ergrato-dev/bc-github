@@ -1,0 +1,128 @@
+# ============================================================
+# CI — Semana 09
+#
+# Se construye en tres prácticas. Descomenta solo los bloques
+# de la práctica que estás haciendo.
+#
+#   Práctica 01 → PASO 1 y PASO 2   (el CI mínimo que ya funciona)
+#   Práctica 02 → PASO 3            (matriz de versiones)
+#   Práctica 03 → PASO 4 y PASO 5   (caché y artifacts)
+# ============================================================
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# El GITHUB_TOKEN es de ESCRITURA si no declaras esto.
+# Un CI solo necesita leer el repositorio.
+permissions:
+  contents: read
+
+# Cinco pushes seguidos al mismo PR no necesitan cinco runs.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ==========================================================
+  # PASO 1: el job de tests
+  # ==========================================================
+  # El `name:` del job es el `context` que pedirá el ruleset de
+  # la Semana 08. Elígelo y no lo cambies a la ligera.
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    # ========================================================
+    # PASO 3 (Práctica 02): matriz de versiones
+    # ========================================================
+    # Al descomentar esto, el check pasa a llamarse
+    # "Tests (22)", "Tests (24)"… y el ruleset deja de
+    # encontrar "Tests". Está avisado en la práctica.
+    #
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     node: [22, 24, 26]
+    #     include:
+    #       - node: 24
+    #         principal: true
+    #     exclude: []
+
+    steps:
+      # ======================================================
+      # PASO 2: clonar, preparar Node y ejecutar los tests
+      # ======================================================
+      - name: Clonar el repositorio
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # PASO 4 (Práctica 03): pnpm ANTES que setup-node.
+      # setup-node necesita pnpm en el PATH para localizar el
+      # store que va a cachear. Al revés falla.
+      #
+      # - name: Instalar pnpm
+      #   uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+      #   with:
+      #     version: 10
+
+      - name: Preparar Node
+        id: node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          # PASO 3: sustituye la línea de arriba por esta
+          # node-version: ${{ matrix.node }}
+          #
+          # PASO 4: sin lockfile no hay caché posible, y hay que
+          # desactivarla explícitamente. Con lockfile, cambia
+          # estas dos líneas por `cache: pnpm`.
+          package-manager-cache: false
+
+      - name: Ejecutar los tests
+        run: node --test
+
+      # ======================================================
+      # PASO 5 (Práctica 03): informe como artifact
+      # ======================================================
+      # `if: always()` para que el informe se suba también
+      # cuando los tests fallan, que es cuando hace falta.
+      # `if-no-files-found: error` porque el defecto (`warn`)
+      # deja pasar un artifact vacío en verde.
+      #
+      # - name: Publicar el informe
+      #   if: always()
+      #   uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      #   with:
+      #     name: informe-node-${{ matrix.node }}
+      #     path: informe/
+      #     if-no-files-found: error
+      #     retention-days: 7
+
+  # ==========================================================
+  # PASO 5 (Práctica 03): un job que consume el artifact
+  # ==========================================================
+  # `needs` ordena Y conecta: sin él, este job arrancaría a la
+  # vez que `test` y no habría artifact que descargar.
+  #
+  # resumen:
+  #   name: Resumen
+  #   needs: test
+  #   if: ${{ !cancelled() }}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Descargar todos los informes
+  #       uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+  #       with:
+  #         pattern: informe-node-*
+  #         path: informes/
+  #
+  #     - name: Escribir el resumen del run
+  #       run: |
+  #         {
+  #           echo "## Informes recibidos"
+  #           echo
+  #           find informes -type f -printf '- `%p`\n' | sort
+  #         } >> "$GITHUB_STEP_SUMMARY"

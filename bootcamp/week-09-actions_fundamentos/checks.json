@@ -1,0 +1,90 @@
+{
+  "semana": "09",
+  "titulo": "Actions: fundamentos",
+  "checks": [
+    {
+      "id": "workflow-ci-existe",
+      "descripcion": "Existe .github/workflows/ci.yml",
+      "api": "repos/{repo}/contents/.github/workflows/ci.yml",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/01-primer-workflow-de-ci.md, paso 1"
+    },
+    {
+      "id": "workflow-con-permissions",
+      "descripcion": "El workflow declara permissions explícitas",
+      "api": "repos/{repo}/contents/.github/workflows/ci.yml",
+      "jq": "(.content | @base64d | test(\"(?m)^permissions:\"))",
+      "pista": "2-practicas/01-primer-workflow-de-ci.md, paso 2"
+    },
+    {
+      "id": "actions-pinneadas-por-sha",
+      "descripcion": "Todas las actions del workflow van pinneadas por SHA",
+      "api": "repos/{repo}/contents/.github/workflows/ci.yml",
+      "jq": "(.content | @base64d | [scan(\"uses: *[^\\n]+\")] | (length > 0) and (all(test(\"@[0-9a-f]{40}\"))))",
+      "pista": "2-practicas/01-primer-workflow-de-ci.md, paso 2"
+    },
+    {
+      "id": "workflow-activo",
+      "descripcion": "El workflow ci.yml está activo",
+      "api": "repos/{repo}/actions/workflows",
+      "jq": "any(.workflows[]; .path == \".github/workflows/ci.yml\" and .state == \"active\")",
+      "pista": "2-practicas/01-primer-workflow-de-ci.md, paso 3"
+    },
+    {
+      "id": "run-con-exito",
+      "descripcion": "Hay al menos un run de CI con conclusión success",
+      "api": "repos/{repo}/actions/runs?per_page=100",
+      "jq": "any(.workflow_runs[]; .path == \".github/workflows/ci.yml\" and .conclusion == \"success\")",
+      "pista": "2-practicas/01-primer-workflow-de-ci.md, paso 3"
+    },
+    {
+      "id": "run-sobre-pull-request",
+      "descripcion": "El CI se ha ejecutado sobre al menos un pull request",
+      "api": "repos/{repo}/actions/runs?event=pull_request&per_page=100",
+      "jq": "any(.workflow_runs[]; .path == \".github/workflows/ci.yml\")",
+      "pista": "2-practicas/01-primer-workflow-de-ci.md, paso 3"
+    },
+    {
+      "id": "matriz-de-tres-o-mas",
+      "descripcion": "La matriz produce 3 o más checks en el último commit de main",
+      "api": "repos/{repo}/commits/main/check-runs?per_page=100",
+      "jq": "([.check_runs[] | select(.name | test(\"\\\\(.+\\\\)$\"))] | length) >= 3",
+      "pista": "2-practicas/02-matriz-de-versiones.md, paso 4"
+    },
+    {
+      "id": "check-agregador-estable",
+      "descripcion": "Existe un check agregador con nombre estable (CI)",
+      "api": "repos/{repo}/commits/main/check-runs?per_page=100",
+      "jq": "any(.check_runs[]; .name == \"CI\")",
+      "pista": "2-practicas/02-matriz-de-versiones.md, paso 6"
+    },
+    {
+      "id": "artifact-publicado",
+      "descripcion": "Se ha publicado al menos un artifact",
+      "api": "repos/{repo}/actions/artifacts?per_page=100",
+      "jq": ".total_count > 0",
+      "pista": "2-practicas/03-artifacts-y-cache.md, paso 7"
+    },
+    {
+      "id": "cache-creada",
+      "descripcion": "Existe al menos una entrada de caché",
+      "api": "repos/{repo}/actions/caches?per_page=100",
+      "jq": ".total_count > 0",
+      "pista": "2-practicas/03-artifacts-y-cache.md, paso 3"
+    },
+    {
+      "id": "check-ci-requerido",
+      "descripcion": "El check CI es requerido por el ruleset de main",
+      "api": "repos/{repo}/rules/branches/main",
+      "jq": "any(.[]; .type == \"required_status_checks\" and (any(.parameters.required_status_checks[]; .context == \"CI\")))",
+      "pista": "2-practicas/02-matriz-de-versiones.md, paso 6"
+    },
+    {
+      "id": "depuracion-documentada",
+      "descripcion": "CONTRIBUTING.md documenta cómo depurar un workflow",
+      "api": "repos/{repo}/contents/CONTRIBUTING.md",
+      "jq": "(.content | @base64d | test(\"Depurar un workflow\"))",
+      "pista": "2-practicas/04-depurar-un-workflow.md, paso 9"
+    }
+  ]
+}

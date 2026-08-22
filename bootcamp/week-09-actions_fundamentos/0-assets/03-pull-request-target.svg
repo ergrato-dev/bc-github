@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 500" width="860" height="500" role="img" aria-label="Comparación entre pull_request y pull_request_target: con pull_request el token es de solo lectura y los secretos no llegan, con pull_request_target el token es de escritura y los secretos sí llegan, de modo que un script postinstall del fork se ejecuta con credenciales del repositorio base">
+  <title>Por qué pull_request_target con checkout del PR es un agujero</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .monoE{ font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #f85149; }
+    .ok   { fill: #3fb950; }
+    .err  { fill: #f85149; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+    .eErr { stroke: #f85149; stroke-width: 2; fill: none; }
+  </style>
+
+  <rect class="bg" width="860" height="500"/>
+  <text class="t h" x="40" y="38">El mismo pull request, dos eventos, dos finales</text>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#30363d"/>
+    </marker>
+    <marker id="ae" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#f85149"/>
+    </marker>
+  </defs>
+
+  <!-- Origen común -->
+  <rect class="surf" x="290" y="58" width="280" height="66" rx="6"/>
+  <text class="t cap"  x="310" y="82">PR desde un fork ajeno</text>
+  <text class="t monoE" x="310" y="102">package.json → "postinstall": "…"</text>
+  <text class="t lbl"  x="310" y="118">Lo escribe quien abre el PR</text>
+
+  <path class="e"    d="M330 124 L215 168" marker-end="url(#a)"/>
+  <path class="eErr" d="M530 124 L645 168" marker-end="url(#ae)"/>
+
+  <!-- Izquierda: pull_request -->
+  <rect class="surf" x="40" y="176" width="360" height="252" rx="8"/>
+  <rect x="40" y="176" width="6" height="252" rx="3" class="ok"/>
+  <text class="t cap ok" x="66" y="202">on: pull_request</text>
+
+  <text class="t s"   x="66" y="230">1 · Se ejecuta el workflow de la rama base</text>
+  <text class="t s"   x="66" y="252">2 · Hace checkout del código del PR</text>
+  <text class="t s"   x="66" y="274">3 · Corre `pnpm install`</text>
+  <text class="t s"   x="66" y="296">4 · El postinstall del atacante SE EJECUTA</text>
+
+  <rect class="surf" x="66" y="314" width="308" height="94" rx="6"/>
+  <text class="t cap"  x="86" y="338">¿Y qué encuentra?</text>
+  <text class="t s ok" x="86" y="360">GITHUB_TOKEN · solo lectura</text>
+  <text class="t s ok" x="86" y="380">secrets · no llegan al runner</text>
+  <text class="t lbl"  x="86" y="400">Ejecuta código ajeno, sin nada que robar</text>
+
+  <!-- Derecha: pull_request_target -->
+  <rect class="surf" x="460" y="176" width="360" height="252" rx="8"/>
+  <rect x="460" y="176" width="6" height="252" rx="3" class="err"/>
+  <text class="t cap err" x="486" y="202">on: pull_request_target</text>
+
+  <text class="t s"   x="486" y="230">1 · Se ejecuta el workflow de la rama base</text>
+  <text class="t s"   x="486" y="252">2 · Checkout con ref: …head.sha ← el fallo</text>
+  <text class="t lbl" x="486" y="266">actions/checkout lo bloquea desde jun-2026,</text>
+  <text class="t lbl" x="486" y="278">salvo allow-unsafe-pr-checkout: true</text>
+  <text class="t s"   x="486" y="294">3 · Corre `pnpm install`</text>
+  <text class="t s"   x="486" y="308">4 · El postinstall del atacante SE EJECUTA</text>
+
+  <rect class="surf" x="486" y="318" width="308" height="90" rx="6"/>
+  <text class="t cap"   x="506" y="340">¿Y qué encuentra?</text>
+  <text class="t s err" x="506" y="360">GITHUB_TOKEN · ESCRITURA</text>
+  <text class="t s err" x="506" y="380">secrets · TODOS, en el entorno</text>
+  <text class="t lbl"   x="506" y="400">Ejecuta código ajeno con tus credenciales</text>
+
+  <text class="t lbl" x="40" y="458">Regla: usa `pull_request`. Si necesitas `pull_request_target` para etiquetar o comentar,</text>
+  <text class="t lbl" x="40" y="478">NO hagas checkout del código del PR. El bloqueo de checkout es una red, no una excusa: no cubre `git`/`gh` a mano.</text>
+</svg>

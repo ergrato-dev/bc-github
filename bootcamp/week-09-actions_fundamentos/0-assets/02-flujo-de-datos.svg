@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 420" width="860" height="420" role="img" aria-label="Cuatro canales para pasar datos: GITHUB_ENV y GITHUB_OUTPUT entre steps del mismo job, outputs más needs entre jobs, y artifacts para archivos entre jobs y entre runs">
+  <title>Qué canal usar según la distancia que tiene que recorrer el dato</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .e    { stroke: #58a6ff; stroke-width: 2; fill: none; }
+    .e2   { stroke: #a371f7; stroke-width: 2; fill: none; }
+    .e3   { stroke: #3fb950; stroke-width: 2; fill: none; }
+  </style>
+
+  <rect class="bg" width="860" height="420"/>
+  <text class="t h" x="40" y="38">¿Hasta dónde tiene que llegar el dato?</text>
+
+  <defs>
+    <marker id="f1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="f2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#a371f7"/>
+    </marker>
+    <marker id="f3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <!-- Fila 1: entre steps -->
+  <text class="t cap" x="40" y="76">Entre steps del mismo job</text>
+  <rect class="surf" x="40" y="90" width="200" height="56" rx="6"/>
+  <text class="t s"    x="58" y="112">Step: calcular</text>
+  <text class="t mono" x="58" y="132">echo "k=v" &gt;&gt; ...</text>
+
+  <path class="e" d="M248 118 L352 118" marker-end="url(#f1)"/>
+  <text class="t mono" x="300" y="108" text-anchor="middle">$GITHUB_OUTPUT</text>
+  <text class="t lbl"  x="300" y="140" text-anchor="middle">necesita id:</text>
+
+  <rect class="surf" x="360" y="90" width="200" height="56" rx="6"/>
+  <text class="t s"    x="378" y="112">Step: usar</text>
+  <text class="t mono" x="378" y="132">steps.calcular.outputs.k</text>
+
+  <rect class="surf" x="600" y="90" width="220" height="56" rx="6"/>
+  <text class="t lbl"  x="618" y="112">Alternativa para el entorno</text>
+  <text class="t mono" x="618" y="132">$GITHUB_ENV · $GITHUB_PATH</text>
+
+  <!-- Fila 2: entre jobs -->
+  <text class="t cap" x="40" y="196">Entre jobs del mismo workflow</text>
+  <rect class="surf" x="40" y="210" width="200" height="56" rx="6"/>
+  <text class="t s"    x="58" y="232">Job: preparar</text>
+  <text class="t mono" x="58" y="252">outputs: version</text>
+
+  <path class="e2" d="M248 238 L352 238" marker-end="url(#f2)"/>
+  <text class="t mono" x="300" y="228" text-anchor="middle">needs</text>
+  <text class="t lbl"  x="300" y="260" text-anchor="middle">ordena Y conecta</text>
+
+  <rect class="surf" x="360" y="210" width="200" height="56" rx="6"/>
+  <text class="t s"    x="378" y="232">Job: desplegar</text>
+  <text class="t mono" x="378" y="252">needs.preparar.outputs</text>
+
+  <rect class="surf" x="600" y="210" width="220" height="56" rx="6"/>
+  <text class="t lbl"  x="618" y="232">Solo VALORES, y son texto</text>
+  <text class="t mono" x="618" y="252">== 'true', con comillas</text>
+
+  <!-- Fila 3: archivos -->
+  <text class="t cap" x="40" y="316">Archivos, entre jobs y entre runs</text>
+  <rect class="surf" x="40" y="330" width="200" height="56" rx="6"/>
+  <text class="t s"    x="58" y="352">Job: build</text>
+  <text class="t mono" x="58" y="372">upload-artifact</text>
+
+  <path class="e3" d="M248 358 L352 358" marker-end="url(#f3)"/>
+  <text class="t mono" x="300" y="348" text-anchor="middle">artifact</text>
+  <text class="t lbl"  x="300" y="380" text-anchor="middle">hasta 90 días</text>
+
+  <rect class="surf" x="360" y="330" width="200" height="56" rx="6"/>
+  <text class="t s"    x="378" y="352">Job: publicar</text>
+  <text class="t mono" x="378" y="372">download-artifact</text>
+
+  <rect class="surf" x="600" y="330" width="220" height="56" rx="6"/>
+  <text class="t lbl"  x="618" y="352">Si no está, el job FALLA</text>
+  <text class="t lbl"  x="618" y="372">La caché solo haría que tardase más</text>
+</svg>

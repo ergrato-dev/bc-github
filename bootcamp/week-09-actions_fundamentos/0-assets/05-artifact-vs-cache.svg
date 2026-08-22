@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 400" width="860" height="400" role="img" aria-label="Árbol de decisión entre artifact y caché: si el job siguiente no puede funcionar sin ese contenido es un artifact, si solo iría más lento es una caché">
+  <title>Artifact o caché: una sola pregunta decide</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .q    { font-size: 14px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+    .ok   { fill: #3fb950; }
+    .acc  { fill: #58a6ff; }
+    .err  { fill: #f85149; }
+  </style>
+
+  <rect class="bg" width="860" height="400"/>
+  <text class="t h" x="40" y="38">Si eso no estuviera, ¿el job siguiente falla o solo tarda más?</text>
+
+  <defs>
+    <marker id="d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#30363d"/>
+    </marker>
+  </defs>
+
+  <!-- Pregunta -->
+  <rect class="surf" x="300" y="58" width="260" height="50" rx="25"/>
+  <text class="t q" x="430" y="88" text-anchor="middle">La pregunta</text>
+
+  <path class="e" d="M370 108 L215 148" marker-end="url(#d)"/>
+  <text class="t cap err" x="250" y="132">FALLA</text>
+
+  <path class="e" d="M490 108 L645 148" marker-end="url(#d)"/>
+  <text class="t cap ok" x="580" y="132">solo tarda más</text>
+
+  <!-- Artifact -->
+  <rect class="surf" x="40" y="156" width="360" height="196" rx="8"/>
+  <rect x="40" y="156" width="6" height="196" rx="3" class="acc"/>
+  <text class="t cap acc" x="66" y="182">Artifact</text>
+  <text class="t mono"    x="66" y="202">upload-artifact / download-artifact</text>
+
+  <text class="t s"   x="66" y="230">dist/ · binarios · informes de cobertura</text>
+  <text class="t s"   x="66" y="252">SBOM · capturas de tests · logs a conservar</text>
+
+  <text class="t lbl" x="66" y="284">Alcance: el run que lo creó</text>
+  <text class="t lbl" x="66" y="304">Caduca: hasta 90 días, configurable</text>
+  <text class="t lbl" x="66" y="324">Se descarga desde la interfaz</text>
+  <text class="t lbl" x="66" y="344">Nombre ÚNICO por run, o el upload falla</text>
+
+  <!-- Cache -->
+  <rect class="surf" x="460" y="156" width="360" height="196" rx="8"/>
+  <rect x="460" y="156" width="6" height="196" rx="3" class="ok"/>
+  <text class="t cap ok" x="486" y="182">Caché</text>
+  <text class="t mono"   x="486" y="202">setup-node cache: · actions/cache</text>
+
+  <text class="t s"   x="486" y="230">store de pnpm · ~/.npm · ~/.cargo</text>
+  <text class="t s"   x="486" y="252">herramientas compiladas · índices</text>
+
+  <text class="t lbl" x="486" y="284">Alcance: entre runs, con reglas de rama</text>
+  <text class="t lbl" x="486" y="304">Caduca: 7 días sin uso · 10 GB por repo</text>
+  <text class="t lbl" x="486" y="324">No se descarga desde la interfaz</text>
+  <text class="t lbl" x="486" y="344">La key SIEMPRE lleva hashFiles(lockfile)</text>
+</svg>

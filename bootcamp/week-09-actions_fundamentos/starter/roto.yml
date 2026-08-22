@@ -1,0 +1,55 @@
+# ============================================================
+# roto.yml — Semana 09, Práctica 04
+#
+# Este workflow tiene CUATRO fallos deliberados. Dos hacen que
+# el run se ponga en rojo; los otros dos son peores: dejan el
+# run en VERDE haciendo lo que no debe.
+#
+# No mires la solución. Encuéntralos con:
+#   gh run view --log-failed
+#   ACTIONS_STEP_DEBUG=true
+#   gh run rerun <id> --failed
+#
+# La práctica 04 los explica uno a uno al final.
+# ============================================================
+
+name: Workflow roto
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  investigar:
+    name: Investigar
+    runs-on: ubuntu-latest
+    steps:
+      - name: Preparar Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          package-manager-cache: false
+
+      - name: Ejecutar los tests del repositorio
+        run: node --test
+
+      - name: Calcular la versión
+        run: |
+          export VERSION="1.4.2"
+          echo "Versión calculada: $VERSION"
+
+      - name: Usar la versión calculada
+        run: |
+          echo "Publicando la versión: '$VERSION'"
+          test -n "$VERSION"
+
+      - name: Comprobar el linter y guardar la salida
+        run: |
+          node -e "console.error('el linter encontro 3 errores'); process.exit(1)" | tee lint.txt
+
+      - name: Resumen
+        run: |
+          echo "Total de comprobaciones: ${{ steps.calcular.outputs.total }}"
+          echo "Fin."

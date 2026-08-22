@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 430" width="860" height="430" role="img" aria-label="Efecto de exclude e include sobre una matriz de tres versiones de Node: exclude quita una combinación, un include que encaja enriquece el job existente y un include con un valor nuevo crea un job aparte">
+  <title>Cómo exclude e include transforman una matriz</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+    .ok   { fill: #3fb950; }
+    .err  { fill: #f85149; }
+    .warn { fill: #d29922; }
+    .acc  { fill: #a371f7; }
+  </style>
+
+  <rect class="bg" width="860" height="430"/>
+  <text class="t h" x="40" y="38">exclude quita. include enriquece… o crea.</text>
+  <text class="t lbl" x="40" y="58">El orden es fijo: primero exclude, después include. Por eso include puede devolver lo que exclude quitó.</text>
+
+  <defs>
+    <marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#30363d"/>
+    </marker>
+  </defs>
+
+  <!-- Paso 1: matriz base -->
+  <text class="t cap" x="40" y="94">1 · La lista</text>
+  <text class="t mono" x="40" y="112">node: [22, 24, 26]</text>
+  <rect class="surf" x="40" y="126" width="150" height="34" rx="4"/>
+  <text class="t s" x="58" y="148">node 22</text>
+  <rect class="surf" x="40" y="168" width="150" height="34" rx="4"/>
+  <text class="t s" x="58" y="190">node 24</text>
+  <rect class="surf" x="40" y="210" width="150" height="34" rx="4"/>
+  <text class="t s" x="58" y="232">node 26</text>
+
+  <path class="e" d="M198 185 L258 185" marker-end="url(#m)"/>
+
+  <!-- Paso 2: exclude -->
+  <text class="t cap" x="266" y="94">2 · exclude</text>
+  <text class="t mono" x="266" y="112">- node: 22</text>
+  <rect class="surf" x="266" y="126" width="150" height="34" rx="4" opacity="0.35"/>
+  <text class="t s err" x="284" y="148">node 22 ✕</text>
+  <rect class="surf" x="266" y="168" width="150" height="34" rx="4"/>
+  <text class="t s" x="284" y="190">node 24</text>
+  <rect class="surf" x="266" y="210" width="150" height="34" rx="4"/>
+  <text class="t s" x="284" y="232">node 26</text>
+
+  <path class="e" d="M424 185 L484 185" marker-end="url(#m)"/>
+
+  <!-- Paso 3: include -->
+  <text class="t cap" x="492" y="94">3 · include</text>
+  <text class="t mono" x="492" y="112">- node: 24, cobertura: true</text>
+  <text class="t mono" x="492" y="128">- node: 20, legado: true</text>
+
+  <rect class="surf" x="492" y="140" width="230" height="34" rx="4"/>
+  <text class="t s" x="510" y="162">node 24 · cobertura ✓</text>
+  <text class="t lbl acc" x="732" y="162">enriquecido</text>
+
+  <rect class="surf" x="492" y="182" width="230" height="34" rx="4"/>
+  <text class="t s" x="510" y="204">node 26</text>
+  <text class="t lbl" x="732" y="204">intacto</text>
+
+  <rect class="surf" x="492" y="224" width="230" height="34" rx="4"/>
+  <text class="t s ok" x="510" y="246">node 20 · legado ✓</text>
+  <text class="t lbl ok" x="732" y="246">job NUEVO</text>
+
+  <!-- Regla -->
+  <rect class="surf" x="40" y="290" width="780" height="52" rx="6"/>
+  <text class="t cap"  x="60" y="314">La regla</text>
+  <text class="t s"    x="140" y="314">si las claves de `include` ENCAJAN con una combinación existente, la enriquecen;</text>
+  <text class="t s"    x="140" y="332">si aportan un valor que no estaba, generan un job aparte.</text>
+
+  <!-- Aviso ruleset -->
+  <rect class="surf" x="40" y="356" width="780" height="52" rx="6"/>
+  <rect x="40" y="356" width="6" height="52" rx="3" class="warn"/>
+  <text class="t cap warn" x="66" y="380">Efecto secundario</text>
+  <text class="t s"    x="180" y="380">cada job lleva sus valores de matriz en el nombre del check.</text>
+  <text class="t s"    x="66" y="398">Tocar la matriz renombra los checks, y el ruleset de la Semana 08 se queda esperando uno que ya no existe.</text>
+</svg>

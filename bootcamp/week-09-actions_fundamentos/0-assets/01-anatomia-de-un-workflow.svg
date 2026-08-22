@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 470" width="860" height="470" role="img" aria-label="Anatomía de un workflow: un archivo YAML contiene jobs, cada job corre en una máquina virtual limpia y contiene steps; los steps de un job comparten disco pero no proceso, y dos jobs no comparten nada">
+  <title>Anatomía de un workflow: qué se comparte en cada nivel</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .inner{ fill: #0d1117; stroke: #30363d; stroke-width: 1; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+    .ok   { fill: #3fb950; }
+    .err  { fill: #f85149; }
+  </style>
+
+  <rect class="bg" width="860" height="470"/>
+  <text class="t h" x="40" y="38">Un workflow, dos máquinas que no se conocen</text>
+
+  <!-- Workflow container -->
+  <rect class="surf" x="40" y="58" width="780" height="292" rx="8"/>
+  <text class="t cap"  x="60" y="82">Workflow</text>
+  <text class="t mono" x="132" y="82">.github/workflows/ci.yml</text>
+  <text class="t lbl"  x="60" y="102">Se dispara con un evento de su `on:`</text>
+
+  <!-- Job A -->
+  <rect class="inner" x="62" y="118" width="360" height="212" rx="6"/>
+  <text class="t cap"  x="82" y="142">Job: build</text>
+  <text class="t lbl"  x="82" y="160">runner limpio · ubuntu-latest</text>
+
+  <rect class="surf" x="82" y="174" width="320" height="34" rx="4"/>
+  <text class="t s"   x="98" y="196">Step 1 · uses: actions/checkout</text>
+  <rect class="surf" x="82" y="216" width="320" height="34" rx="4"/>
+  <text class="t s"   x="98" y="238">Step 2 · run: pnpm install</text>
+  <rect class="surf" x="82" y="258" width="320" height="34" rx="4"/>
+  <text class="t s"   x="98" y="280">Step 3 · run: pnpm build</text>
+
+  <text class="t lbl ok" x="82" y="314">Entre steps: MISMO disco · shell nuevo cada vez</text>
+
+  <!-- Job B -->
+  <rect class="inner" x="438" y="118" width="360" height="212" rx="6"/>
+  <text class="t cap"  x="458" y="142">Job: test</text>
+  <text class="t lbl"  x="458" y="160">otro runner, igual de limpio</text>
+
+  <rect class="surf" x="458" y="174" width="320" height="34" rx="4"/>
+  <text class="t s"   x="474" y="196">Step 1 · uses: actions/checkout</text>
+  <rect class="surf" x="458" y="216" width="320" height="34" rx="4"/>
+  <text class="t s"   x="474" y="238">Step 2 · run: pnpm install</text>
+  <rect class="surf" x="458" y="258" width="320" height="34" rx="4"/>
+  <text class="t s"   x="474" y="280">Step 3 · run: node --test</text>
+
+  <text class="t lbl err" x="458" y="314">Vuelve a instalar: NO ve nada de build</text>
+
+  <!-- Separación -->
+  <line class="e" x1="430" y1="130" x2="430" y2="318" stroke-dasharray="5 5"/>
+  <text class="t lbl err" x="430" y="126" text-anchor="middle">✕</text>
+
+  <!-- Leyenda -->
+  <text class="t cap" x="40" y="386">Para cruzar esa línea hacen falta canales explícitos</text>
+  <rect class="surf" x="40" y="400" width="250" height="46" rx="6"/>
+  <text class="t s"    x="58" y="422">Un valor</text>
+  <text class="t mono" x="58" y="440">outputs: + needs:</text>
+
+  <rect class="surf" x="304" y="400" width="250" height="46" rx="6"/>
+  <text class="t s"    x="322" y="422">Archivos</text>
+  <text class="t mono" x="322" y="440">upload / download-artifact</text>
+
+  <rect class="surf" x="568" y="400" width="252" height="46" rx="6"/>
+  <text class="t s"    x="586" y="422">Solo velocidad</text>
+  <text class="t mono" x="586" y="440">cache (puede no acertar)</text>
+</svg>
