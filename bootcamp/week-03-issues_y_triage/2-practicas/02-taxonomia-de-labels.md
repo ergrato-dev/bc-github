@@ -4,7 +4,7 @@
 > responde preguntas reales.
 
 **Duración estimada**: 40 min
-**Prerrequisitos**: [Teoría 03](../1-teoria/03-labels-milestones-y-tipos.md)
+**Prerrequisitos**: [Teoría 03](../1-teoria/03-labels.md) y [04](../1-teoria/04-milestones-y-tipos.md)
 
 ## Contexto
 

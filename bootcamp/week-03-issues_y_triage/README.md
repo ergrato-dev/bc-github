@@ -24,10 +24,13 @@ Al finalizar esta semana serás capaz de:
 ```
 week-03-issues_y_triage/
 ├── 1-teoria/
-│   ├── 01-anatomia-de-un-issue.md        # Ciclo de vida, vinculación, tasklists
-│   ├── 02-issue-forms-yaml.md            # Formularios YAML, tipos de campo, config
-│   ├── 03-labels-milestones-y-tipos.md   # Taxonomías, milestones, sub-issues
-│   └── 04-busqueda-y-triage.md           # Queries, proceso de triage, automatización
+│   ├── 01-anatomia-de-un-issue.md          # Ciclo de vida, vinculación, transferir, bandeja
+│   ├── 02-issue-forms-yaml.md              # Formularios YAML, campos, config, prellenado
+│   ├── 03-labels.md                        # Taxonomía por familias, colores, gh label
+│   ├── 04-milestones-y-tipos.md            # Milestone vs iteración vs issue type
+│   ├── 05-sub-issues-y-descomposicion.md   # Partir épicos, jerarquía, REST y GraphQL
+│   ├── 06-consultas-y-bandeja.md           # Consultas de triage, vistas, notificaciones
+│   └── 07-triage.md                        # El proceso, respuestas guardadas, métricas
 ├── 2-practicas/
 │   ├── 01-issue-forms.md                 # Dos formularios y el selector
 │   ├── 02-taxonomia-de-labels.md         # Familias, colores, creación por lote
@@ -44,10 +47,13 @@ week-03-issues_y_triage/
 
 | Archivo | Tema | Duración |
 |---------|------|:--------:|
-| [01-anatomia-de-un-issue.md](1-teoria/01-anatomia-de-un-issue.md) | Ciclo de vida, asignación, referencias cruzadas | 25 min |
-| [02-issue-forms-yaml.md](1-teoria/02-issue-forms-yaml.md) | `.github/ISSUE_TEMPLATE/*.yml`, tipos de campo, `config.yml` | 35 min |
-| [03-labels-milestones-y-tipos.md](1-teoria/03-labels-milestones-y-tipos.md) | Taxonomías, issue types, sub-issues, tasklists | 30 min |
-| [04-busqueda-y-triage.md](1-teoria/04-busqueda-y-triage.md) | Sintaxis de búsqueda, saved replies, proceso de triage | 30 min |
+| [01-anatomia-de-un-issue.md](1-teoria/01-anatomia-de-un-issue.md) | Ciclo de vida, cierres, vinculación, transferir y bloquear | 25 min |
+| [02-issue-forms-yaml.md](1-teoria/02-issue-forms-yaml.md) | `.github/ISSUE_TEMPLATE/*.yml`, campos, `config.yml`, prellenado por URL | 25 min |
+| [03-labels.md](1-teoria/03-labels.md) | Taxonomía por familias, colores, `gh label`, qué no es una label | 20 min |
+| [04-milestones-y-tipos.md](1-teoria/04-milestones-y-tipos.md) | Milestone, iteración e issue type: cuál para qué | 20 min |
+| [05-sub-issues-y-descomposicion.md](1-teoria/05-sub-issues-y-descomposicion.md) | Partir épicos, jerarquía, límites, REST y GraphQL | 25 min |
+| [06-consultas-y-bandeja.md](1-teoria/06-consultas-y-bandeja.md) | Las consultas del triage, vistas guardadas, notificaciones | 25 min |
+| [07-triage.md](1-teoria/07-triage.md) | El proceso, respuestas guardadas, qué automatizar, métricas | 20 min |
 
 ### Prácticas
 
@@ -68,10 +74,10 @@ etiquetados, priorizados y agrupados en un milestone.
 
 | Actividad | Tiempo |
 |-----------|-------:|
-| Teoría (4 archivos) | 2 h |
+| Teoría (7 archivos) | 2 h 40 min |
 | Prácticas (4) | 2 h 50 min |
-| Proyecto | 2 h 30 min |
-| Revisión y verificación | 40 min |
+| Proyecto | 2 h |
+| Revisión y verificación | 30 min |
 | **Total** | **8 h** |
 
 ## 🎩 Trucos y atajos

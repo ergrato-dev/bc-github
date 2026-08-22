@@ -4,7 +4,7 @@
 > clasificado y sin issues huérfanos.
 
 **Duración estimada**: 40 min
-**Prerrequisitos**: [Teoría 04](../1-teoria/04-busqueda-y-triage.md), prácticas 01-03
+**Prerrequisitos**: [Teoría 06](../1-teoria/06-consultas-y-bandeja.md) y [07](../1-teoria/07-triage.md), prácticas 01-03
 
 ## Contexto
 

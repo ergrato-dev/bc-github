@@ -3,7 +3,7 @@
 > Partes un épico en piezas que se pueden asignar, cerrar y medir por separado.
 
 **Duración estimada**: 40 min
-**Prerrequisitos**: [Teoría 03](../1-teoria/03-labels-milestones-y-tipos.md)
+**Prerrequisitos**: [Teoría 05](../1-teoria/05-sub-issues-y-descomposicion.md)
 
 ## Contexto
 
