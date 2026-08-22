@@ -26,10 +26,13 @@ Al finalizar esta semana serás capaz de:
 ```
 week-06-pull_requests_a_fondo/
 ├── 1-teoria/
-│   ├── 01-anatomia-de-un-pr.md      # Draft, descripción, checks, estados
-│   ├── 02-review-a-fondo.md         # Comentarios, sugerencias, lotes, veredictos
-│   ├── 03-estrategias-de-merge.md   # Merge, squash, rebase, auto-merge
-│   └── 04-conflictos-y-stacked.md   # Conflictos y PRs apilados
+│   ├── 01-anatomia-de-un-pr.md          # Estados, checks, mergeabilidad, forks
+│   ├── 02-abrir-buenos-prs.md           # Tamaño, descripción, draft, plantilla
+│   ├── 03-review-a-fondo.md             # Comentarios, sugerencias, lotes, veredictos
+│   ├── 04-responder-a-la-review.md      # Aplicar cambios, hilos, desacuerdos
+│   ├── 05-estrategias-de-merge.md       # Merge, squash, rebase, revertir
+│   ├── 06-auto-merge-y-rama-al-dia.md   # Auto-merge, update-branch, Dependabot
+│   └── 07-conflictos-y-stacked.md       # Conflictos y PRs apilados
 ├── 2-practicas/
 │   ├── 01-primer-pr-completo.md     # Del issue al merge
 │   ├── 02-review-con-sugerencias.md # Revisar como un profesional
@@ -46,10 +49,13 @@ week-06-pull_requests_a_fondo/
 
 | Archivo | Tema | Duración |
 |---------|------|:--------:|
-| [01-anatomia-de-un-pr.md](1-teoria/01-anatomia-de-un-pr.md) | Ciclo de vida, draft, descripción, checks | 30 min |
-| [02-review-a-fondo.md](1-teoria/02-review-a-fondo.md) | Comentarios, sugerencias, veredictos, CODEOWNERS | 35 min |
-| [03-estrategias-de-merge.md](1-teoria/03-estrategias-de-merge.md) | Merge, squash, rebase, auto-merge | 30 min |
-| [04-conflictos-y-stacked.md](1-teoria/04-conflictos-y-stacked.md) | Conflictos y PRs apilados | 25 min |
+| [01-anatomia-de-un-pr.md](1-teoria/01-anatomia-de-un-pr.md) | Ciclo de vida, checks, `mergeStateStatus`, PRs de forks | 20 min |
+| [02-abrir-buenos-prs.md](1-teoria/02-abrir-buenos-prs.md) | Tamaño, descripción, draft, plantilla, `gh pr create` | 25 min |
+| [03-review-a-fondo.md](1-teoria/03-review-a-fondo.md) | Sugerencias, lotes, veredictos, revisar un PR grande | 25 min |
+| [04-responder-a-la-review.md](1-teoria/04-responder-a-la-review.md) | Aplicar cambios sin romper la revisión, hilos, desacuerdos | 20 min |
+| [05-estrategias-de-merge.md](1-teoria/05-estrategias-de-merge.md) | Merge, squash, rebase y cómo se revierte cada uno | 25 min |
+| [06-auto-merge-y-rama-al-dia.md](1-teoria/06-auto-merge-y-rama-al-dia.md) | Auto-merge, rama al día, `update-branch`, Dependabot | 20 min |
+| [07-conflictos-y-stacked.md](1-teoria/07-conflictos-y-stacked.md) | Conflictos, `zdiff3`, `rerere` y PRs apilados | 20 min |
 
 ### Prácticas
 
@@ -70,10 +76,10 @@ estrategia de merge elegida y justificada, y los issues cerrándose solos.
 
 | Actividad | Tiempo |
 |-----------|-------:|
-| Teoría (4 archivos) | 2 h |
+| Teoría (7 archivos) | 2 h 35 min |
 | Prácticas (4) | 2 h 55 min |
-| Proyecto | 2 h 25 min |
-| Revisión y verificación | 40 min |
+| Proyecto | 2 h 10 min |
+| Revisión y verificación | 20 min |
 | **Total** | **8 h** |
 
 ## 🎩 Trucos y atajos

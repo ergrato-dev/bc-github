@@ -4,7 +4,7 @@
 > una pila de dos PRs encadenados.
 
 **Duración estimada**: 40 min
-**Prerrequisitos**: [Teoría 04](../1-teoria/04-conflictos-y-stacked.md)
+**Prerrequisitos**: [Teoría 07](../1-teoria/07-conflictos-y-stacked.md)
 
 ## Contexto
 

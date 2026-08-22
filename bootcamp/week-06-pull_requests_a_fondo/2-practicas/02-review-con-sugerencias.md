@@ -4,7 +4,7 @@
 > lotes. Aunque el PR sea tuyo.
 
 **Duración estimada**: 45 min
-**Prerrequisitos**: [Teoría 02](../1-teoria/02-review-a-fondo.md), práctica 01
+**Prerrequisitos**: [Teoría 03](../1-teoria/03-review-a-fondo.md) y [04](../1-teoria/04-responder-a-la-review.md), práctica 01
 
 ## Contexto
 

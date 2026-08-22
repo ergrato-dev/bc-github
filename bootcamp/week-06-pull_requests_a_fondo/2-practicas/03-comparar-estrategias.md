@@ -4,7 +4,7 @@
 > cada una a la historia. Luego eliges la tuya.
 
 **Duración estimada**: 45 min
-**Prerrequisitos**: [Teoría 03](../1-teoria/03-estrategias-de-merge.md)
+**Prerrequisitos**: [Teoría 05](../1-teoria/05-estrategias-de-merge.md) y [06](../1-teoria/06-auto-merge-y-rama-al-dia.md)
 
 ## Contexto
 

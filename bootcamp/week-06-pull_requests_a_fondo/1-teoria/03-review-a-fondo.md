@@ -89,7 +89,52 @@ estilo. Para eso está `Comment` — o mejor, un linter.
 Todo lo que pueda decidir una máquina, que lo decida una máquina. La revisión
 humana es cara: gástala en lo que solo puede hacer una persona.
 
-## 6. `CODEOWNERS` en la revisión
+## 6. Cómo se revisa un PR grande
+
+A veces el PR grande llega igual. Un orden que funciona:
+
+1. **Lee la descripción y el issue** antes que el diff. Sin saber qué intenta
+   hacer, todo comentario es sobre el cómo
+2. **Mira la lista de archivos** (`gh pr diff 42 --name-only`): dónde toca dice
+   mucho antes de leer una línea
+3. **Empieza por los tests.** Dicen qué cree el autor que hace su código, y qué
+   casos no contempló
+4. **Luego el núcleo**, no el orden alfabético de archivos
+5. **Marca *Viewed*** cada archivo terminado; la casilla se desmarca sola si el
+   archivo cambia
+6. **Si a la mitad no lo entiendes, para** y pide dividirlo. Es más útil que
+   terminar una revisión superficial
+
+Y el criterio de una sola frase: **¿me sentiría cómodo arreglando esto a las tres
+de la mañana?** Si la respuesta es no, ahí hay un comentario que hacer.
+
+### Qué mirar en los tests
+
+| Pregunta | Por qué |
+|----------|---------|
+| ¿Falla el test si rompo el código a propósito? | Un test que siempre pasa no prueba nada |
+| ¿Cubre el caso límite del issue? | Es el caso que provocó todo esto |
+| ¿Se entiende qué comprueba por el nombre? | El nombre del test es documentación |
+| ¿Depende del orden de ejecución o del reloj? | Test intermitente asegurado |
+
+## 7. Revisar desde la terminal
+
+```bash
+gh pr diff 42                       # el diff completo
+gh pr diff 42 --name-only           # solo los archivos
+gh pr checkout 42                   # traerlo y probarlo de verdad
+gh pr view 42 --comments            # el hilo entero
+
+gh pr review 42 --approve --body "Se ve bien, gracias."
+gh pr review 42 --comment --body "Dos dudas sobre el redondeo."
+gh pr review 42 --request-changes --body "Falta el caso de 0 días."
+```
+
+Los comentarios **de línea** siguen siendo más cómodos en la interfaz: `gh` no
+tiene una forma ergonómica de anclarlos. Lo habitual es leer y probar en la
+terminal, y comentar en la web.
+
+## 8. `CODEOWNERS` en la revisión
 
 Definido en la Semana 02, aquí es donde actúa: al abrir un PR que toca una ruta
 con dueño, GitHub pide revisión a ese dueño automáticamente.
@@ -101,7 +146,7 @@ sugerencia. Con él, el PR no se mergea sin esa aprobación (Semana 08).
 gh pr view 42 --json reviewRequests --jq '.reviewRequests'
 ```
 
-## 7. Resolver conversaciones
+## 9. Resolver conversaciones
 
 Cada hilo de comentario de línea se puede marcar como **resuelto**. Convenciones
 que funcionan:
@@ -113,7 +158,7 @@ que funcionan:
 Un ruleset puede exigir que **no queden conversaciones abiertas** para mergear.
 Es una regla barata que evita mergear con dudas colgando.
 
-## 8. Antipatrones
+## 10. Antipatrones
 
 | Antipatrón | Por qué duele | Qué hacer |
 |------------|---------------|-----------|
@@ -125,7 +170,7 @@ Es una regla barata que evita mergear con dudas colgando.
 | Discutir tres días en el PR | Bloquea la entrega | Dos rondas y se habla en directo |
 | Revisar el estilo cuando hay un fallo de lógica | Se pierde lo importante | Lo bloqueante primero |
 
-## 9. Trucos
+## 11. Trucos
 
 - **Solo lo nuevo desde tu última revisión**: en *Files changed*, el desplegable
   *Changes since your last review*
@@ -154,3 +199,5 @@ Es una regla barata que evita mergear con dudas colgando.
 - [ ] Has mandado al menos una sugerencia aplicable
 - [ ] Sabes cuándo `Request changes` y cuándo `Comment`
 - [ ] No revisas nada que pueda decidir un linter
+- [ ] Sabes por dónde empezar cuando el PR es grande
+- [ ] Has traído un PR a local con `gh pr checkout` para revisarlo

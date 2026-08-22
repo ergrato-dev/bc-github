@@ -3,7 +3,7 @@
 > Del issue al merge, con plantilla, descripción y cierre automático.
 
 **Duración estimada**: 45 min
-**Prerrequisitos**: [Teoría 01](../1-teoria/01-anatomia-de-un-pr.md), backlog de la Semana 03
+**Prerrequisitos**: [Teoría 01](../1-teoria/01-anatomia-de-un-pr.md) y [02](../1-teoria/02-abrir-buenos-prs.md), backlog de la Semana 03
 
 ## Contexto
 

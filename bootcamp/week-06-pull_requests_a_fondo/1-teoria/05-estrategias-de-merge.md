@@ -8,7 +8,7 @@
 - Explicar qué le hace cada estrategia al grafo de commits
 - Elegir una para tu repositorio y saber justificarla
 - Configurar el repositorio para que solo se pueda usar esa
-- Usar auto-merge con criterio
+- Revertir un merge según la estrategia usada
 
 ## 1. Qué problema resuelve
 
@@ -102,42 +102,7 @@ gh api repos/{owner}/{repo} --method PATCH \
 Así cada commit de `main` dice qué hizo y enlaza a su PR. Con el valor por
 defecto (`COMMIT_OR_PR_TITLE`) acabas con commits titulados `wip` en `main`.
 
-## 4. Auto-merge
-
-Mergea el PR **en cuanto** se cumplan las condiciones: checks en verde y
-aprobaciones necesarias.
-
-```bash
-gh pr merge 42 --auto --squash
-```
-
-| Bueno para | Malo para |
-|------------|-----------|
-| PRs pequeños ya aprobados | Cambios delicados |
-| CI que tarda | Cuando aún estás decidiendo |
-| Dependabot | PRs sin revisión obligatoria |
-
-Requiere estar habilitado en el repositorio:
-
-```bash
-gh repo edit --enable-auto-merge
-```
-
-> [!WARNING]
-> Auto-merge con checks que **no** son obligatorios en un ruleset mergea en
-> cuanto haya aprobación, aunque el CI esté rojo. La combinación segura es
-> auto-merge **más** checks obligatorios (Semana 08).
-
-## 5. Borrar la rama al mergear
-
-```bash
-gh repo edit --delete-branch-on-merge
-```
-
-Sin esto, en seis meses tendrás doscientas ramas muertas. El commit sigue en la
-historia; la rama no aporta nada.
-
-## 6. Revertir
+## 4. Revertir
 
 | Estrategia | Cómo se revierte |
 |------------|------------------|
@@ -145,28 +110,45 @@ historia; la rama no aporta nada.
 | Rebase | Un `revert` por commit, o un rango |
 | Merge commit | `git revert -m 1 <sha-del-merge>` |
 
-El botón **Revert** del PR crea automáticamente un PR inverso. Es la vía rápida
-en producción: revierte primero, investiga después.
+El botón **Revert** del PR crea automáticamente un PR inverso, y desde la
+terminal hay un comando propio:
 
-## 7. Antipatrones
+```bash
+gh pr revert 42                 # abre el PR que deshace el 42
+gh pr revert 42 --title "revert: cálculo de multa" --body "Rompe el caso de 0 días, ver #57"
+```
+
+Es la vía rápida en producción: **revierte primero, investiga después**. Un
+revert es barato y reversible; una sesión de depuración con `main` roto, no.
+
+Dos detalles que conviene saber antes de necesitarlos:
+
+- Revertir un revert es perfectamente normal — así vuelve a entrar el cambio
+  cuando esté arreglado
+- Con **merge commit**, `git revert -m 1` indica que se conserva el primer padre
+  (la historia de `main`). Sin `-m`, Git no sabe qué lado deshacer y falla
+
+## 5. Auto-merge y rama al día
+
+Las dos piezas que hacen que el merge no dependa de que alguien esté mirando la
+pantalla —auto-merge, actualizar la rama y borrar la rama al mergear— están en la
+[Teoría 06](06-auto-merge-y-rama-al-dia.md).
+
+## 6. Antipatrones
 
 | Antipatrón | Por qué duele | Qué hacer |
 |------------|---------------|-----------|
 | Las tres estrategias habilitadas | Historia incoherente | Elige una, desactiva el resto |
 | Squash con título por defecto | `main` lleno de commits `wip` | `squash_merge_commit_title=PR_TITLE` |
 | Rebase con commits sucios | Cada `wip` acaba en `main` | Limpia con `rebase -i` antes |
-| Auto-merge sin checks obligatorios | Puede mergear con CI en rojo | Ruleset con checks requeridos |
-| No borrar ramas | Cementerio de ramas | `--delete-branch-on-merge` |
 | Mergear tu propio PR sin revisión | El PR pierde su función | Al menos una revisión, aunque sea diferida |
 
-## 8. Trucos
+## 7. Trucos
 
 - **Ver la configuración actual**:
   ```bash
   gh api repos/{owner}/{repo} --jq '{squash: .allow_squash_merge, merge: .allow_merge_commit, rebase: .allow_rebase_merge, auto: .allow_auto_merge, borrar: .delete_branch_on_merge}'
   ```
-- **Actualizar la rama antes de mergear**: `gh pr merge --auto` respeta el
-  requisito de "rama al día" si el ruleset lo exige
 - **Revert en un clic**: el botón *Revert* del PR mergeado crea el PR inverso
 - **Squash conservando el detalle**: el cuerpo del commit incluye la lista de
   commits originales si usas `squash_merge_commit_message=COMMIT_MESSAGES`
