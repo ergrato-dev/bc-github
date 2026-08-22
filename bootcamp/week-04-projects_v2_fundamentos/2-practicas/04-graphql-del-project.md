@@ -4,7 +4,7 @@
 > es lo que necesitarás para automatizarlo la semana que viene.
 
 **Duración estimada**: 40 min
-**Prerrequisitos**: prácticas 01-03, scope `project`
+**Prerrequisitos**: [Teoría 07](../1-teoria/07-projects-por-graphql.md), prácticas 01-03, scope `project`
 
 ## Contexto
 

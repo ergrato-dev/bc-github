@@ -4,7 +4,7 @@
 > que alguien se hace, sobra.
 
 **Duración estimada**: 45 min
-**Prerrequisitos**: [Teoría 03](../1-teoria/03-vistas-y-filtros.md), práctica 01
+**Prerrequisitos**: [Teoría 04](../1-teoria/04-vistas-y-layouts.md) y [05](../1-teoria/05-filtros.md), práctica 01
 
 ## Contexto
 

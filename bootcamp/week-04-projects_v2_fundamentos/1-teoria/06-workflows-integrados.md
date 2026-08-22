@@ -67,7 +67,30 @@ Lo cerrado hace más de tres semanas deja de ocupar sitio.
 Lo archivado se recupera desde `··· → Archived items`, pero recuperar cien items
 uno a uno no es agradable.
 
-## 5. Dónde está el límite
+## 5. Cómo se activan, y qué conviene saber antes
+
+`Project → ··· → Workflows`. Cada workflow tiene su interruptor, su filtro (los
+que lo admiten) y su acción. Cuatro detalles que ahorran desconcierto:
+
+- **Solo aplican de aquí en adelante.** Activar `Auto-add` no trae los issues que
+  ya existían: eso se hace a mano o por CLI (ver los trucos)
+- **Se pueden desactivar sin borrar**, y conviene: así no pierdes el filtro que te
+  costó escribir
+- **Son del project**, no del repositorio. Se configuran una vez aunque el
+  project cubra cinco repositorios
+- **El filtro de `Auto-add` usa la sintaxis de búsqueda de issues**, no la de
+  filtros de project: ahí se escribe `is:issue is:open label:"type:bug"`, y no
+  existen `status:` ni `iteration:` porque el item aún no está en el tablero
+
+### El orden en que conviene activarlos
+
+1. `Item added to project` → `Status = Backlog`. Sin esto, los items entran sin
+   estado y no aparecen en ninguna columna del tablero
+2. `Item closed` → `Hecho`, y `Pull request merged` → `Hecho`
+3. `Auto-add`, con un filtro estrecho
+4. El resto, uno cada vez, comprobando el efecto antes del siguiente
+
+## 6. Dónde está el límite
 
 Los workflows integrados **no** pueden:
 
@@ -81,7 +104,16 @@ Los workflows integrados **no** pueden:
 Todo eso necesita Actions + GraphQL, que es la Semana 05. Regla: si el
 integrado lo cubre, úsalo — menos piezas que mantener.
 
-## 6. Antipatrones
+| Necesidad | Herramienta |
+|-----------|-------------|
+| Estado según se abre, cierra o mergea | Workflow integrado |
+| Meter en el tablero lo que cumple un filtro | Workflow integrado (`Auto-add`) |
+| Poner iteración, prioridad o estimación al entrar | Actions + GraphQL (Semana 05) |
+| Reaccionar a una label añadida después | Actions (Semana 05) |
+| Copiar un valor de un campo a otro | Actions + GraphQL |
+| Avisar en otro sitio cuando algo cambia de estado | Actions |
+
+## 7. Antipatrones
 
 | Antipatrón | Por qué duele | Qué hacer |
 |------------|---------------|-----------|
@@ -91,7 +123,7 @@ integrado lo cubre, úsalo — menos piezas que mantener.
 | Activar los ocho workflows el primer día | No sabes cuál causó qué | Uno cada vez |
 | Confiar en el auto-add para el histórico | Solo aplica a items **nuevos** | Los antiguos se añaden a mano |
 
-## 7. Trucos
+## 8. Trucos
 
 - **Añadir en bloque lo que ya existe** (auto-add no mira hacia atrás):
   ```bash
@@ -119,3 +151,4 @@ integrado lo cubre, úsalo — menos piezas que mantener.
 - [ ] `Item closed` mueve las tarjetas a `Hecho`
 - [ ] Si usas auto-archive, has probado el filtro en una vista antes
 - [ ] Sabes decir qué **no** puede hacer un workflow integrado
+- [ ] Los items nuevos entran con un `Status` puesto, no vacíos

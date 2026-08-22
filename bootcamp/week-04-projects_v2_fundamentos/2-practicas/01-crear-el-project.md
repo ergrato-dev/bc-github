@@ -4,7 +4,7 @@
 > semana pasada.
 
 **Duración estimada**: 45 min
-**Prerrequisitos**: [Teoría 01](../1-teoria/01-modelo-de-datos.md) y [02](../1-teoria/02-campos-e-iteraciones.md), backlog de la Semana 03
+**Prerrequisitos**: [Teoría 01](../1-teoria/01-modelo-de-datos.md) y [02](../1-teoria/02-campos.md), backlog de la Semana 03
 
 ## Contexto
 

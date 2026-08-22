@@ -25,10 +25,13 @@ Al finalizar esta semana serás capaz de:
 ```
 week-04-projects_v2_fundamentos/
 ├── 1-teoria/
-│   ├── 01-modelo-de-datos.md         # Items, campos, vistas: por qué no es un tablero
-│   ├── 02-campos-e-iteraciones.md    # Tipos de campo, iteraciones, campos calculados
-│   ├── 03-vistas-y-filtros.md        # Tabla, board, roadmap, agrupación, slicing
-│   └── 04-workflows-integrados.md    # Automatización sin escribir código
+│   ├── 01-modelo-de-datos.md         # Items, campos, vistas, permisos, límites
+│   ├── 02-campos.md                  # Tipos de campo, single select, cuántos hacen falta
+│   ├── 03-iteraciones.md             # Cadencia, descansos, @current, planificar
+│   ├── 04-vistas-y-layouts.md        # Tabla, board, roadmap, slicing, sumas
+│   ├── 05-filtros.md                 # Sintaxis completa, fechas relativas, depuración
+│   ├── 06-workflows-integrados.md    # Automatización sin escribir código
+│   └── 07-projects-por-graphql.md    # Scopes, IDs, leer items, paginar
 ├── 2-practicas/
 │   ├── 01-crear-el-project.md        # Project, campos y primeros items
 │   ├── 02-vistas-que-responden.md    # Una vista por pregunta real
@@ -45,10 +48,13 @@ week-04-projects_v2_fundamentos/
 
 | Archivo | Tema | Duración |
 |---------|------|:--------:|
-| [01-modelo-de-datos.md](1-teoria/01-modelo-de-datos.md) | Items, campos, vistas y por qué importa la diferencia | 30 min |
-| [02-campos-e-iteraciones.md](1-teoria/02-campos-e-iteraciones.md) | Tipos de campo, iteraciones, buenas prácticas | 30 min |
-| [03-vistas-y-filtros.md](1-teoria/03-vistas-y-filtros.md) | Vistas, agrupación, ordenación, sintaxis de filtros | 30 min |
-| [04-workflows-integrados.md](1-teoria/04-workflows-integrados.md) | Automatización nativa y sus límites | 30 min |
+| [01-modelo-de-datos.md](1-teoria/01-modelo-de-datos.md) | Items, campos, vistas, alcance, permisos y límites reales | 25 min |
+| [02-campos.md](1-teoria/02-campos.md) | Tipos de campo, single select, cuántos hacen falta | 20 min |
+| [03-iteraciones.md](1-teoria/03-iteraciones.md) | Cadencia, descansos, `@current`, planificar sin teatro | 20 min |
+| [04-vistas-y-layouts.md](1-teoria/04-vistas-y-layouts.md) | Tabla, board, roadmap, slicing, sumas por columna | 25 min |
+| [05-filtros.md](1-teoria/05-filtros.md) | Sintaxis completa, fechas relativas, de la pregunta al filtro | 25 min |
+| [06-workflows-integrados.md](1-teoria/06-workflows-integrados.md) | Automatización nativa, orden de activación y límites | 20 min |
+| [07-projects-por-graphql.md](1-teoria/07-projects-por-graphql.md) | Scopes, IDs, leer items y valores, paginar | 25 min |
 
 ### Prácticas
 
@@ -69,10 +75,10 @@ iteraciones, cuatro vistas y todos los issues dentro.
 
 | Actividad | Tiempo |
 |-----------|-------:|
-| Teoría (4 archivos) | 2 h |
+| Teoría (7 archivos) | 2 h 40 min |
 | Prácticas (4) | 2 h 50 min |
-| Proyecto | 2 h 30 min |
-| Revisión y verificación | 40 min |
+| Proyecto | 2 h |
+| Revisión y verificación | 30 min |
 | **Total** | **8 h** |
 
 ## 🎩 Trucos y atajos

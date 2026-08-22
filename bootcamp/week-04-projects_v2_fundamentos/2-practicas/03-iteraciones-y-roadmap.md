@@ -4,7 +4,7 @@
 > cómo se ve todo en una línea de tiempo.
 
 **Duración estimada**: 40 min
-**Prerrequisitos**: [Teoría 02](../1-teoria/02-campos-e-iteraciones.md) y [03](../1-teoria/03-vistas-y-filtros.md), prácticas 01-02
+**Prerrequisitos**: [Teoría 03](../1-teoria/03-iteraciones.md) y [04](../1-teoria/04-vistas-y-layouts.md), prácticas 01-02
 
 ## Contexto
 

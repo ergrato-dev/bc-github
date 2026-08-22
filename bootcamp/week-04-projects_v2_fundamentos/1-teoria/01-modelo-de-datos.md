@@ -30,9 +30,9 @@ PROJECT
 
 | Pieza | Qué es | Cuántas |
 |-------|--------|---------|
-| **Item** | Una fila. Un issue, un PR o una nota suelta | Hasta 50 000 por project |
-| **Campo** | Un dato asociado a cada item | Hasta 50 personalizados |
-| **Vista** | Una configuración de filtro + agrupación + orden | Hasta 50 |
+| **Item** | Una fila. Un issue, un PR o una nota suelta | Hasta 50 000, **incluido el archivo** |
+| **Campo** | Un dato asociado a cada item | Hasta 50, incluidos los que trae de fábrica |
+| **Vista** | Una configuración de filtro + agrupación + orden | Las que necesites (pocas, en la práctica) |
 
 ![Modelo de datos de Projects v2: items, campos y vistas](../0-assets/01-modelo-projects-v2.svg)
 
@@ -86,7 +86,31 @@ Regla: si el dato tiene sentido cuando alguien encuentra el issue por búsqueda,
 va en el issue. Si solo tiene sentido dentro de tu planificación, va en el
 project.
 
-## 6. Solo GraphQL
+### Cuando el project se llena
+
+Los 50 000 items cuentan los archivados, así que archivar no libera espacio: para
+eso está **borrar** el item del project (que no borra el issue). En la práctica,
+un project personal no se acerca ni de lejos a ese techo; lo que sí llega pronto
+es el techo de **50 campos**, porque los de fábrica cuentan.
+
+## 6. Alcance, permisos y copias
+
+Un project pertenece a una **cuenta** (tu usuario) o a una **organización**, no a
+un repositorio, aunque se pueda enlazar a uno o a varios para que aparezca en su
+pestaña *Projects*.
+
+| Aspecto | Cómo funciona |
+|---------|---------------|
+| Visibilidad | Público o privado, independiente de la de los repositorios |
+| Acceso | Se concede por persona o por equipo: lectura, escritura o administración |
+| Enlace a repositorios | `gh project link <n> --owner @me --repo <repo>` |
+| Copiar | *Make a copy* duplica campos y vistas (y opcionalmente los drafts) |
+| Plantilla | Un project se puede marcar como plantilla para reutilizar su estructura |
+
+Un item de un repositorio privado no se muestra a quien no tenga acceso a ese
+repositorio, aunque el project sea público: los permisos del contenido mandan.
+
+## 7. Solo GraphQL
 
 La API REST **no** expone Projects v2. Todo pasa por GraphQL:
 
@@ -110,7 +134,7 @@ gh auth refresh -s read:project
 Sin él, la respuesta es `INSUFFICIENT_SCOPES`. Es el primer tropiezo de todo el
 mundo con Projects.
 
-## 7. Antipatrones
+## 8. Antipatrones
 
 | Antipatrón | Por qué duele | Qué hacer |
 |------------|---------------|-----------|
@@ -121,7 +145,7 @@ mundo con Projects.
 | 20 campos personalizados | Nadie los rellena y quedan vacíos | 4-6 campos que se usen de verdad |
 | Esperar que la API REST funcione | No existe para Projects v2 | GraphQL, siempre |
 
-## 8. Trucos
+## 9. Trucos
 
 - **Listar tus projects con su número**: `gh project list --owner @me`
 - **Ver toda la estructura en JSON**: `gh project view <n> --owner @me --format json`
@@ -130,6 +154,9 @@ mundo con Projects.
   formaliza después
 - **Un project puede vivir en la organización**, no solo en tu usuario: así lo
   ven todos los equipos
+- **Enlazarlo al repositorio** para que salga en su pestaña *Projects*:
+  `gh project link <n> --owner @me --repo <repo>`
+- **Copiar la estructura** a un proyecto nuevo: `gh project copy <n> --source-owner @me --target-owner @me --title "Nuevo"`
 - **Atajo `c`** dentro de un project: crea un item nuevo sin tocar el ratón
 - **La vista de tabla se comporta como una hoja de cálculo**: se puede pegar una
   columna entera desde el portapapeles
@@ -146,3 +173,4 @@ mundo con Projects.
 - [ ] Sabes decidir si un dato va en el issue o en el project
 - [ ] Tienes el scope `read:project` y tu consulta GraphQL responde
 - [ ] Distingues cuándo usar un draft y cuándo un issue
+- [ ] Sabes a quién pertenece un project y cómo se enlaza a un repositorio
