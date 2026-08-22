@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 400" width="860" height="400" role="img" aria-label="Ciclo de vida de una action: del commit en main se crea el tag inmutable v1.0.0, el tag móvil v1 se reapunta a él, se publica una release y opcionalmente se lista en el Marketplace; quien la consume elige entre la referencia v1, la versión exacta o el SHA">
+  <title>Del código a la versión que otros consumen</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .inner{ fill: #0d1117; stroke: #30363d; stroke-width: 1; }
+    .fix  { fill: #0d1117; stroke: #3fb950; stroke-width: 1.5; }
+    .mov  { fill: #0d1117; stroke: #d29922; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+    .emov { stroke: #d29922; stroke-width: 2; fill: none; stroke-dasharray: 5 4; }
+    .ok   { fill: #3fb950; }
+    .warn { fill: #d29922; }
+  </style>
+
+  <rect class="bg" width="860" height="400"/>
+  <text class="t h" x="40" y="36">Una versión que no se mueve, y un puntero que sí</text>
+
+  <!-- commits line -->
+  <rect class="surf" x="40" y="58" width="780" height="118" rx="8"/>
+  <text class="t cap" x="60" y="82">Historia de la action</text>
+
+  <circle cx="110" cy="126" r="9" fill="#30363d"/>
+  <circle cx="230" cy="126" r="9" fill="#30363d"/>
+  <circle cx="350" cy="126" r="9" class="ok"/>
+  <circle cx="470" cy="126" r="9" fill="#30363d"/>
+  <circle cx="590" cy="126" r="9" class="ok"/>
+  <path class="e" d="M110 126 H590"/>
+
+  <text class="t lbl"  x="86"  y="156">commit</text>
+  <text class="t lbl"  x="206" y="156">commit</text>
+  <text class="t mono" x="316" y="156">v1.0.0</text>
+  <text class="t lbl"  x="446" y="156">commit</text>
+  <text class="t mono" x="566" y="156">v1.1.0</text>
+
+  <!-- moving tag -->
+  <rect class="mov" x="640" y="100" width="150" height="52" rx="6"/>
+  <text class="t cap"  x="658" y="122">tag móvil</text>
+  <text class="t mono" x="658" y="142">v1 → v1.1.0</text>
+  <path class="emov" d="M599 126 H640"/>
+
+  <!-- release / marketplace -->
+  <rect class="surf" x="40" y="196" width="380" height="108" rx="8"/>
+  <text class="t cap" x="60" y="220">Publicar</text>
+  <rect class="fix" x="62" y="232" width="336" height="26" rx="4"/>
+  <text class="t mono" x="74" y="250">gh release create v1.1.0 --generate-notes</text>
+  <rect class="inner" x="62" y="264" width="336" height="26" rx="4"/>
+  <text class="t lbl" x="74" y="282">Marketplace: opcional — action.yml en la raíz, nombre único, 2FA</text>
+
+  <!-- consumers -->
+  <rect class="surf" x="440" y="196" width="380" height="108" rx="8"/>
+  <text class="t cap" x="460" y="220">Quien la consume elige</text>
+  <text class="t mono" x="460" y="244">@v1</text>
+  <text class="t lbl"  x="520" y="244">recibe arreglos compatibles sin tocar nada</text>
+  <text class="t mono" x="460" y="266">@v1.1.0</text>
+  <text class="t lbl"  x="520" y="266">fija la versión exacta</text>
+  <text class="t mono" x="460" y="288">@&lt;sha&gt;</text>
+  <text class="t lbl"  x="520" y="288">inmutable de verdad — lo correcto (Semana 11)</text>
+
+  <text class="t s" x="40" y="342">Verde: etiquetas inmutables, nunca se reescriben. Ámbar: el único tag que se mueve, por convención del ecosistema.</text>
+  <text class="t s" x="40" y="366">Mover v1.0.0 rompe los builds de quien la tenga pinneada: es la diferencia entre una versión y una promesa rota.</text>
+</svg>

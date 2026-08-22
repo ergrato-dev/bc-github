@@ -210,6 +210,61 @@ Los consejos genéricos de productividad no entran.
 
 ---
 
-> Las secciones de las semanas 09 a 21 se añaden a medida que se publica cada
+## Semana 09 — Actions: fundamentos
+
+→ [Semana 09](../bootcamp/week-09-actions_fundamentos/README.md)
+
+| Truco | Cómo |
+|-------|------|
+| Ver solo lo que falló | `gh run view <id> --log-failed` — el primer reflejo, siempre |
+| Relanzar solo los jobs rotos | `gh run rerun <id> --failed` |
+| Seguir la ejecución en vivo | `gh run watch` |
+| Logs de depuración | Variable de repositorio `ACTIONS_STEP_DEBUG=true` — y borrarla al acabar |
+| Ver el payload del evento | `jq . "$GITHUB_EVENT_PATH"` dentro de un step |
+| Depurar un context entero | `${{ toJSON(needs) }}` pasado por `env:` |
+| Resumen bonito del run | `echo "..." >> "$GITHUB_STEP_SUMMARY"` acepta Markdown y tablas |
+| Pasar datos entre steps | `echo "clave=valor" >> "$GITHUB_OUTPUT"` (el step necesita `id:`) |
+| Empezar por lo mínimo | `permissions: {}` y añadir solo lo que falle |
+| Tuberías que no mienten | `shell: bash` fuerza `pipefail`: sin él, un test rojo sale en verde |
+| Ningún run zombi | `timeout-minutes: 10` — el defecto son 6 horas |
+| Cancelar runs viejos del mismo PR | `concurrency` con `cancel-in-progress: true` |
+| Matriz que no aborta al primer fallo | `strategy.fail-fast: false` |
+| Check estable con matriz variable | Job agregador con `needs` y nombre fijo |
+| Caché que nunca acierta | La `key` debe llevar `hashFiles('**/lockfile')` |
+| Ver y borrar cachés | `gh cache list` · `gh cache delete --all` |
+| Reactivar un `schedule` dormido | `gh workflow enable <archivo>` |
+
+---
+
+## Semana 10 — Actions: reutilización y actions propias
+
+→ [Semana 10](../bootcamp/week-10-actions_reutilizacion_y_actions_propias/README.md)
+
+| Truco | Cómo |
+|-------|------|
+| La regla del tercer uso | Escribes, copias, y a la tercera factorizas |
+| Empieza dentro del repositorio | `./.github/actions/<nombre>`: sin publicar ni versionar |
+| Una action local necesita `checkout` antes | Si no, `Can't find 'action.yml'` |
+| Nombres de check al anidar | Pasan a ser `llamador / job (matriz)` |
+| Agregador honesto | `if: always()` **más** comprobar `needs.<job>.result` a mano |
+| El job que llama no lleva `runs-on` | Solo `uses`, `with`, `secrets`, `needs`, `if`, `permissions`, `strategy` |
+| `env:` no se hereda al reusable | Lo que necesite, como `input` |
+| Los permisos solo se reducen | Si el reusable necesita `write`, lo concede el llamador |
+| `shell:` obligatorio en composite | Es el fallo número uno, y el error no lo dice claro |
+| Los inputs son cadenas | `if: ${{ inputs.x == 'true' }}`, nunca contra el booleano |
+| Sin `secrets` en composite | El token se pasa como input explícito |
+| Scripts propios de una action | `${{ github.action_path }}/scripts/x.sh` |
+| Sin dependencias, sin empaquetador | `main: src/index.mjs`; con toolkit hace falta `dist/` |
+| Comprobar que `dist/` está al día | Rebuild en CI + `git diff --quiet dist` |
+| Autoprueba de una action | `uses: ./` en su propio workflow, en los tres sistemas |
+| El SHA de un tag | `gh api repos/OWNER/REPO/tags --jq '.[] \| select(.name=="v1") \| .commit.sha'` |
+| Tag mayor móvil | `git tag -f -a v1 -m "v1 → v1.2.3" && git push -f origin v1` |
+| Nunca muevas `v1.2.3` | Rompe los builds de quien la tenga pinneada por SHA |
+| Notas de release automáticas | `gh release create v1.0.0 --generate-notes` |
+| Deprecar un input sin romper | `deprecationMessage:` y retirarlo en la versión mayor |
+
+---
+
+> Las secciones de las semanas 11 a 21 se añaden a medida que se publica cada
 > semana. Si has hecho una semana y su sección no está aquí,
 > [abre un issue](https://github.com/ergrato-dev/bc-github/issues).

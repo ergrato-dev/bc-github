@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 480" width="860" height="480" role="img" aria-label="Los cuatro mecanismos de reutilización de Actions: el starter workflow se copia al crear un repositorio; un job puede sustituirse entero por un reusable workflow; dentro de un job, varios steps pueden sustituirse por una composite action o por una action de JavaScript o Docker">
+  <title>Dónde encaja cada mecanismo de reutilización</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .inner{ fill: #0d1117; stroke: #30363d; stroke-width: 1; }
+    .ext  { fill: #161b22; stroke: #58a6ff; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .e    { stroke: #58a6ff; stroke-width: 2; fill: none; }
+    .ed   { stroke: #8b949e; stroke-width: 1.5; fill: none; stroke-dasharray: 5 4; }
+  </style>
+
+  <rect class="bg" width="860" height="480"/>
+  <text class="t h" x="40" y="36">Cuatro mecanismos, cuatro granularidades</text>
+
+  <!-- Caller workflow -->
+  <rect class="surf" x="40" y="58" width="470" height="322" rx="8"/>
+  <text class="t cap"  x="60" y="82">Workflow llamador</text>
+  <text class="t mono" x="190" y="82">.github/workflows/ci.yml</text>
+
+  <!-- Job 1: uses reusable -->
+  <rect class="inner" x="62" y="100" width="426" height="82" rx="6"/>
+  <text class="t cap"  x="82" y="124">job: ci</text>
+  <text class="t mono" x="82" y="146">uses: ./.github/workflows/ci-reutilizable.yml</text>
+  <text class="t lbl"  x="82" y="166">Sin runs-on ni steps: el job entero viene de fuera</text>
+
+  <!-- Job 2: normal job with steps -->
+  <rect class="inner" x="62" y="196" width="426" height="164" rx="6"/>
+  <text class="t cap"  x="82" y="220">job: extras</text>
+  <text class="t lbl"  x="82" y="238">runs-on: ubuntu-latest</text>
+
+  <rect class="inner" x="82" y="250" width="386" height="26" rx="4"/>
+  <text class="t mono" x="94" y="268">- uses: actions/checkout@&lt;sha&gt;</text>
+
+  <rect class="inner" x="82" y="282" width="386" height="26" rx="4"/>
+  <text class="t mono" x="94" y="300">- uses: ./.github/actions/preparar-entorno</text>
+
+  <rect class="inner" x="82" y="314" width="386" height="26" rx="4"/>
+  <text class="t mono" x="94" y="332">- uses: tu-usuario/accion-tamano-pr@&lt;sha&gt;</text>
+
+  <!-- Right column: what each uses points to -->
+  <rect class="ext" x="560" y="100" width="260" height="82" rx="6"/>
+  <text class="t cap"  x="580" y="124">Reusable workflow</text>
+  <text class="t lbl"  x="580" y="144">Jobs completos, con su propio runner</text>
+  <text class="t lbl"  x="580" y="162">Solo en .github/workflows/</text>
+
+  <rect class="ext" x="560" y="240" width="260" height="60" rx="6"/>
+  <text class="t cap"  x="580" y="264">Composite action</text>
+  <text class="t lbl"  x="580" y="284">Steps, dentro del job que la llama</text>
+
+  <rect class="ext" x="560" y="308" width="260" height="60" rx="6"/>
+  <text class="t cap"  x="580" y="332">Action JS o Docker</text>
+  <text class="t lbl"  x="580" y="352">Código: lógica, API, herramientas</text>
+
+  <!-- edges -->
+  <path class="e" d="M488 141 H560"/>
+  <path class="e" d="M468 295 H520 V270 H560"/>
+  <path class="e" d="M468 327 H520 V338 H560"/>
+
+  <!-- Starter workflow -->
+  <rect class="surf" x="40" y="400" width="780" height="52" rx="8"/>
+  <text class="t cap"  x="60" y="424">Starter workflow</text>
+  <text class="t lbl"  x="200" y="424">No se invoca: se COPIA al crear un workflow nuevo. Vive en el repositorio `.github` de la cuenta</text>
+  <text class="t lbl"  x="200" y="442">Es el único que no crea dependencia — y por eso tampoco arregla nada después</text>
+  <path class="ed" d="M120 400 V380 H275 V380"/>
+</svg>

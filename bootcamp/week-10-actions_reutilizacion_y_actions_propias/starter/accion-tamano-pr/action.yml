@@ -1,0 +1,30 @@
+# Semana 10 — Prácticas 03 y 04
+#
+# Action de JavaScript SIN dependencias: por eso `main` puede apuntar
+# directamente al código fuente y no hace falta empaquetar en dist/.
+# En cuanto importes @actions/core, habrá que empaquetar (Teoría 04).
+
+name: Etiquetar tamaño del PR
+description: Añade una label según cuántas líneas cambia el pull request
+author: tu-usuario
+
+branding:
+  icon: tag
+  color: blue
+
+inputs:
+  token:
+    description: Token con permiso de escritura sobre pull requests
+    required: true
+  umbral-grande:
+    description: Líneas a partir de las cuales el PR se considera xl
+    required: false
+    default: "400"
+
+outputs:
+  tamano:
+    description: La etiqueta aplicada (s, m, l o xl)
+
+runs:
+  using: node24
+  main: src/index.mjs

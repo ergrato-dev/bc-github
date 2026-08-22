@@ -1,0 +1,75 @@
+# Semana 10 — Práctica 01
+#
+# Punto de partida del workflow reutilizable. Los bloques marcados con
+# `# PASO N` están comentados: cada práctica te dice cuál descomentar.
+#
+# Lo que ya viene puesto no es opcional:
+#   - `permissions:` explícitas (el defecto puede ser de escritura)
+#   - actions de terceros pinneadas por SHA, con el tag en comentario
+#   - los datos del payload van por `env:`, nunca dentro de un `run:`
+
+name: CI reutilizable
+
+on:
+  workflow_call:
+    # ---------------------------------------------------------------- PASO 1
+    # Los parámetros del pipeline. Un `default` sensato es lo que hace que otro
+    # repositorio pueda llamarlo sin leerse este archivo.
+    #
+    # inputs:
+    #   node-version:
+    #     description: Versión de Node con la que ejecutar los tests
+    #     type: string
+    #     required: false
+    #     default: "24"
+    #   instalar:
+    #     description: Si se instalan las dependencias antes de los tests
+    #     type: boolean
+    #     required: false
+    #     default: true
+
+    # ---------------------------------------------------------------- PASO 2
+    # Lo que el workflow devuelve al que lo llama. Sale de los `outputs` de un
+    # job, que a su vez salen de un step con `id:`.
+    #
+    # outputs:
+    #   cobertura:
+    #     description: Porcentaje de líneas cubiertas por los tests
+    #     value: ${{ jobs.test.outputs.cobertura }}
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    # PASO 2 — descomenta también esto
+    # outputs:
+    #   cobertura: ${{ steps.medir.outputs.pct }}
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # PASO 3 (Práctica 02) — sustituye estos dos steps por la composite action:
+      #
+      #   - id: entorno
+      #     uses: ./.github/actions/preparar-entorno
+      #     with:
+      #       node-version: ${{ inputs.node-version }}
+      #
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24"     # ← PASO 1: cámbialo por ${{ inputs.node-version }}
+          cache: npm
+
+      - shell: bash
+        run: npm ci
+
+      - id: medir
+        shell: bash
+        run: |
+          npm test
+          # Sustituye este valor fijo por la cobertura real de tu proyecto
+          echo "pct=0" >> "$GITHUB_OUTPUT"

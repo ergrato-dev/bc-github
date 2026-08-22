@@ -1,0 +1,104 @@
+{
+  "semana": "10",
+  "titulo": "Actions: reutilización y actions propias",
+  "checks": [
+    {
+      "id": "workflow-reutilizable-existe",
+      "descripcion": "Existe .github/workflows/ci-reutilizable.yml",
+      "api": "repos/{repo}/contents/.github/workflows/ci-reutilizable.yml",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/01-reusable-workflow.md, paso 1"
+    },
+    {
+      "id": "workflow-call-declarado",
+      "descripcion": "El workflow reutilizable declara on: workflow_call con inputs",
+      "api": "repos/{repo}/contents/.github/workflows/ci-reutilizable.yml",
+      "jq": "(.content | @base64d) as $y | ($y | test(\"(?m)^ *workflow_call:\")) and ($y | test(\"(?m)^ *inputs:\"))",
+      "pista": "2-practicas/01-reusable-workflow.md, paso 2"
+    },
+    {
+      "id": "ci-llama-al-reutilizable",
+      "descripcion": "ci.yml invoca al workflow reutilizable",
+      "api": "repos/{repo}/contents/.github/workflows/ci.yml",
+      "jq": "(.content | @base64d | test(\"uses: *\\\\./\\\\.github/workflows/ci-reutilizable\\\\.yml\"))",
+      "pista": "2-practicas/01-reusable-workflow.md, paso 3"
+    },
+    {
+      "id": "check-agregador-estable",
+      "descripcion": "Existe el check agregador CI sobre el último commit de main",
+      "api": "repos/{repo}/commits/main/check-runs?per_page=100",
+      "jq": "any(.check_runs[]; .name == \"CI\")",
+      "pista": "2-practicas/01-reusable-workflow.md, paso 5"
+    },
+    {
+      "id": "check-ci-requerido",
+      "descripcion": "El ruleset de main sigue exigiendo el check CI",
+      "api": "repos/{repo}/rules/branches/main",
+      "jq": "any(.[]; .type == \"required_status_checks\" and (any(.parameters.required_status_checks[]; .context == \"CI\")))",
+      "pista": "2-practicas/01-reusable-workflow.md, paso 5"
+    },
+    {
+      "id": "composite-action-existe",
+      "descripcion": "Existe .github/actions/preparar-entorno/action.yml",
+      "api": "repos/{repo}/contents/.github/actions/preparar-entorno/action.yml",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/02-composite-action.md, paso 1"
+    },
+    {
+      "id": "composite-action-valida",
+      "descripcion": "La action declara runs.using: composite y expone algún output",
+      "api": "repos/{repo}/contents/.github/actions/preparar-entorno/action.yml",
+      "jq": "(.content | @base64d) as $y | ($y | test(\"using: *composite\")) and ($y | test(\"(?m)^outputs:\"))",
+      "pista": "2-practicas/02-composite-action.md, paso 2"
+    },
+    {
+      "id": "composite-action-en-uso",
+      "descripcion": "El workflow reutilizable usa la composite action local",
+      "api": "repos/{repo}/contents/.github/workflows/ci-reutilizable.yml",
+      "jq": "(.content | @base64d | test(\"uses: *\\\\./\\\\.github/actions/preparar-entorno\"))",
+      "pista": "2-practicas/02-composite-action.md, paso 4"
+    },
+    {
+      "id": "repo-de-la-action",
+      "descripcion": "Existe el repositorio público accion-tamano-pr",
+      "api": "repos/{owner}/accion-tamano-pr",
+      "jq": ".private == false",
+      "pista": "2-practicas/04-publicar-la-action.md, paso 1"
+    },
+    {
+      "id": "action-yml-en-la-raiz",
+      "descripcion": "accion-tamano-pr tiene action.yml en la raíz con runtime node24",
+      "api": "repos/{owner}/accion-tamano-pr/contents/action.yml",
+      "jq": "(.content | @base64d) as $y | ($y | test(\"using: *node24\")) and ($y | test(\"(?m)^inputs:\"))",
+      "pista": "2-practicas/04-publicar-la-action.md, paso 1"
+    },
+    {
+      "id": "tags-de-version",
+      "descripcion": "La action tiene los tags v1.0.0 y v1",
+      "api": "repos/{owner}/accion-tamano-pr/git/matching-refs/tags",
+      "jq": "[.[].ref] | (index(\"refs/tags/v1.0.0\") != null) and (index(\"refs/tags/v1\") != null)",
+      "pista": "2-practicas/04-publicar-la-action.md, paso 5"
+    },
+    {
+      "id": "release-publicada",
+      "descripcion": "La action tiene al menos una release publicada",
+      "api": "repos/{owner}/accion-tamano-pr/releases",
+      "jq": "(map(select(.draft == false)) | length) > 0",
+      "pista": "2-practicas/04-publicar-la-action.md, paso 5"
+    },
+    {
+      "id": "action-consumida-por-sha",
+      "descripcion": "Un workflow consume la action publicada pinneada por SHA",
+      "api": "repos/{repo}/contents/.github/workflows/etiquetar-pr.yml",
+      "jq": "(.content | @base64d | test(\"uses: *[A-Za-z0-9._-]+/accion-tamano-pr@[0-9a-f]{40}\"))",
+      "pista": "2-practicas/04-publicar-la-action.md, paso 6"
+    },
+    {
+      "id": "pr-etiquetado-por-tamano",
+      "descripcion": "Al menos un pull request tiene una label tamano:*",
+      "api": "repos/{repo}/pulls?state=all&per_page=100",
+      "jq": "any(.[]; any(.labels[]; .name | startswith(\"tamano:\")))",
+      "pista": "2-practicas/03-action-en-javascript.md, paso 6"
+    }
+  ]
+}

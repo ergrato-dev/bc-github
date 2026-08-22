@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 430" width="860" height="430" role="img" aria-label="Comparación entre reusable workflow y composite action: el reusable workflow arranca su propio runner y puede tener varios jobs con dependencias entre ellos; la composite action se ejecuta dentro del job de quien la llama, en su mismo runner y sistema de archivos">
+  <title>Reusable workflow frente a composite action</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .inner{ fill: #0d1117; stroke: #30363d; stroke-width: 1; }
+    .hi   { fill: #0d1117; stroke: #58a6ff; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+  </style>
+
+  <rect class="bg" width="860" height="430"/>
+  <text class="t h" x="40" y="36">Lo que cambia es dónde se ejecuta</text>
+
+  <!-- Left: reusable workflow -->
+  <rect class="surf" x="40" y="58" width="380" height="330" rx="8"/>
+  <text class="t cap" x="60" y="82">Reusable workflow</text>
+  <text class="t lbl" x="60" y="100">El job del llamador desaparece: lo sustituye otro workflow entero</text>
+
+  <rect class="inner" x="62" y="114" width="336" height="48" rx="6"/>
+  <text class="t cap"  x="82" y="136">Workflow llamador</text>
+  <text class="t mono" x="82" y="154">job ci: uses: …/ci-reutilizable.yml</text>
+
+  <path class="e" d="M230 162 V186"/>
+
+  <rect class="hi" x="62" y="190" width="336" height="180" rx="6"/>
+  <text class="t cap" x="82" y="214">Workflow llamado</text>
+  <text class="t lbl" x="82" y="232">runner propio · secretos declarados · permisos heredados</text>
+
+  <rect class="inner" x="82" y="244" width="140" height="52" rx="4"/>
+  <text class="t cap" x="96" y="266">job: lint</text>
+  <text class="t lbl" x="96" y="284">ubuntu-latest</text>
+
+  <rect class="inner" x="238" y="244" width="140" height="52" rx="4"/>
+  <text class="t cap" x="252" y="266">job: test</text>
+  <text class="t lbl" x="252" y="284">matriz de 3</text>
+
+  <rect class="inner" x="82" y="306" width="296" height="48" rx="4"/>
+  <text class="t cap" x="96" y="328">job: publicar</text>
+  <text class="t lbl" x="96" y="346">needs: [lint, test] — hay grafo de dependencias</text>
+
+  <!-- Right: composite -->
+  <rect class="surf" x="450" y="58" width="370" height="330" rx="8"/>
+  <text class="t cap" x="470" y="82">Composite action</text>
+  <text class="t lbl" x="470" y="100">El job es el mismo: solo se sustituyen varios steps por uno</text>
+
+  <rect class="inner" x="472" y="114" width="326" height="256" rx="6"/>
+  <text class="t cap" x="492" y="138">job: test</text>
+  <text class="t lbl" x="492" y="156">runs-on: ubuntu-latest — un único runner</text>
+
+  <rect class="inner" x="492" y="170" width="286" height="26" rx="4"/>
+  <text class="t mono" x="504" y="188">- uses: actions/checkout@&lt;sha&gt;</text>
+
+  <rect class="hi" x="492" y="202" width="286" height="94" rx="4"/>
+  <text class="t mono" x="504" y="222">- uses: ./.github/actions/preparar</text>
+  <text class="t lbl"  x="504" y="242">setup-node</text>
+  <text class="t lbl"  x="504" y="260">restaurar caché</text>
+  <text class="t lbl"  x="504" y="278">npm ci</text>
+
+  <rect class="inner" x="492" y="304" width="286" height="26" rx="4"/>
+  <text class="t mono" x="504" y="322">- run: npm test</text>
+
+  <text class="t lbl" x="492" y="352">Mismo disco, mismo entorno, mismos permisos</text>
+
+  <text class="t s" x="40" y="412">Si lo que repites es el job entero → reusable workflow. Si lo que repites está dentro del job → composite action.</text>
+</svg>
