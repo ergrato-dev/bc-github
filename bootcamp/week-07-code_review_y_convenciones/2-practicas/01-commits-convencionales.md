@@ -4,7 +4,7 @@
 > un hook que se comparte con el repositorio.
 
 **Duración estimada**: 45 min
-**Prerrequisitos**: [Teoría 02](../1-teoria/02-conventional-commits.md)
+**Prerrequisitos**: [Teoría 02](../1-teoria/02-conventional-commits.md) y [03](../1-teoria/03-validar-la-convencion.md)
 
 ## Contexto
 

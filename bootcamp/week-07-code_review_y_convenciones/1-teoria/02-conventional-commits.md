@@ -94,7 +94,58 @@ ideal es usar los dos.
 Un breaking change fuerza **MAJOR** en SemVer. Es la señal más importante de
 toda la convención: es la única que puede romperle el software a alguien.
 
-## 5. Relación con SemVer y el changelog
+## 5. El cuerpo y los footers, con detalle
+
+La parte que casi nadie usa y que es la que da valor al changelog:
+
+```
+fix(prestamos)!: cobra la multa desde el primer día de retraso
+
+Antes se aplicaba a partir del segundo día por un error de comparación
+(`>` en vez de `>=`). El reglamento del artículo 14 no admite margen.
+
+BREAKING CHANGE: los préstamos con un día de retraso pasan a tener multa.
+Los importes históricos no se recalculan.
+Refs: #12
+Reviewed-by: @persona-prestamos
+Co-authored-by: Nombre <nombre@ejemplo.com>
+```
+
+| Parte | Regla |
+|-------|-------|
+| Cuerpo | Separado del título por **una línea en blanco**. Explica el porqué |
+| Footers | Al final, separados por una línea en blanco, formato `Clave: valor` |
+| `BREAKING CHANGE:` | El único footer que se escribe con espacio y en mayúsculas |
+| `Closes #N` / `Fixes #N` | Cierra el issue si el commit llega a la rama por defecto |
+| `Co-authored-by:` | GitHub lo reconoce y atribuye el commit a las dos personas |
+| `Signed-off-by:` | Lo añade `git commit -s` cuando el proyecto usa DCO |
+
+### Scopes que sirven
+
+El `scope` es la parte del sistema afectada, y es lo que agrupa el changelog. Un
+buen conjunto de scopes se parece al dominio del proyecto (`prestamos`, `socios`,
+`catalogo`), no a su estructura de carpetas (`utils`, `helpers`, `index`).
+
+En un monorepo, el scope suele ser el paquete (`feat(api):`, `fix(web):`), y ahí
+sí conviene fijar la lista de scopes permitidos en la validación
+([Teoría 03](03-validar-la-convencion.md)).
+
+### Revertir
+
+```
+revert: feat(prestamos): calcula la multa por retraso
+
+This reverts commit a1b2c3d4.
+```
+
+`git revert` genera un mensaje que empieza por `Revert "..."`; si quieres que el
+changelog lo recoja, renómbralo al formato de arriba.
+
+## 6. Qué versión sale de esto
+
+Cada tipo de commit se traduce en un incremento de versión, y de ahí sale el
+changelog. La relación completa —qué cuenta como rotura, qué pasa en `0.x`, cómo
+se escribe el changelog— está en la [Teoría 04](04-semver-y-changelog.md).
 
 ```
 MAYOR . MENOR . PARCHE
@@ -103,15 +154,7 @@ MAYOR . MENOR . PARCHE
   └────────────────── BREAKING CHANGE
 ```
 
-Herramientas como `release-please` o `semantic-release` leen los commits desde
-la última etiqueta, calculan el incremento, generan el `CHANGELOG.md` y publican
-la release. Todo eso lo montarás en la **Semana 12**; la convención de hoy es lo
-que lo hace posible.
-
-Por eso importa el `scope` y por eso importan los tipos: son la materia prima
-del changelog.
-
-## 6. Con squash merge, el título del PR es el commit
+## 7. Con squash merge, el título del PR es el commit
 
 Es la consecuencia práctica más importante y la que más se pasa por alto.
 
@@ -124,7 +167,7 @@ Si tu repositorio usa **squash** (Semana 06), lo que acaba en `main` es el
 
 Con merge commit o rebase, se valida cada commit. Con squash, el título del PR.
 
-## 7. Antipatrones
+## 8. Antipatrones
 
 | Antipatrón | Por qué duele | Qué hacer |
 |------------|---------------|-----------|
@@ -136,20 +179,10 @@ Con merge commit o rebase, se valida cada commit. Con squash, el título del PR.
 | Validar commits pero mergear con squash | Se valida lo que no cuenta | Valida el título del PR |
 | Descripción de 200 caracteres | Se corta en todas las vistas | ≤ 72, el resto al cuerpo |
 
-## 8. Trucos
+## 9. Trucos
 
-- **Hook local de 10 líneas**, sin instalar dependencias:
-  ```bash
-  cat > .git/hooks/commit-msg <<'EOF'
-  #!/usr/bin/env bash
-  regex='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9-]+\))?!?: .{1,72}$'
-  head -1 "$1" | grep -qE "$regex" || {
-    echo "Mensaje no convencional. Formato: tipo(scope): descripción"; exit 1; }
-  EOF
-  chmod +x .git/hooks/commit-msg
-  ```
-- **Los hooks no se clonan**: `.git/hooks` no se versiona. Guárdalo en
-  `.githooks/` y configura `git config core.hooksPath .githooks`
+- **La validación automática está en la [Teoría 03](03-validar-la-convencion.md)**:
+  hook `commit-msg` compartido y comprobación del título del PR en CI
 - **`git commit --fixup`** genera automáticamente un mensaje válido
 - **Plantilla de mensaje**: `git config commit.template .gitmessage` te precarga
   la estructura en el editor
@@ -171,5 +204,5 @@ Con merge commit o rebase, se valida cada commit. Con squash, el título del PR.
 
 - [ ] Tus últimos 10 commits cumplen la convención
 - [ ] Sabes marcar un breaking change de las dos formas
-- [ ] Tienes un hook local que valida el formato
+- [ ] Sabes escribir cuerpo y footers, y para qué sirve cada footer
 - [ ] Si usas squash, validas el **título del PR**

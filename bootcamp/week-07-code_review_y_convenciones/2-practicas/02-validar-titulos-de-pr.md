@@ -4,7 +4,7 @@
 > solo validas los commits locales, estás validando lo que no cuenta.
 
 **Duración estimada**: 40 min
-**Prerrequisitos**: práctica 01, estrategia de merge de la Semana 06
+**Prerrequisitos**: [Teoría 03](../1-teoria/03-validar-la-convencion.md), práctica 01, estrategia de merge de la Semana 06
 
 ## Contexto
 

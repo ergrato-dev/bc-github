@@ -24,10 +24,13 @@ Al finalizar esta semana serás capaz de:
 ```
 week-07-code_review_y_convenciones/
 ├── 1-teoria/
-│   ├── 01-cultura-de-review.md          # Qué se revisa, tiempos, desacuerdos
-│   ├── 02-conventional-commits.md       # Spec, breaking changes, SemVer
-│   ├── 03-estrategias-de-ramificacion.md # GitHub flow vs trunk-based vs git-flow
-│   └── 04-codeowners-y-dod.md           # CODEOWNERS a escala y Definition of Done
+│   ├── 01-cultura-de-review.md           # Qué se revisa, quién, tiempos, desacuerdos
+│   ├── 02-conventional-commits.md        # Spec completa, cuerpo y footers
+│   ├── 03-validar-la-convencion.md       # Hook compartido y check del título del PR
+│   ├── 04-semver-y-changelog.md          # Qué rompe, 0.x, preversiones, changelog
+│   ├── 05-estrategias-de-ramificacion.md # GitHub flow vs trunk-based vs git-flow
+│   ├── 06-codeowners.md                  # Precedencia, patrones, repartir revisión
+│   └── 07-definition-of-done.md          # DoD comprobable y cómo se automatiza
 ├── 2-practicas/
 │   ├── 01-commits-convencionales.md     # Convención + validación automática
 │   ├── 02-validar-titulos-de-pr.md      # Workflow que rechaza títulos malos
@@ -44,10 +47,13 @@ week-07-code_review_y_convenciones/
 
 | Archivo | Tema | Duración |
 |---------|------|:--------:|
-| [01-cultura-de-review.md](1-teoria/01-cultura-de-review.md) | Qué revisar, tiempos, desacuerdos, tono | 30 min |
-| [02-conventional-commits.md](1-teoria/02-conventional-commits.md) | Formato, breaking changes, SemVer, changelog | 30 min |
-| [03-estrategias-de-ramificacion.md](1-teoria/03-estrategias-de-ramificacion.md) | GitHub flow, trunk-based, git-flow | 30 min |
-| [04-codeowners-y-dod.md](1-teoria/04-codeowners-y-dod.md) | CODEOWNERS a escala, Definition of Done | 25 min |
+| [01-cultura-de-review.md](1-teoria/01-cultura-de-review.md) | Qué revisar, quién revisa, tiempos, desacuerdos, medirlo | 25 min |
+| [02-conventional-commits.md](1-teoria/02-conventional-commits.md) | Formato, tipos, breaking changes, cuerpo y footers | 25 min |
+| [03-validar-la-convencion.md](1-teoria/03-validar-la-convencion.md) | Hook compartido, check del título del PR, hacerlo obligatorio | 20 min |
+| [04-semver-y-changelog.md](1-teoria/04-semver-y-changelog.md) | Qué rompe de verdad, `0.x`, preversiones, changelog | 20 min |
+| [05-estrategias-de-ramificacion.md](1-teoria/05-estrategias-de-ramificacion.md) | GitHub flow, trunk-based, git-flow y cómo elegir | 25 min |
+| [06-codeowners.md](1-teoria/06-codeowners.md) | Precedencia, patrones, repartir sin cuellos de botella | 20 min |
+| [07-definition-of-done.md](1-teoria/07-definition-of-done.md) | DoD comprobable, dónde vive, cómo se vuelve automática | 20 min |
 
 ### Prácticas
 
@@ -68,10 +74,10 @@ commits validada por CI, DoD en la plantilla de PR y `CODEOWNERS` por área.
 
 | Actividad | Tiempo |
 |-----------|-------:|
-| Teoría (4 archivos) | 1 h 55 min |
+| Teoría (7 archivos) | 2 h 35 min |
 | Prácticas (4) | 2 h 50 min |
-| Proyecto | 2 h 30 min |
-| Revisión y verificación | 45 min |
+| Proyecto | 2 h 05 min |
+| Revisión y verificación | 30 min |
 | **Total** | **8 h** |
 
 ## 🎩 Trucos y atajos

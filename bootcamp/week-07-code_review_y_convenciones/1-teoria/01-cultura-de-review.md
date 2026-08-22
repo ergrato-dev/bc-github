@@ -74,7 +74,30 @@ nit: el nombre `resultado` no aporta información (no bloquea)
 Sin severidad, el autor no sabe qué es obligatorio: o lo hace todo, o no hace
 nada.
 
-## 5. Tiempos y tamaños
+## 5. Quién revisa
+
+Elegir revisor no es "quien esté libre":
+
+| Criterio | Cuándo aplica |
+|----------|---------------|
+| Quien conoce el área (`CODEOWNERS`) | Cambios en lógica delicada |
+| Quien **no** conoce el área | Cuando quieres repartir conocimiento; añade tiempo, gana equipo |
+| Dos revisores | Código crítico: seguridad, dinero, migraciones de datos |
+| Quien pidió el cambio | Para validar que resuelve lo que pedía, no el código |
+
+Dos casos particulares que conviene decidir de antemano:
+
+- **Alguien nuevo en el equipo**: que revise desde el primer día es la forma más
+  rápida de que aprenda el sistema, aunque su revisión no bloquee al principio
+- **Trabajo en pareja**: si dos personas escribieron el código juntas, un tercero
+  revisando aporta poco; lo honesto es decirlo en el PR y pedir revisión solo si
+  el cambio es delicado
+
+Y el caso incómodo: **revisar a alguien con más experiencia que tú**. Se hace
+igual, preguntando. "No entiendo por qué hace falta esta parte" es un comentario
+perfectamente válido, y muchas veces el más útil del PR.
+
+## 6. Tiempos y tamaños
 
 | Acuerdo | Valor razonable |
 |---------|-----------------|
@@ -88,7 +111,7 @@ El tiempo de respuesta importa más de lo que parece: un PR parado bloquea a su
 autor, envejece contra `main` y acumula conflictos. Revisar rápido es más
 valioso que revisar exhaustivamente.
 
-## 6. Desacuerdos
+## 7. Desacuerdos
 
 Ocurren y no son un problema — bloquear la entrega, sí. Escalado sano:
 
@@ -102,7 +125,31 @@ Ocurren y no son un problema — bloquear la entrega, sí. Escalado sano:
 Principio útil: **quien discrepa aporta la alternativa**. "No me gusta" no es
 una revisión.
 
-## 7. Antipatrones
+## 8. Medir si la revisión funciona
+
+Tres números, sacados con lo de la
+[Semana 05](../../week-05-projects_v2_automatizacion_y_metricas/1-teoria/05-calcular-metricas-con-la-api.md):
+
+| Métrica | Qué revela |
+|---------|-----------|
+| Tiempo hasta la **primera** revisión | Si es de días, el proceso está roto ahí |
+| Tamaño mediano de PR | Predice casi todo lo demás |
+| Rondas por PR | Más de dos, de forma sistemática, indica falta de acuerdos |
+
+```bash
+gh pr list --state merged --limit 50 \
+  --json number,additions,deletions,createdAt,mergedAt \
+  --jq '[.[] | {n: .number,
+                lineas: (.additions + .deletions),
+                horas: (((.mergedAt|fromdate) - (.createdAt|fromdate)) / 3600 | floor)}]
+        | sort_by(-.lineas)'
+```
+
+Lo que **no** se mide: comentarios por persona, ni revisiones hechas por cada
+uno. En cuanto la revisión se convierte en una cuota, aparecen las revisiones de
+cumplido.
+
+## 9. Antipatrones
 
 | Antipatrón | Por qué duele | Qué hacer |
 |------------|---------------|-----------|
@@ -114,7 +161,7 @@ una revisión.
 | Sarcasmo o "obviamente" | Daña sin mejorar el código | Explica |
 | Un solo revisor para todo | Cuello de botella y punto único de conocimiento | Reparte con `CODEOWNERS` |
 
-## 8. Trucos
+## 10. Trucos
 
 - **Automatiza lo repetido**: si comentas lo mismo tres veces, escribe la regla
 - **Empieza por lo bloqueante**: si hay un fallo de lógica, no comentes nombres
@@ -140,3 +187,5 @@ una revisión.
 - [ ] Usas prefijos de severidad en los comentarios
 - [ ] Tienes un acuerdo escrito de tiempo de respuesta
 - [ ] Nada de lo que comentas podría comprobarlo un linter
+- [ ] Sabes a quién pedir revisión según el tipo de cambio
+- [ ] Has medido alguna vez el tiempo hasta la primera revisión de tus PRs
