@@ -109,7 +109,60 @@ Práctica 03 y el puente hacia la Semana 09.
 
 ![Las tres capas de gobernanza](../0-assets/01-capas-de-gobernanza.svg)
 
-## 4. Se apilan, no se sustituyen
+## 4. La forma del JSON
+
+Un ruleset completo tiene siempre la misma estructura, y conviene reconocerla
+porque es lo que vas a versionar en el repositorio:
+
+```json
+{
+  "name": "main-proteccion",
+  "target": "branch",
+  "enforcement": "disabled",
+  "conditions": {
+    "ref_name": { "include": ["~DEFAULT_BRANCH"], "exclude": [] }
+  },
+  "bypass_actors": [],
+  "rules": [
+    { "type": "pull_request", "parameters": { "required_approving_review_count": 0 } },
+    { "type": "non_fast_forward" }
+  ]
+}
+```
+
+| Campo | Qué es |
+|-------|--------|
+| `name` | Identificador legible. Sale en los mensajes de bloqueo, así que dilo bien |
+| `target` | `branch`, `tag` o `push` |
+| `enforcement` | `disabled`, `evaluate` (Enterprise) o `active` |
+| `conditions.ref_name` | A qué refs aplica, con `include` y `exclude` |
+| `bypass_actors` | Quién puede saltárselo ([Teoría 05](05-bypass-y-auditoria.md)) |
+| `rules` | La lista de reglas, cada una con sus `parameters` |
+
+Ese JSON se crea y se actualiza con la API, y **es lo que debe vivir en el
+repositorio**:
+
+```bash
+gh api repos/{owner}/{repo}/rulesets --method POST --input .github/rulesets/main.json
+gh api repos/{owner}/{repo}/rulesets/<id> --method PUT --input .github/rulesets/main.json
+```
+
+Versionarlo tiene tres consecuencias que la interfaz no da: se revisa en un PR,
+se puede copiar a otro repositorio y queda escrito **por qué** está así.
+
+## 5. Dónde puede vivir un ruleset
+
+| Nivel | Alcance | Disponible |
+|-------|---------|------------|
+| Repositorio | Ese repositorio | Todos los planes (privado: Pro/Team/Enterprise) |
+| Organización | Todos los repositorios de la organización, por patrón | **GitHub Enterprise** |
+
+Los de organización son la forma de aplicar la misma política a doscientos
+repositorios sin tocarlos uno a uno. No los tienes en este bootcamp, pero es la
+razón por la que la gobernanza a escala se hace con rulesets y no con branch
+protection.
+
+## 6. Se apilan, no se sustituyen
 
 Varios rulesets pueden aplicar a la misma rama. **Se suman**: la rama queda
 sujeta a la unión de todas las reglas, y la más restrictiva gana. No hay
@@ -131,7 +184,7 @@ gh api repos/{owner}/{repo}/rules/branches/main --jq '.[] | .type'
 gh ruleset check main
 ```
 
-## 5. Branch protection sigue existiendo
+## 7. Branch protection sigue existiendo
 
 No está retirada. Convive con los rulesets y **también se suma**: si un repo
 antiguo tiene branch protection y le añades un ruleset, se aplican las dos.
@@ -140,7 +193,7 @@ Cuándo la vas a encontrar: repositorios anteriores a 2023 y automatizaciones
 viejas contra `repos/{owner}/{repo}/branches/{branch}/protection`. Saber leerla
 es útil; escribirla nueva, no.
 
-## 6. Antipatrones
+## 8. Antipatrones
 
 | Antipatrón | Por qué duele | Qué hacer |
 |------------|---------------|-----------|
@@ -148,10 +201,10 @@ es útil; escribirla nueva, no.
 | Un ruleset gigante con todo dentro | No puedes desactivar una parte | Uno por intención |
 | Apuntar a `refs/heads/main` literal | Se rompe al renombrar la rama | `~DEFAULT_BRANCH` |
 | Copiar el ruleset de un repo de empresa | La mitad de las reglas no existen en tu plan | Comprueba la tabla del punto 3 |
-| Exigir un check que nunca corre | El PR no se puede mergear jamás | Ver Teoría 02, sección de checks |
+| Exigir un check que nunca corre | El PR no se puede mergear jamás | Ver [Teoría 03](03-checks-y-firmas.md) |
 | Mezclar branch protection y ruleset sin saberlo | Reglas que "aparecen" de la nada | `gh ruleset check main` |
 
-## 7. Trucos
+## 9. Trucos
 
 - **Ver las reglas efectivas de una rama** sin abrir Settings:
   `gh api repos/{owner}/{repo}/rules/branches/main --jq '[.[].type]'`
@@ -175,3 +228,4 @@ es útil; escribirla nueva, no.
 - [ ] Sabes qué pasa cuando dos rulesets aplican a la misma rama
 - [ ] Has ejecutado `gh api repos/{owner}/{repo}/rules/branches/main`
 - [ ] Sabes qué reglas de la tabla del punto 3 puedes usar en tu repositorio
+- [ ] Reconoces la estructura de un ruleset en JSON y sabes crearlo por API

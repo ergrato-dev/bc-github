@@ -4,7 +4,7 @@
 > comprobar antes de exigir.
 
 **Duración estimada**: 45 min
-**Prerrequisitos**: [Práctica 01](01-primer-ruleset.md), Semana 07 (workflow
+**Prerrequisitos**: [Teoría 03](../1-teoria/03-checks-y-firmas.md), [Práctica 01](01-primer-ruleset.md), Semana 07 (workflow
 `validar-pr.yml`), Semana 01 (firma de commits)
 
 ## Contexto
@@ -93,7 +93,7 @@ jq '[.rules[].type]' .github/rulesets/main-proteccion.json
 `strict_required_status_checks_policy: false` a propósito: en `true` obliga a
 tener la rama al día con `main` antes de mergear, y trabajando solo eso es
 fricción sin beneficio. Es exactamente el problema del que habla la
-[Teoría 03](../1-teoria/03-merge-queue.md).
+[Teoría 06](../1-teoria/06-merge-queue.md).
 
 ## Paso 4: Enviarlo
 

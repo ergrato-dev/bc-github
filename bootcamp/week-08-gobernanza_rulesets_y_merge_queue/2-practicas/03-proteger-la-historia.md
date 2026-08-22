@@ -4,7 +4,7 @@
 > real de las push rules cuando tu plan no las incluye.
 
 **Duración estimada**: 40 min
-**Prerrequisitos**: [Práctica 02](02-checks-y-firmas-obligatorios.md)
+**Prerrequisitos**: [Teoría 04](../1-teoria/04-proteger-la-historia-y-tags.md), [Práctica 02](02-checks-y-firmas-obligatorios.md)
 
 ## Contexto
 

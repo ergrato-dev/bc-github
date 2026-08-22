@@ -5,7 +5,7 @@
 
 **Duración estimada**: 45 min
 **Prerrequisitos**: [Teoría 01](../1-teoria/01-rulesets-vs-branch-protection.md)
-y [Teoría 02](../1-teoria/02-reglas-y-bypass.md)
+y [Teoría 02](../1-teoria/02-la-regla-pull-request.md)
 
 ## Contexto
 

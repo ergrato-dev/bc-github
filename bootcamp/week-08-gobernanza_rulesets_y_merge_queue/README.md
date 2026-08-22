@@ -28,8 +28,10 @@ Al finalizar esta semana serás capaz de:
 ```
 week-08-gobernanza_rulesets_y_merge_queue/
 ├── 0-assets/     01-capas-de-gobernanza · 02-anatomia-de-un-ruleset
-├── 1-teoria/     01-rulesets-vs-branch-protection · 02-reglas-y-bypass
-│                 03-merge-queue · 04-environments-y-despliegue
+├── 1-teoria/     01-rulesets-vs-branch-protection · 02-la-regla-pull-request
+│                 03-checks-y-firmas · 04-proteger-la-historia-y-tags
+│                 05-bypass-y-auditoria · 06-merge-queue
+│                 07-environments-y-despliegue
 ├── 2-practicas/  01-primer-ruleset · 02-checks-y-firmas-obligatorios
 │                 03-proteger-la-historia · 04-environments
 ├── 3-proyecto/   Tu `main` protegida de verdad
@@ -42,10 +44,13 @@ week-08-gobernanza_rulesets_y_merge_queue/
 
 | Archivo | Tema | Duración |
 |---------|------|:--------:|
-| [`01-rulesets-vs-branch-protection.md`](1-teoria/01-rulesets-vs-branch-protection.md) | Modelo, targets, capas, disponibilidad por plan | 30 min |
-| [`02-reglas-y-bypass.md`](1-teoria/02-reglas-y-bypass.md) | Cada regla, bypass actors, `disabled` como borrador | 35 min |
-| [`03-merge-queue.md`](1-teoria/03-merge-queue.md) | Qué problema resuelve y cuándo es sobreingeniería | 25 min |
-| [`04-environments-y-despliegue.md`](1-teoria/04-environments-y-despliegue.md) | Environments, revisores, wait timers, secretos | 30 min |
+| [`01-rulesets-vs-branch-protection.md`](1-teoria/01-rulesets-vs-branch-protection.md) | Modelo, targets, JSON, capas, disponibilidad por plan | 25 min |
+| [`02-la-regla-pull-request.md`](1-teoria/02-la-regla-pull-request.md) | Cada parámetro, qué poner trabajando solo, combinaciones imposibles | 20 min |
+| [`03-checks-y-firmas.md`](1-teoria/03-checks-y-firmas.md) | De dónde sale el `context`, el check que nunca corre, firmas | 25 min |
+| [`04-proteger-la-historia-y-tags.md`](1-teoria/04-proteger-la-historia-y-tags.md) | `non_fast_forward`, tags inmutables, sustituto de las push rules | 25 min |
+| [`05-bypass-y-auditoria.md`](1-teoria/05-bypass-y-auditoria.md) | Bypass actors, `disabled` como borrador, rule suites, historial | 20 min |
+| [`06-merge-queue.md`](1-teoria/06-merge-queue.md) | Qué problema resuelve y cuándo es sobreingeniería | 25 min |
+| [`07-environments-y-despliegue.md`](1-teoria/07-environments-y-despliegue.md) | Environments, revisores, wait timers, secretos | 20 min |
 
 ### Prácticas
 
@@ -89,10 +94,10 @@ Ese es el trabajo de la Práctica 03, y el puente hacia la Semana 09.
 
 | Actividad | Tiempo |
 |-----------|-------:|
-| Teoría (4 archivos) | 2 h |
+| Teoría (7 archivos) | 2 h 40 min |
 | Prácticas (4) | 2 h 50 min |
-| Proyecto | 2 h 20 min |
-| Revisión y verificación | 50 min |
+| Proyecto | 2 h 10 min |
+| Revisión y verificación | 20 min |
 | **Total** | **8 h** |
 
 ## 🎩 Trucos y atajos

@@ -4,7 +4,7 @@
 > a producción. Aquí cierras la segunda puerta.
 
 **Duración estimada**: 40 min
-**Prerrequisitos**: [Teoría 04](../1-teoria/04-environments-y-despliegue.md)
+**Prerrequisitos**: [Teoría 07](../1-teoria/07-environments-y-despliegue.md)
 
 ## Contexto
 
