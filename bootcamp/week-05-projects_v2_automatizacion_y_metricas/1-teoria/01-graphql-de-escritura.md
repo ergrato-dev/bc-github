@@ -103,26 +103,64 @@ El `value` cambia según el tipo del campo:
 | `updateProjectV2` | Cambiar título, descripción o visibilidad |
 | `convertProjectV2DraftIssueItemToIssue` | Convertir un draft en issue real |
 
-## 6. Credenciales
+## 6. Escribir varios items de una vez
 
-Este es el punto donde se atasca todo el mundo al automatizar:
+GraphQL permite **alias**: varias mutaciones en una sola petición, cada una con
+su nombre. Es la forma correcta de actualizar diez items sin hacer diez llamadas.
 
-> [!IMPORTANT]
-> **`GITHUB_TOKEN` no funciona con Projects v2.** El token que Actions inyecta
-> tiene alcance sobre el repositorio, y los projects viven fuera de él (en el
-> usuario o la organización). Necesitas un **PAT fine-grained** con permiso de
-> Projects, o un token de **GitHub App**.
+```graphql
+mutation($project: ID!, $field: ID!, $option: String!,
+         $i1: ID!, $i2: ID!) {
+  a: updateProjectV2ItemFieldValue(input: {
+        projectId: $project, itemId: $i1, fieldId: $field,
+        value: { singleSelectOptionId: $option } }) { projectV2Item { id } }
+  b: updateProjectV2ItemFieldValue(input: {
+        projectId: $project, itemId: $i2, fieldId: $field,
+        value: { singleSelectOptionId: $option } }) { projectV2Item { id } }
+}
+```
 
-Para automatizar:
+Dos avisos: la respuesta trae un bloque por alias, así que hay que comprobarlos
+todos; y **no hay transacción** — si la tercera falla, las dos primeras ya se
+aplicaron.
 
-1. Crea un PAT fine-grained con `Projects: Read and write`
-2. Guárdalo como secreto del repositorio (`PROJECT_TOKEN`)
-3. Úsalo en el workflow en lugar de `GITHUB_TOKEN`
+Para vaciar un campo no sirve mandar `null`: hay una mutación propia,
+`clearProjectV2ItemFieldValue`.
 
-Un PAT tiene caducidad: apúntala. El día que el tablero deje de llenarse solo, la
-causa será esa.
+## 7. Verificar después de escribir
 
-## 7. Límites y errores
+Una mutación con IDs válidos pero equivocados **no da error**. La única defensa
+es leer lo que acabas de escribir:
+
+```bash
+gh api graphql -F item="$ITEM_ID" -f query='
+  query($item: ID!) {
+    node(id: $item) {
+      ... on ProjectV2Item {
+        fieldValues(first: 20) {
+          nodes {
+            ... on ProjectV2ItemFieldSingleSelectValue {
+              name field { ... on ProjectV2SingleSelectField { name } }
+            }
+          }
+        }
+      }
+    }
+  }'
+```
+
+En un script, esa comprobación es la diferencia entre "el tablero está mal desde
+hace tres semanas" y "el workflow falló el martes".
+
+## 8. La credencial
+
+Aquí es donde se atasca todo el mundo: **`GITHUB_TOKEN` no puede escribir en un
+Project v2**, porque el project no pertenece al repositorio. Hace falta un PAT
+fine-grained con `Projects: Read and write` o un token de GitHub App. Está
+entero, con el diagnóstico de cada error, en la
+[Teoría 02](02-credenciales-para-projects.md).
+
+## 9. Límites y errores
 
 | Error | Causa | Solución |
 |-------|-------|----------|
@@ -132,7 +170,7 @@ causa será esa.
 | `RATE_LIMITED` | Demasiadas mutaciones seguidas | El límite de GraphQL es por puntos: `gh api graphql --jq .data.rateLimit` |
 | Campo que no cambia y sin error | `fieldId` de otro campo | Vuelve a listar los campos |
 
-## 8. Antipatrones
+## 10. Antipatrones
 
 | Antipatrón | Por qué duele | Qué hacer |
 |------------|---------------|-----------|
@@ -142,7 +180,7 @@ causa será esa.
 | Automatizar la prioridad | La prioridad es una decisión humana | Automatiza lo mecánico, no el criterio |
 | No verificar tras mutar | Las mutaciones fallan en silencio si el ID es válido pero de otro objeto | Consulta el item después de escribir |
 
-## 9. Trucos
+## 11. Trucos
 
 - **Explorador con autocompletado**: el [GraphQL Explorer](https://docs.github.com/graphql/overview/explorer)
   usa tu sesión y descubre campos sin adivinar
@@ -169,3 +207,5 @@ causa será esa.
 - [ ] Has ejecutado `addProjectV2ItemById` y `updateProjectV2ItemFieldValue`
 - [ ] Puedes explicar por qué `GITHUB_TOKEN` no sirve aquí
 - [ ] Verificas el resultado después de cada mutación
+- [ ] Sabes escribir varios items en una sola petición con alias
+- [ ] Sabes cómo se vacía un campo (no es mandando `null`)

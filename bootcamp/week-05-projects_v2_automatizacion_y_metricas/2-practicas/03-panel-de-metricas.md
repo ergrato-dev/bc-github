@@ -4,7 +4,7 @@
 > dejas en un script reutilizable.
 
 **Duración estimada**: 45 min
-**Prerrequisitos**: [Teoría 03](../1-teoria/03-metricas-de-flujo.md)
+**Prerrequisitos**: [Teoría 04](../1-teoria/04-metricas-de-flujo.md) y [05](../1-teoria/05-calcular-metricas-con-la-api.md)
 
 ## Contexto
 

@@ -35,7 +35,7 @@ jobs:
   add:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/add-to-project@v1.0.2
+      - uses: actions/add-to-project@5afcf98fcd03f1c2f92c3c83f58ae24323cc57fd # v2.0.0
         with:
           project-url: https://github.com/users/<tu-usuario>/projects/<n>
           github-token: ${{ secrets.PROJECT_TOKEN }}
@@ -49,29 +49,19 @@ jobs:
 | `steps:` | Pasos: `uses:` invoca una action, `run:` ejecuta comandos |
 | `secrets.X` | Secreto del repositorio |
 
-## 3. La credencial: el error número uno
+## 3. La credencial, en una línea
 
-`actions/add-to-project` **no funciona con `GITHUB_TOKEN`**. El token de Actions
-tiene alcance sobre el repositorio y un project vive en el usuario o la
-organización.
-
-Necesitas:
-
-1. Un **PAT fine-grained** con permiso `Projects: Read and write` (y `Issues:
-   Read` si vas a leer labels)
-2. Guardado como secreto: `gh secret set PROJECT_TOKEN`
-
-> [!WARNING]
-> Un PAT en un secreto es un secreto de larga vida: ponle caducidad, apunta la
-> fecha y acótalo a lo mínimo. En la Semana 11 verás cómo evitar estos tokens con
-> GitHub Apps y OIDC; en Projects, hoy, la App es la única alternativa mejor.
+`actions/add-to-project` y cualquier mutación de project **fallan con
+`GITHUB_TOKEN`**: hace falta un PAT fine-grained con `Projects: Read and write` o
+un token de GitHub App. El porqué, el montaje y el diagnóstico de cada error
+están en la [Teoría 02](02-credenciales-para-projects.md).
 
 ## 4. `actions/add-to-project`
 
 La action oficial. Sabe filtrar sin que escribas lógica:
 
 ```yaml
-      - uses: actions/add-to-project@v1.0.2
+      - uses: actions/add-to-project@5afcf98fcd03f1c2f92c3c83f58ae24323cc57fd # v2.0.0
         with:
           project-url: https://github.com/users/<tu-usuario>/projects/<n>
           github-token: ${{ secrets.PROJECT_TOKEN }}
@@ -80,6 +70,37 @@ La action oficial. Sabe filtrar sin que escribas lógica:
 ```
 
 Cubre "que entre en el tablero". Para rellenar campos hace falta GraphQL propio.
+
+| Entrada | Para qué |
+|---------|----------|
+| `project-url` | El project destino (usuario u organización) |
+| `github-token` | La credencial: PAT o token de App |
+| `labeled` | Lista de labels que filtran qué entra |
+| `label-operator` | `OR` (por defecto), `AND` o `NOT` |
+
+Y una salida que se aprovecha poco: `itemId`, el ID del item recién creado, que
+es justo lo que necesita la mutación del paso siguiente.
+
+```yaml
+      - uses: actions/add-to-project@5afcf98fcd03f1c2f92c3c83f58ae24323cc57fd # v2.0.0
+        id: add
+        with: { ... }
+      - run: echo "El item es ${{ steps.add.outputs.itemId }}"
+```
+
+### Qué eventos disparan qué
+
+| Evento | Uso típico |
+|--------|------------|
+| `issues: [opened, reopened]` | Meter el issue en el tablero |
+| `issues: [labeled]` | Reaccionar a una clasificación posterior |
+| `pull_request: [opened, ready_for_review]` | Meter PRs en el tablero |
+| `schedule:` | Informes y limpiezas periódicas |
+| `workflow_dispatch:` | Lanzarlo a mano para probar |
+
+`issues: [labeled]` es el que suele faltar: el `Auto-add` integrado y el evento
+`opened` solo ven el issue **al crearse**, así que lo que se etiqueta después no
+entra nunca.
 
 ## 5. GraphQL dentro de un workflow
 
@@ -139,7 +160,33 @@ La automatización de projects falla de formas discretas:
 > sin actividad en el repositorio. Es la causa más común de "mi informe semanal
 > dejó de llegar".
 
-## 8. Antipatrones
+## 8. Higiene del workflow
+
+Tres líneas que no cuestan nada y evitan la mayoría de sustos, y que se
+justifican a fondo en las Semanas 09-11:
+
+```yaml
+permissions: {}                 # y añade solo lo que falle
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.issue.number }}
+  cancel-in-progress: true
+jobs:
+  add:
+    timeout-minutes: 5
+```
+
+Y la versión de las actions de terceros **fijada por SHA**: un tag se puede
+mover, un commit no. El SHA se saca del propio repositorio de la action:
+
+```bash
+gh api repos/actions/add-to-project/tags --jq '.[] | select(.name=="v2.0.0") | .commit.sha'
+```
+
+```yaml
+      - uses: actions/add-to-project@5afcf98fcd03f1c2f92c3c83f58ae24323cc57fd # v2.0.0
+```
+
+## 9. Antipatrones
 
 | Antipatrón | Por qué duele | Qué hacer |
 |------------|---------------|-----------|
@@ -150,7 +197,7 @@ La automatización de projects falla de formas discretas:
 | Action sin versión fija (`@main`) | Un cambio de terceros rompe tu tablero | Tag o SHA (Semana 11) |
 | No comprobar `gh run list` | Los fallos pasan desapercibidos semanas | Revísalo al empezar cada semana |
 
-## 9. Trucos
+## 10. Trucos
 
 - **Ver si tus workflows están corriendo**: `gh run list --limit 10`
 - **Relanzar solo lo que falló**: `gh run rerun <id> --failed`
@@ -175,3 +222,4 @@ La automatización de projects falla de formas discretas:
 - [ ] Un issue nuevo entra solo en el tablero
 - [ ] Sabes por qué `GITHUB_TOKEN` no sirve aquí
 - [ ] Sabes qué le pasa a un `schedule:` tras 60 días sin actividad
+- [ ] Tus workflows declaran `permissions` y fijan las actions de terceros

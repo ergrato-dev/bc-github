@@ -4,7 +4,7 @@
 > escribe.
 
 **Duración estimada**: 40 min
-**Prerrequisitos**: [Teoría 04](../1-teoria/04-insights-y-reportes.md), práctica 03
+**Prerrequisitos**: [Teoría 06](../1-teoria/06-insights.md) y [07](../1-teoria/07-informes-automaticos.md), práctica 03
 
 ## Contexto
 
@@ -121,7 +121,7 @@ jobs:
   informe:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Generar y publicar el informe
         env:

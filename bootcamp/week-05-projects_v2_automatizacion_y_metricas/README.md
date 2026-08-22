@@ -30,10 +30,13 @@ Al finalizar esta semana serás capaz de:
 ```
 week-05-projects_v2_automatizacion_y_metricas/
 ├── 1-teoria/
-│   ├── 01-graphql-de-escritura.md    # Mutaciones, IDs, idempotencia
-│   ├── 02-automatizacion-con-actions.md # add-to-project, credenciales, límites
-│   ├── 03-metricas-de-flujo.md       # Lead time, cycle time, throughput, WIP
-│   └── 04-insights-y-reportes.md     # Insights nativos, exportar, informar
+│   ├── 01-graphql-de-escritura.md          # Mutaciones, IDs, alias, verificar
+│   ├── 02-credenciales-para-projects.md    # Por qué GITHUB_TOKEN no vale; PAT y App
+│   ├── 03-automatizacion-con-actions.md    # add-to-project, eventos, higiene
+│   ├── 04-metricas-de-flujo.md             # Lead time, cycle time, WIP, DORA, umbrales
+│   ├── 05-calcular-metricas-con-la-api.md  # gh + jq, timeline, medianas y percentiles
+│   ├── 06-insights.md                      # Gráficos nativos y sus límites
+│   └── 07-informes-automaticos.md          # Informe como issue, histórico, por qué se cae
 ├── 2-practicas/
 │   ├── 01-mutaciones-graphql.md      # Escribir en el project por API
 │   ├── 02-workflow-add-to-project.md # Que el tablero se llene solo
@@ -50,10 +53,13 @@ week-05-projects_v2_automatizacion_y_metricas/
 
 | Archivo | Tema | Duración |
 |---------|------|:--------:|
-| [01-graphql-de-escritura.md](1-teoria/01-graphql-de-escritura.md) | Mutaciones, IDs, cómo no duplicar items | 30 min |
-| [02-automatizacion-con-actions.md](1-teoria/02-automatizacion-con-actions.md) | `add-to-project`, credenciales, qué automatizar | 30 min |
-| [03-metricas-de-flujo.md](1-teoria/03-metricas-de-flujo.md) | Lead time, cycle time, throughput, WIP y DORA | 30 min |
-| [04-insights-y-reportes.md](1-teoria/04-insights-y-reportes.md) | Insights nativos, sus límites, informes propios | 30 min |
+| [01-graphql-de-escritura.md](1-teoria/01-graphql-de-escritura.md) | Mutaciones, los tres IDs, alias, verificar lo escrito | 25 min |
+| [02-credenciales-para-projects.md](1-teoria/02-credenciales-para-projects.md) | Por qué `GITHUB_TOKEN` no vale, PAT fine-grained, GitHub App | 20 min |
+| [03-automatizacion-con-actions.md](1-teoria/03-automatizacion-con-actions.md) | `add-to-project`, eventos, GraphQL en un workflow, higiene | 25 min |
+| [04-metricas-de-flujo.md](1-teoria/04-metricas-de-flujo.md) | Lead time, cycle time, WIP, ley de Little, DORA, umbrales | 25 min |
+| [05-calcular-metricas-con-la-api.md](1-teoria/05-calcular-metricas-con-la-api.md) | `gh` + `jq`, timeline, medianas y percentiles | 20 min |
+| [06-insights.md](1-teoria/06-insights.md) | Gráficos nativos, qué preguntan y dónde acaban | 20 min |
+| [07-informes-automaticos.md](1-teoria/07-informes-automaticos.md) | Informe como issue, serie histórica, por qué dejan de llegar | 20 min |
 
 ### Prácticas
 
@@ -74,10 +80,10 @@ métricas de flujo de tu repositorio.
 
 | Actividad | Tiempo |
 |-----------|-------:|
-| Teoría (4 archivos) | 2 h |
+| Teoría (7 archivos) | 2 h 35 min |
 | Prácticas (4) | 2 h 55 min |
-| Proyecto | 2 h 25 min |
-| Revisión y verificación | 40 min |
+| Proyecto | 2 h 10 min |
+| Revisión y verificación | 20 min |
 | **Total** | **8 h** |
 
 ## 🎩 Trucos y atajos

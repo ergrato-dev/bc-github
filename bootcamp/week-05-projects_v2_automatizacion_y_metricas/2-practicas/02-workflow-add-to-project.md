@@ -4,7 +4,7 @@
 > inicial puesto.
 
 **Duración estimada**: 45 min
-**Prerrequisitos**: [Teoría 02](../1-teoria/02-automatizacion-con-actions.md), práctica 01
+**Prerrequisitos**: [Teoría 02](../1-teoria/02-credenciales-para-projects.md) y [03](../1-teoria/03-automatizacion-con-actions.md), práctica 01
 
 ## Contexto
 
@@ -87,7 +87,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Añadir al project
-        uses: actions/add-to-project@v1.0.2
+        uses: actions/add-to-project@5afcf98fcd03f1c2f92c3c83f58ae24323cc57fd # v2.0.0
         with:
           project-url: https://github.com/users/<tu-usuario>/projects/<numero>
           github-token: ${{ secrets.PROJECT_TOKEN }}
