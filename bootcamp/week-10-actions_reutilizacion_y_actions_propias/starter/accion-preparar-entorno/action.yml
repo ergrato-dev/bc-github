@@ -32,13 +32,17 @@ author: tu-usuario
 runs:
   using: composite
   steps:
+    # pnpm/action-setup va antes que setup-node: `cache: pnpm` necesita
+    # pnpm en el PATH para localizar el store (Semana 09).
+    - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+
     - id: node
       uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: "24"        # ← PASO 1: ${{ inputs.node-version }}
-        cache: npm
+        cache: pnpm
 
     # PASO 1 — añade la condición cuando tengas el input:
     #   if: ${{ inputs.instalar == 'true' }}
     - shell: bash                  # ← obligatorio en composite actions
-      run: npm ci
+      run: pnpm install --frozen-lockfile

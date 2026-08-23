@@ -46,10 +46,12 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: "24"
-      - run: npm ci
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
       - run: node --test
 
   dist-al-dia:
@@ -57,16 +59,18 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: "24"
-      - run: npm ci
-      - run: npx ncc build src/index.js -o dist
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec ncc build src/index.js -o dist
       - name: Comprobar que dist coincide con src
         shell: bash
         run: |
           if ! git diff --quiet dist; then
-            echo "::error::dist/ está desactualizado. Ejecuta 'npm run build' y commitea."
+            echo "::error::dist/ está desactualizado. Ejecuta 'pnpm build' y commitea."
             git diff --stat dist
             exit 1
           fi
@@ -197,7 +201,7 @@ use. El ciclo honesto es:
 |--------------|----------------|
 | El runtime (`node20` → `node24`) | Avisos de deprecación en los logs de los runs |
 | Las actions que usas dentro | Dependabot con `package-ecosystem: github-actions` |
-| Las dependencias de npm | Dependabot con `package-ecosystem: npm` |
+| Las dependencias del proyecto | Dependabot con `package-ecosystem: npm` |
 | La API de GitHub | Changelog de GitHub y fallos en la autoprueba |
 
 ```yaml
@@ -211,6 +215,10 @@ updates:
     directory: "/"
     schedule: { interval: weekly }
 ```
+
+> [!NOTE]
+> El ecosistema se llama `npm` aunque uses `pnpm`: es el identificador del
+> registro, no del gestor. Dependabot lee tu `pnpm-lock.yaml` igual.
 
 Y la comprobación que más avisa de que algo se ha movido bajo tus pies: un
 workflow programado semanal que ejecute la autoprueba aunque nadie toque el
@@ -233,7 +241,7 @@ repositorio. Recuerda que un `schedule` se desactiva tras 60 días sin actividad
 ## 8. Trucos
 
 - **`uses: ./` es la mejor prueba que existe** y cuesta seis líneas
-- **Un script `npm run build`** con `ncc` evita que cada uno lo genere distinto
+- **Un script `pnpm build`** con `ncc` evita que cada uno lo genere distinto
 - **Comprueba el output en la propia autoprueba**: `: "${VALOR:?mensaje}"` falla
   el step si vino vacío
 - **`act` sirve para iterar**, no para dar por buena una action: imágenes

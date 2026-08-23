@@ -160,7 +160,7 @@ try {
 
 ## 5. Empaquetar: por qué existe `dist/`
 
-El runner **no ejecuta `npm install`** antes de tu action: descarga el
+El runner **no ejecuta `pnpm install`** antes de tu action: descarga el
 repositorio en la ref pedida y ejecuta `runs.main` tal cual. Si tu código
 importa `@actions/core` y `node_modules` no está ahí, falla.
 
@@ -174,8 +174,8 @@ Las dos salidas:
 El empaquetador estándar es [`@vercel/ncc`](https://github.com/vercel/ncc):
 
 ```bash
-npm i -D @vercel/ncc
-npx ncc build src/index.js -o dist
+pnpm add -D @vercel/ncc
+pnpm exec ncc build src/index.js -o dist
 git add dist && git commit -m "build: regenera dist"
 ```
 

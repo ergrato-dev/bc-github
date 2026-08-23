@@ -51,7 +51,7 @@ Los consejos genéricos de productividad no entran.
 | Dos ramas abiertas sin `stash` | `git worktree add ../hotfix main` |
 | Buscar cuándo apareció un texto | `git log -S "calcularMulta" --oneline` |
 | Historia de una función concreta | `git log -L :calcularMulta:src/index.ts` |
-| Bisect sin intervención | `git bisect start HEAD v1.0 && git bisect run npm test` |
+| Bisect sin intervención | `git bisect start HEAD v1.0 && git bisect run pnpm test` |
 | Abrir en el navegador lo que estás mirando | `gh browse src/index.ts` |
 | Firmar sin GPG | `gpg.format = ssh`, y sube la clave **dos veces** (auth y signing) |
 | Auditar qué commits van firmados | `gh api repos/{owner}/{repo}/commits --jq '.[] \| .commit.verification.verified'` |

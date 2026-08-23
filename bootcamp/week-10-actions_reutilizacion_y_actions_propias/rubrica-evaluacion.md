@@ -48,7 +48,7 @@
 6. Por seguridad: una action de terceros no puede leerse los secretos de quien la
    usa. Se le pasa un token declarándolo como `input` y pasándoselo con
    `with: token: ${{ secrets.GITHUB_TOKEN }}`.
-7. Porque el runner **no ejecuta `npm install`** antes de la action: descarga el
+7. Porque el runner **no ejecuta `pnpm install`** antes de la action: descarga el
    repositorio y ejecuta `runs.main` tal cual. Si la action no tiene
    dependencias, `main` puede apuntar directamente al código fuente.
 8. Solo corre en runners Linux; el arranque es mucho más lento (build o descarga

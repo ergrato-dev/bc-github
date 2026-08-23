@@ -60,14 +60,16 @@ jobs:
       cobertura: ${{ steps.medir.outputs.pct }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: ${{ inputs.node-version }}
-      - run: npm ci
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
       - id: medir
         shell: bash
         run: |
-          npm test
+          pnpm test
           echo "pct=87" >> "$GITHUB_OUTPUT"
 ```
 

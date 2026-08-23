@@ -73,7 +73,7 @@ Reordenar no es un verbo: se mueven las líneas. Y `exec` es lo que convierte un
 rebase en una verificación:
 
 ```bash
-git rebase -i --exec 'npm test' main
+git rebase -i --exec 'pnpm test' main
 ```
 
 Aplica los tests después de **cada** commit reescrito y se detiene en el primero
@@ -245,7 +245,7 @@ que es exactamente lo que pasa al rebasear la misma rama varias veces.
 - **Rebasear sin abrir el editor** (útil con `--autosquash`):
   `GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash main`
 - **Comprobar que todos los commits de tu rama compilan**:
-  `git rebase -i --exec 'npm test' main`
+  `git rebase -i --exec 'pnpm test' main`
 - **Firmar de nuevo toda la rama tras reescribirla**:
   `git rebase --exec 'git commit --amend --no-edit -S' -i main`
 

@@ -105,7 +105,7 @@ combinación puede no ser legal.
 Cómo verlo sin volverse abogado:
 
 - La pestaña **Insights → Dependency graph** lista dependencias y licencias
-- `npm query`, `pip-licenses` o equivalentes generan el inventario desde la CLI
+- `pnpm licenses list`, `pip-licenses` o equivalentes generan el inventario desde la CLI
 - Un inventario formal (SBOM) es parte de la cadena de suministro, en la Semana 13
 
 Nada de esto sustituye a un abogado cuando el proyecto es comercial. Lo que sí

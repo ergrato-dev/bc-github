@@ -30,7 +30,7 @@ La regla más importante del CD, y la que más se incumple:
 > El artefacto que se despliega es **exactamente** el que se probó. No se
 > reconstruye por entorno.
 
-Reconstruir para producción significa ejecutar `npm ci` otra vez, con otro reloj,
+Reconstruir para producción significa ejecutar `pnpm install` otra vez, con otro reloj,
 otra caché y quizá otra versión transitiva. Es un binario distinto que nadie ha
 probado.
 
@@ -43,7 +43,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - run: npm ci && npm run build
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+      - run: pnpm install --frozen-lockfile && pnpm build
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: sitio

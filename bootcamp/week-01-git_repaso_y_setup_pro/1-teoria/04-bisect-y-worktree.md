@@ -59,7 +59,7 @@ git bisect reset
 
 ```bash
 git bisect start HEAD v1.0      # <bad> <good> en la misma línea
-git bisect run npm test
+git bisect run pnpm test
 ```
 
 Git ejecuta el comando en cada paso y decide solo. Los códigos de salida no son
@@ -78,9 +78,9 @@ tu script no puede opinar.
 ```bash
 #!/usr/bin/env bash
 # probar.sh — devuelve 125 si ni siquiera compila
-npm ci --silent || exit 125
-npm run build --silent || exit 125
-npm test --silent
+pnpm install --frozen-lockfile --silent || exit 125
+pnpm build --silent || exit 125
+pnpm test --silent
 ```
 
 ```bash
@@ -184,7 +184,7 @@ que apunta a `.git/worktrees/<nombre>` del repositorio principal.
   falla si `main` ya está checkouteada en otro sitio. Es una protección, no un
   fallo: evita dos árboles moviendo la misma rama
 - **Los archivos ignorados no viajan.** Cada worktree necesita su propio
-  `npm ci` y su propio `.env`. Es el precio de tener un árbol limpio de verdad
+  `pnpm install` y su propio `.env`. Es el precio de tener un árbol limpio de verdad
 
 ```bash
 git worktree lock ../revision-pr-42    # evita que `prune` lo elimine (p. ej. en un USB)

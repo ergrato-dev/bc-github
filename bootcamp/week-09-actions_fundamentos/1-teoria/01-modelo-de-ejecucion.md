@@ -69,7 +69,7 @@ Esta tabla resuelve la mayoría de las preguntas de la semana.
 
 Las dos consecuencias que más tiempo cuestan:
 
-- **`npm install` en el job A no deja nada instalado para el job B.** Si B
+- **`pnpm install` en el job A no deja nada instalado para el job B.** Si B
   necesita dependencias, B las instala. No hay atajo
 - **`export MI_VAR=x` en un step no llega al siguiente**, porque cada `run:` es
   un proceso de shell nuevo

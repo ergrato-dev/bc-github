@@ -65,15 +65,17 @@ outputs:
 runs:
   using: composite
   steps:
+    - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+
     - id: node
       uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
       with:
         node-version: ${{ inputs.node-version }}
-        cache: npm
+        cache: pnpm
 
     - if: ${{ inputs.instalar == 'true' }}
       shell: bash
-      run: npm ci
+      run: pnpm install --frozen-lockfile
 ```
 
 **Verifica** que ningún `run:` se ha quedado sin `shell:`:

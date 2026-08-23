@@ -13,12 +13,16 @@ estimado: 45-60 minutos.
 | GitHub CLI | 2.40 | `gh --version` |
 | `jq` | 1.6 | `jq --version` |
 | Node.js | 22 | `node --version` |
-| pnpm | 10 | `pnpm --version` |
+| pnpm | 11 | `pnpm --version` |
 | Docker | 26 | `docker --version` |
 
 > [!NOTE]
-> Docker no hace falta hasta la Semana 10. Node y pnpm no hacen falta hasta la
-> Semana 09. Git, `gh` y `jq` sí desde el día 1.
+> Docker no hace falta hasta la Semana 10, y se usa de verdad en la Semana 12.
+> Node y pnpm no hacen falta hasta la Semana 09; antes solo aparecen en ejemplos
+> que puedes leer sin ejecutar. Git, `gh` y `jq` sí desde el día 1.
+>
+> `pnpm` 11 es el mínimo real: `pnpm version`, que se usa en la Semana 12, se
+> añadió en la 11.0.0.
 
 ### Instalación
 

@@ -23,7 +23,7 @@ En un run cualquiera se ejecuta código de **cuatro procedencias distintas**:
 |-------------|---------|-------------------|
 | Tu repositorio | `.github/workflows/ci.yml`, tus scripts | Tú y quien pueda mergear |
 | Actions de terceros | `actions/checkout`, cualquier `uses:` | El mantenedor de esa action |
-| Dependencias del build | `npm ci` y los `postinstall` de 800 paquetes | El registro y sus autores |
+| Dependencias del build | `pnpm install` y los `postinstall` de 800 paquetes | El registro y sus autores |
 | El payload del evento | El título de un PR, el nombre de una rama | **Cualquiera** |
 
 Las cuatro corren en el mismo proceso, con las mismas variables de entorno y con
@@ -158,7 +158,7 @@ ventana, y **no** sustituye a no subirlo.
 
 Es tan importante como lo anterior:
 
-- **No filtran las dependencias de tu build.** `npm ci` sigue descargando lo que
+- **No filtran las dependencias de tu build.** `pnpm install` sigue descargando lo que
   diga el lockfile; eso es la Semana 13
 - **No leen tus scripts.** Un `run:` tuyo que hace `curl | bash` pasa todas las
   políticas

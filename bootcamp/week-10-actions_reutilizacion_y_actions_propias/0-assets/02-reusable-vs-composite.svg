@@ -60,10 +60,10 @@
   <text class="t mono" x="504" y="222">- uses: ./.github/actions/preparar</text>
   <text class="t lbl"  x="504" y="242">setup-node</text>
   <text class="t lbl"  x="504" y="260">restaurar caché</text>
-  <text class="t lbl"  x="504" y="278">npm ci</text>
+  <text class="t lbl"  x="504" y="278">pnpm install</text>
 
   <rect class="inner" x="492" y="304" width="286" height="26" rx="4"/>
-  <text class="t mono" x="504" y="322">- run: npm test</text>
+  <text class="t mono" x="504" y="322">- run: pnpm test</text>
 
   <text class="t lbl" x="492" y="352">Mismo disco, mismo entorno, mismos permisos</text>
 
