@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" role="img" aria-label="Los cinco eslabones de la cadena de suministro de software: fuente, dependencias, build, publicación y consumo. Encima de cada uno, el control de GitHub que lo defiende y la semana del bootcamp en que se monta; debajo, el ataque típico que recibe.">
+  <title>Los cinco eslabones y qué defiende cada uno</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .ok   { fill: #0d1117; stroke: #3fb950; stroke-width: 1.5; }
+    .bad  { fill: #0d1117; stroke: #f85149; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 11px; fill: #8b949e; }
+    .good { font-size: 11px; fill: #3fb950; }
+    .err  { font-size: 11px; fill: #f85149; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .wk   { font-size: 10px; fill: #58a6ff; }
+    .e    { stroke: #58a6ff; stroke-width: 2; fill: none; }
+  </style>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="880" height="420"/>
+  <text class="t h" x="25" y="34">Un control por eslabón, y el ataque que espera en cada uno</text>
+
+  <text class="t good" x="25" y="66">DEFIENDE</text>
+
+  <rect class="ok" x="25"  y="80" width="150" height="62" rx="8"/>
+  <text class="t s"  x="38" y="102">Ruleset · firmas</text>
+  <text class="t s"  x="38" y="120">Push protection</text>
+  <text class="t wk" x="38" y="136">Semanas 01 · 08 · 14</text>
+
+  <rect class="ok" x="195" y="80" width="150" height="62" rx="8"/>
+  <text class="t s"  x="208" y="102">Dependabot</text>
+  <text class="t s"  x="208" y="120">Dependency review</text>
+  <text class="t wk" x="208" y="136">Semana 13</text>
+
+  <rect class="ok" x="365" y="80" width="150" height="62" rx="8"/>
+  <text class="t s"  x="378" y="102">permissions mínimas</text>
+  <text class="t s"  x="378" y="120">actions por SHA</text>
+  <text class="t wk" x="378" y="136">Semana 11</text>
+
+  <rect class="ok" x="535" y="80" width="150" height="62" rx="8"/>
+  <text class="t s"  x="548" y="102">Releases inmutables</text>
+  <text class="t s"  x="548" y="120">Attestations · SBOM</text>
+  <text class="t wk" x="548" y="136">Semanas 12 · 14</text>
+
+  <rect class="ok" x="705" y="80" width="150" height="62" rx="8"/>
+  <text class="t s"  x="718" y="102">gh attestation</text>
+  <text class="t s"  x="718" y="120">verify</text>
+  <text class="t wk" x="718" y="136">Semanas 12 · 14</text>
+
+  <rect class="surf" x="25"  y="180" width="150" height="56" rx="8"/>
+  <text class="t cap" x="38" y="206">Fuente</text>
+  <text class="t s"   x="38" y="224">tu repositorio</text>
+
+  <rect class="surf" x="195" y="180" width="150" height="56" rx="8"/>
+  <text class="t cap" x="208" y="206">Dependencias</text>
+  <text class="t s"   x="208" y="224">lo que instalas</text>
+
+  <rect class="surf" x="365" y="180" width="150" height="56" rx="8"/>
+  <text class="t cap" x="378" y="206">Build</text>
+  <text class="t s"   x="378" y="224">runner y workflow</text>
+
+  <rect class="surf" x="535" y="180" width="150" height="56" rx="8"/>
+  <text class="t cap" x="548" y="206">Publicación</text>
+  <text class="t s"   x="548" y="224">registro y release</text>
+
+  <rect class="surf" x="705" y="180" width="150" height="56" rx="8"/>
+  <text class="t cap" x="718" y="206">Consumo</text>
+  <text class="t s"   x="718" y="224">quien te instala</text>
+
+  <line class="e" x1="175" y1="208" x2="191" y2="208" marker-end="url(#a)"/>
+  <line class="e" x1="345" y1="208" x2="361" y2="208" marker-end="url(#a)"/>
+  <line class="e" x1="515" y1="208" x2="531" y2="208" marker-end="url(#a)"/>
+  <line class="e" x1="685" y1="208" x2="701" y2="208" marker-end="url(#a)"/>
+
+  <text class="t err" x="25" y="278">RECIBE</text>
+
+  <rect class="bad" x="25"  y="292" width="150" height="62" rx="8"/>
+  <text class="t s" x="38" y="314">Cuenta comprometida</text>
+  <text class="t s" x="38" y="332">Commit sin revisar</text>
+
+  <rect class="bad" x="195" y="292" width="150" height="62" rx="8"/>
+  <text class="t s" x="208" y="314">Typosquatting</text>
+  <text class="t s" x="208" y="332">Mantenedor tomado</text>
+
+  <rect class="bad" x="365" y="292" width="150" height="62" rx="8"/>
+  <text class="t s" x="378" y="314">Action mutable</text>
+  <text class="t s" x="378" y="332">Secretos en el log</text>
+
+  <rect class="bad" x="535" y="292" width="150" height="62" rx="8"/>
+  <text class="t s" x="548" y="314">Token de publicar</text>
+  <text class="t s" x="548" y="332">Artefacto sustituido</text>
+
+  <rect class="bad" x="705" y="292" width="150" height="62" rx="8"/>
+  <text class="t s" x="718" y="314">Nadie verifica</text>
+  <text class="t s" x="718" y="332">nada de lo anterior</text>
+
+  <text class="t lbl" x="25" y="392">En los compromisos publicados el atacante casi nunca rompe algo: usa un permiso legítimo que sobraba.</text>
+</svg>

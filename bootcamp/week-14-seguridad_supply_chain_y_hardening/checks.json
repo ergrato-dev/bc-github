@@ -1,0 +1,153 @@
+{
+  "semana": "14",
+  "titulo": "Seguridad: cadena de suministro y hardening",
+  "checks": [
+    {
+      "id": "secret-scanning-activo",
+      "descripcion": "El escaneo de secretos está activo en el repositorio",
+      "api": "repos/{repo}",
+      "jq": ".security_and_analysis.secret_scanning.status == \"enabled\"",
+      "pista": "2-practicas/01-secretos-que-no-entran.md, paso 2"
+    },
+    {
+      "id": "push-protection-activa",
+      "descripcion": "La protección de push está activa",
+      "api": "repos/{repo}",
+      "jq": ".security_and_analysis.secret_scanning_push_protection.status == \"enabled\"",
+      "pista": "2-practicas/01-secretos-que-no-entran.md, paso 2"
+    },
+    {
+      "id": "alertas-de-secretos-legibles",
+      "descripcion": "Las alertas de secret scanning son legibles por API",
+      "api": "repos/{repo}/secret-scanning/alerts?per_page=1",
+      "jq": "type == \"array\"",
+      "pista": "2-practicas/01-secretos-que-no-entran.md, paso 6"
+    },
+    {
+      "id": "sin-secretos-abiertos",
+      "descripcion": "No queda ninguna alerta de secreto abierta",
+      "api": "repos/{repo}/secret-scanning/alerts?state=open&per_page=100",
+      "jq": "length == 0",
+      "pista": "2-practicas/01-secretos-que-no-entran.md, paso 6"
+    },
+    {
+      "id": "sin-bypass-de-push-protection",
+      "descripcion": "Nadie se ha saltado la protección de push en este repositorio",
+      "api": "repos/{repo}/secret-scanning/alerts?is_bypassed=true&per_page=100",
+      "jq": "length == 0",
+      "pista": "2-practicas/01-secretos-que-no-entran.md, paso 4"
+    },
+    {
+      "id": "gitignore-cubre-secretos-locales",
+      "descripcion": "El .gitignore ignora los archivos .env",
+      "api": "repos/{repo}/contents/.gitignore",
+      "jq": "(.content | @base64d | test(\"(?m)^\\\\.env\"))",
+      "pista": "2-practicas/01-secretos-que-no-entran.md, paso 7"
+    },
+    {
+      "id": "politica-de-seguridad",
+      "descripcion": "Existe SECURITY.md en la raíz de la rama por defecto",
+      "api": "repos/{repo}/contents/SECURITY.md",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/02-la-puerta-de-los-reportes.md, paso 1"
+    },
+    {
+      "id": "politica-con-canal-privado",
+      "descripcion": "La política enlaza el formulario de reporte privado",
+      "api": "repos/{repo}/contents/SECURITY.md",
+      "jq": "(.content | @base64d | test(\"security/advisories/new\"))",
+      "pista": "2-practicas/02-la-puerta-de-los-reportes.md, paso 1"
+    },
+    {
+      "id": "reporte-privado-activo",
+      "descripcion": "El reporte privado de vulnerabilidades está activado",
+      "api": "repos/{repo}/private-vulnerability-reporting",
+      "jq": ".enabled == true",
+      "pista": "2-practicas/02-la-puerta-de-los-reportes.md, paso 2"
+    },
+    {
+      "id": "advisory-en-borrador",
+      "descripcion": "Hay al menos un advisory del repositorio en borrador",
+      "api": "repos/{repo}/security-advisories?per_page=100",
+      "jq": "[.[] | select(.state == \"draft\")] | length > 0",
+      "pista": "2-practicas/02-la-puerta-de-los-reportes.md, paso 3"
+    },
+    {
+      "id": "advisory-con-paquete-y-parche",
+      "descripcion": "El advisory declara paquete afectado y versión que lo parchea",
+      "api": "repos/{repo}/security-advisories?per_page=100",
+      "jq": "[.[] | select(((.vulnerabilities // [])[0].package.name // \"\") != \"\" and ((.vulnerabilities // [])[0].patched_versions // \"\") != \"\")] | length > 0",
+      "pista": "2-practicas/02-la-puerta-de-los-reportes.md, paso 3"
+    },
+    {
+      "id": "ningun-advisory-publicado",
+      "descripcion": "Ningún advisory de práctica se ha publicado en la base global",
+      "api": "repos/{repo}/security-advisories?per_page=100",
+      "jq": "[.[] | select(.state == \"published\")] | length == 0",
+      "pista": "2-practicas/02-la-puerta-de-los-reportes.md, paso 6"
+    },
+    {
+      "id": "sbom-disponible",
+      "descripcion": "El SBOM del grafo de dependencias se puede exportar",
+      "api": "repos/{repo}/dependency-graph/sbom",
+      "jq": "(.sbom.spdxVersion // \"\") | startswith(\"SPDX-\")",
+      "pista": "2-practicas/03-sbom-y-attestations.md, paso 1"
+    },
+    {
+      "id": "workflow-genera-el-sbom",
+      "descripcion": "El workflow de cadena de suministro genera el SBOM del artefacto",
+      "api": "repos/{repo}/contents/.github/workflows/cadena-de-suministro.yml",
+      "jq": "(.content | @base64d | test(\"sbom-action@[0-9a-f]{40}\"))",
+      "pista": "2-practicas/03-sbom-y-attestations.md, paso 2"
+    },
+    {
+      "id": "workflow-atesta-el-sbom",
+      "descripcion": "Y lo atesta con actions/attest anclada por SHA",
+      "api": "repos/{repo}/contents/.github/workflows/cadena-de-suministro.yml",
+      "jq": "(.content | @base64d) as $y | ($y | test(\"actions/attest@[0-9a-f]{40}\")) and ($y | test(\"(?m)^ *sbom-path:\"))",
+      "pista": "2-practicas/03-sbom-y-attestations.md, paso 2"
+    },
+    {
+      "id": "permisos-de-atestacion",
+      "descripcion": "El workflow declara id-token y attestations en write",
+      "api": "repos/{repo}/contents/.github/workflows/cadena-de-suministro.yml",
+      "jq": "(.content | @base64d) as $y | ($y | test(\"(?m)^ *id-token: *write\")) and ($y | test(\"(?m)^ *attestations: *write\"))",
+      "pista": "2-practicas/03-sbom-y-attestations.md, paso 2"
+    },
+    {
+      "id": "cadena-de-suministro-pinneada",
+      "descripcion": "Ese workflow no usa ninguna action por tag flotante",
+      "api": "repos/{repo}/contents/.github/workflows/cadena-de-suministro.yml",
+      "jq": "((.content | @base64d | test(\"(?m)^ *(- )?uses: .*@(v[0-9]|main|master)\")) | not)",
+      "pista": "2-practicas/04-scorecard-y-hardening.md, paso 5"
+    },
+    {
+      "id": "scorecard-configurado",
+      "descripcion": "Existe el workflow de Scorecard con la action anclada por SHA",
+      "api": "repos/{repo}/contents/.github/workflows/scorecard.yml",
+      "jq": "(.content | @base64d | test(\"ossf/scorecard-action@[0-9a-f]{40}\"))",
+      "pista": "2-practicas/04-scorecard-y-hardening.md, paso 2"
+    },
+    {
+      "id": "scorecard-sube-el-sarif",
+      "descripcion": "El workflow sube los resultados a code scanning con su propia categoría",
+      "api": "repos/{repo}/contents/.github/workflows/scorecard.yml",
+      "jq": "(.content | @base64d) as $y | ($y | test(\"upload-sarif@[0-9a-f]{40}\")) and ($y | test(\"(?m)^ *category:\"))",
+      "pista": "2-practicas/04-scorecard-y-hardening.md, paso 2"
+    },
+    {
+      "id": "scorecard-analizando",
+      "descripcion": "Hay al menos un análisis de Scorecard registrado",
+      "api": "repos/{repo}/code-scanning/analyses?per_page=100",
+      "jq": "[.[] | select(.tool.name == \"Scorecard\")] | length > 0",
+      "pista": "2-practicas/04-scorecard-y-hardening.md, paso 2"
+    },
+    {
+      "id": "mapa-de-la-cadena-documentado",
+      "descripcion": "El README explica qué control cubre cada eslabón",
+      "api": "repos/{repo}/contents/README.md",
+      "jq": "(.content | @base64d | test(\"(?i)cadena de suministro\"))",
+      "pista": "2-practicas/04-scorecard-y-hardening.md, paso 7"
+    }
+  ]
+}

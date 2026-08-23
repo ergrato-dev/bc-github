@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" role="img" aria-label="Cómo se firma y se verifica una atestación. El workflow pide su token OIDC, Fulcio emite un certificado de vida corta, se firma con una clave efímera que se descarta, la firma queda registrada en el log de transparencia Rekor y la atestación se guarda asociada al digest del artefacto. Después, gh attestation verify recalcula el digest, busca la atestación, comprueba la firma y exige que la identidad del firmante y el tipo de predicado sean los esperados.">
+  <title>De la firma efímera a la verificación</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .hi   { fill: #0d1117; stroke: #58a6ff; stroke-width: 1.5; }
+    .ok   { fill: #0d1117; stroke: #3fb950; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 11px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .num  { font-size: 12px; font-weight: 600; fill: #58a6ff; }
+    .good { font-size: 11px; fill: #3fb950; }
+    .e    { stroke: #58a6ff; stroke-width: 2; fill: none; }
+    .eg   { stroke: #3fb950; stroke-width: 2; fill: none; }
+    .sep  { stroke: #30363d; stroke-width: 1.5; stroke-dasharray: 5 5; }
+  </style>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="880" height="420"/>
+  <text class="t h" x="25" y="34">Firmar sin tener ninguna clave que guardar</text>
+
+  <text class="t num" x="25" y="66">FIRMA · dentro del workflow</text>
+
+  <rect class="surf" x="25" y="80" width="176" height="66" rx="8"/>
+  <text class="t cap"  x="38" y="104">Artefacto</text>
+  <text class="t mono" x="38" y="124">sha256:9f86d0…</text>
+  <text class="t s"    x="38" y="140">el subject es el digest</text>
+
+  <line class="e" x1="201" y1="113" x2="229" y2="113" marker-end="url(#a)"/>
+
+  <rect class="surf" x="233" y="80" width="176" height="66" rx="8"/>
+  <text class="t cap"  x="246" y="104">Predicado</text>
+  <text class="t mono" x="246" y="124">spdx.dev/Document</text>
+  <text class="t s"    x="246" y="140">qué se afirma del artefacto</text>
+
+  <line class="e" x1="409" y1="113" x2="437" y2="113" marker-end="url(#a)"/>
+
+  <rect class="hi" x="441" y="80" width="176" height="66" rx="8"/>
+  <text class="t cap"  x="454" y="104">Token OIDC</text>
+  <text class="t mono" x="454" y="124">id-token: write</text>
+  <text class="t s"    x="454" y="140">la identidad del workflow</text>
+
+  <line class="e" x1="617" y1="113" x2="645" y2="113" marker-end="url(#a)"/>
+
+  <rect class="hi" x="649" y="80" width="206" height="66" rx="8"/>
+  <text class="t cap" x="662" y="104">Fulcio</text>
+  <text class="t s"   x="662" y="124">certificado de vida corta</text>
+  <text class="t s"   x="662" y="140">la clave se usa y se tira</text>
+
+  <path class="e" d="M752 146 L752 176" marker-end="url(#a)"/>
+
+  <rect class="hi" x="441" y="180" width="414" height="56" rx="8"/>
+  <text class="t cap" x="454" y="204">Rekor · log de transparencia</text>
+  <text class="t s"   x="454" y="222">queda constancia pública y añadida solo al final de que esa identidad firmó a esa hora</text>
+
+  <path class="e" d="M441 208 L300 208 L300 178" marker-end="url(#a)"/>
+
+  <rect class="surf" x="205" y="180" width="190" height="56" rx="8"/>
+  <text class="t cap"  x="218" y="204">Atestación guardada</text>
+  <text class="t mono" x="218" y="222">attestations: write</text>
+
+  <line class="sep" x1="25" y1="262" x2="855" y2="262"/>
+
+  <text class="t good" x="25" y="290">VERIFICACIÓN · en quien consume, aunque seas tú</text>
+
+  <rect class="ok" x="25" y="304" width="200" height="62" rx="8"/>
+  <text class="t cap"  x="38" y="328">1 · Recalcular</text>
+  <text class="t s"    x="38" y="348">el digest del archivo que tienes</text>
+
+  <line class="eg" x1="225" y1="335" x2="253" y2="335" marker-end="url(#ag)"/>
+
+  <rect class="ok" x="257" y="304" width="200" height="62" rx="8"/>
+  <text class="t cap" x="270" y="328">2 · Buscar y comprobar</text>
+  <text class="t s"   x="270" y="348">la firma contra Sigstore</text>
+
+  <line class="eg" x1="457" y1="335" x2="485" y2="335" marker-end="url(#ag)"/>
+
+  <rect class="ok" x="489" y="304" width="366" height="62" rx="8"/>
+  <text class="t cap"  x="502" y="328">3 · Exigir identidad y predicado</text>
+  <text class="t mono" x="502" y="348">--signer-workflow · --predicate-type</text>
+
+  <text class="t lbl" x="25" y="400">Leer el JSON de una atestación no comprueba nada. Solo el paso 2 valida firmas, y solo el 3 decide de quién te fías.</text>
+</svg>

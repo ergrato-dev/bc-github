@@ -367,6 +367,41 @@ Los consejos genéricos de productividad no entran.
 
 ---
 
-> Las secciones de las semanas 14 a 21 se añaden a medida que se publica cada
+## Semana 14 — Seguridad: cadena de suministro y hardening
+
+→ [Semana 14](../bootcamp/week-14-seguridad_supply_chain_y_hardening/README.md)
+
+| Truco | Cómo |
+|-------|------|
+| Ver de un vistazo qué seguridad tienes activa | `gh api repos/{owner}/{repo} --jq '.security_and_analysis'` |
+| Encender las dos capas de secretos por API | `-F 'security_and_analysis[secret_scanning][status]=enabled'` |
+| Lo único que es una emergencia | `?validity=active` en la consulta de alertas de secretos |
+| Quién se saltó la protección y cuándo | `?is_bypassed=true` — primera consulta de cualquier auditoría |
+| Qué secretos ya están fuera | `?is_publicly_leaked=true` |
+| Dónde está el secreto exactamente | `secret-scanning/alerts/N/locations`, el endpoint que nadie llama |
+| Un token inventado no dispara nada | Los patrones llevan suma de comprobación: hay que probar con uno real |
+| El bloqueo se comprueba por push, no por commit | Un secreto en un commit tumba el push entero |
+| Saber si tu puerta de reportes está abierta | `gh api repos/{owner}/{repo}/private-vulnerability-reporting --jq '.enabled'` |
+| El enlace que ahorra el paso que todos abandonan | `https://github.com/OWNER/REPO/security/advisories/new` |
+| Crear el advisory ya con su fork privado | `"start_private_fork": true` al crearlo |
+| Encontrar borradores olvidados | `gh api repos/{owner}/{repo}/security-advisories?state=draft` |
+| El GHSA existe antes de publicar | Sirve para nombrar la rama del arreglo sin decir qué arregla |
+| El SBOM del repositorio, en un comando | `gh api repos/{owner}/{repo}/dependency-graph/sbom` |
+| Convertirlo en algo que se pueda `grep` | `--jq '.sbom.packages[].name'` |
+| Ver qué dependencias entraron entre dos versiones | `diff` entre los SBOM de dos releases |
+| `404` en el SBOM no es un permiso | Significa que no hay manifiestos reconocidos |
+| `actions/attest-sbom` está deprecada | Usa `actions/attest` con `sbom-path` |
+| Verificar el SBOM, no la procedencia | `--predicate-type https://spdx.dev/Document/v2.3` |
+| Verificación estrecha de verdad | `--signer-workflow OWNER/REPO/.github/workflows/x.yml` |
+| Rechazar lo firmado en runners ajenos | `--deny-self-hosted-runners` |
+| Verificar sin conexión | `gh attestation download` y `gh attestation trusted-root` |
+| Un artefacto puede tener varias atestaciones | Filtra con `?predicate_type=` en el endpoint |
+| La puntuación de cualquier proyecto, sin autenticarse | `curl -s https://api.scorecard.dev/projects/github.com/OWNER/REPO` |
+| Lo que más sube con menos trabajo | `Token-Permissions` y `Pinned-Dependencies` |
+| Puntúa y es gratis | `persist-credentials: false` en cada `checkout` |
+
+---
+
+> Las secciones de las semanas 15 a 21 se añaden a medida que se publica cada
 > semana. Si has hecho una semana y su sección no está aquí,
 > [abre un issue](https://github.com/ergrato-dev/bc-github/issues).

@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880" height="400" role="img" aria-label="El círculo del advisory: un reporte privado crea un borrador en tu repositorio, se arregla en un fork privado temporal, se publica junto con la versión parcheada, entra en la GitHub Advisory Database y llega a quien usa tu paquete como una alerta de Dependabot con la versión a la que subir.">
+  <title>De tu advisory a la alerta de Dependabot de otro</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .hi   { fill: #0d1117; stroke: #58a6ff; stroke-width: 1.5; }
+    .ok   { fill: #0d1117; stroke: #3fb950; stroke-width: 1.5; }
+    .warn { fill: #0d1117; stroke: #d29922; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 11px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .priv { font-size: 11px; fill: #d29922; }
+    .pub  { font-size: 11px; fill: #3fb950; }
+    .e    { stroke: #58a6ff; stroke-width: 2; fill: none; }
+    .sep  { stroke: #30363d; stroke-width: 1.5; stroke-dasharray: 5 5; }
+  </style>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="880" height="400"/>
+  <text class="t h" x="25" y="34">Lo que escribes tú acaba siendo la alerta de otro</text>
+
+  <text class="t priv" x="25"  y="64">PRIVADO · durante el embargo</text>
+  <text class="t pub"  x="470" y="64">PÚBLICO · el día de la publicación</text>
+  <line class="sep" x1="452" y1="76" x2="452" y2="336"/>
+
+  <rect class="surf" x="25" y="86" width="185" height="60" rx="8"/>
+  <text class="t cap" x="38" y="110">Reporte privado</text>
+  <text class="t s"   x="38" y="128">/security/advisories/new</text>
+
+  <line class="e" x1="210" y1="116" x2="240" y2="116" marker-end="url(#a)"/>
+
+  <rect class="warn" x="244" y="86" width="190" height="60" rx="8"/>
+  <text class="t cap" x="257" y="110">Advisory en borrador</text>
+  <text class="t s"   x="257" y="128">draft · triage</text>
+
+  <path class="e" d="M339 146 L339 186" marker-end="url(#a)"/>
+
+  <rect class="warn" x="244" y="190" width="190" height="60" rx="8"/>
+  <text class="t cap" x="257" y="214">Fork privado temporal</text>
+  <text class="t s"   x="257" y="232">se arregla sin enseñar el fallo</text>
+
+  <path class="e" d="M339 250 L339 288" marker-end="url(#a)"/>
+
+  <rect class="surf" x="244" y="292" width="190" height="56" rx="8"/>
+  <text class="t cap" x="257" y="316">Versión parcheada</text>
+  <text class="t s"   x="257" y="334">publicada en el registro</text>
+
+  <path class="e" d="M434 320 L470 320 L470 262" marker-end="url(#a)"/>
+
+  <rect class="ok" x="470" y="196" width="190" height="62" rx="8"/>
+  <text class="t cap" x="483" y="220">Advisory publicado</text>
+  <text class="t s"   x="483" y="238">rango vulnerable + parche</text>
+
+  <path class="e" d="M565 196 L565 158" marker-end="url(#a)"/>
+
+  <rect class="hi" x="470" y="96" width="190" height="62" rx="8"/>
+  <text class="t cap" x="483" y="120">Advisory Database</text>
+  <text class="t s"   x="483" y="138">GHSA · y CVE si lo pides</text>
+
+  <line class="e" x1="660" y1="127" x2="690" y2="127" marker-end="url(#a)"/>
+
+  <rect class="surf" x="694" y="96" width="161" height="62" rx="8"/>
+  <text class="t cap" x="707" y="120">Grafo de otro</text>
+  <text class="t s"   x="707" y="138">usa tu paquete</text>
+
+  <path class="e" d="M774 158 L774 194" marker-end="url(#a)"/>
+
+  <rect class="ok" x="694" y="198" width="161" height="62" rx="8"/>
+  <text class="t cap" x="707" y="222">Alerta de Dependabot</text>
+  <text class="t s"   x="707" y="240">con versión a la que subir</text>
+
+  <text class="t lbl" x="25" y="378">Si el advisory sale sin patched_versions, esa alerta nace sin arreglo posible: el caso de la Semana 13, causado por ti.</text>
+</svg>
