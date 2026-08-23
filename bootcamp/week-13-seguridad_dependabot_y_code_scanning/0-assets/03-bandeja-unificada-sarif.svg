@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880" height="400" role="img" aria-label="Bandeja unificada de code scanning: CodeQL y cualquier herramienta de terceros emiten SARIF 2.1.0 y lo suben con una categoría propia; las alertas comparten histórico, descartes con motivo y checks obligatorios">
+  <title>Cualquier herramienta, la misma bandeja</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .hi   { fill: #0d1117; stroke: #58a6ff; stroke-width: 1.5; }
+    .ok   { fill: #0d1117; stroke: #3fb950; stroke-width: 1.5; }
+    .err  { fill: #0d1117; stroke: #f85149; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .errt { font-size: 11px; fill: #f85149; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+    .eb   { stroke: #58a6ff; stroke-width: 2; fill: none; }
+  </style>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#30363d"/>
+    </marker>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="880" height="400"/>
+  <text class="t h" x="40" y="38">Code scanning no es CodeQL: es la bandeja donde aterriza cualquier herramienta</text>
+
+  <rect class="surf" x="40" y="74" width="180" height="60" rx="8"/>
+  <text class="t cap" x="58" y="98">CodeQL</text>
+  <text class="t s"   x="58" y="120">código y workflows</text>
+
+  <rect class="surf" x="40" y="148" width="180" height="60" rx="8"/>
+  <text class="t cap" x="58" y="172">Trivy</text>
+  <text class="t s"   x="58" y="194">contenedores e IaC</text>
+
+  <rect class="surf" x="40" y="222" width="180" height="60" rx="8"/>
+  <text class="t cap" x="58" y="246">Tu linter</text>
+  <text class="t s"   x="58" y="268">solo reglas de seguridad</text>
+
+  <line class="e" x1="220" y1="104" x2="264" y2="150" marker-end="url(#a)"/>
+  <line class="e" x1="220" y1="178" x2="264" y2="178" marker-end="url(#a)"/>
+  <line class="e" x1="220" y1="252" x2="264" y2="206" marker-end="url(#a)"/>
+
+  <rect class="hi" x="268" y="140" width="176" height="78" rx="8"/>
+  <text class="t cap"  x="286" y="166">SARIF 2.1.0</text>
+  <text class="t mono" x="286" y="188">results · locations</text>
+  <text class="t mono" x="286" y="208">partialFingerprints</text>
+
+  <line class="eb" x1="444" y1="179" x2="492" y2="179" marker-end="url(#ab)"/>
+
+  <rect class="hi" x="496" y="140" width="176" height="78" rx="8"/>
+  <text class="t cap"  x="514" y="166">upload-sarif</text>
+  <text class="t mono" x="514" y="188">category: única</text>
+  <text class="t s"    x="514" y="208">security-events: write</text>
+
+  <line class="eb" x1="672" y1="179" x2="712" y2="179" marker-end="url(#ab)"/>
+
+  <rect class="ok" x="716" y="120" width="124" height="118" rx="8"/>
+  <text class="t cap" x="734" y="146">Security</text>
+  <text class="t s"   x="734" y="168">histórico</text>
+  <text class="t s"   x="734" y="188">descartes</text>
+  <text class="t s"   x="734" y="208">checks</text>
+  <text class="t s"   x="734" y="228">comentarios</text>
+
+  <rect class="err" x="268" y="278" width="404" height="72" rx="8"/>
+  <text class="t cap"  x="286" y="302">Si dos herramientas comparten la misma category…</text>
+  <text class="t errt" x="286" y="324">cada subida marca como resueltas las alertas de la otra</text>
+  <text class="t lbl"  x="286" y="342">y el panel parpadea según quién terminó último</text>
+
+  <text class="t lbl" x="40" y="376">Una category por herramienta y por dimensión de análisis. En una matriz de lenguajes, el lenguaje va dentro.</text>
+</svg>

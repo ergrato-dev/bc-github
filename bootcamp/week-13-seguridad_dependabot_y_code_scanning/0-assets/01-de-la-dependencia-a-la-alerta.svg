@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" role="img" aria-label="De la dependencia a la alerta: el grafo de dependencias construido desde el manifiesto y el lockfile se cruza con el GitHub Advisory Database para producir alertas, que pasan por los estados abierta, descartada y arreglada">
+  <title>Cómo nace una alerta de Dependabot</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .hi   { fill: #0d1117; stroke: #58a6ff; stroke-width: 1.5; }
+    .ok   { fill: #0d1117; stroke: #3fb950; stroke-width: 1.5; }
+    .warn { fill: #0d1117; stroke: #d29922; stroke-width: 1.5; }
+    .err  { fill: #0d1117; stroke: #f85149; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .monoy{ font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #d29922; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+    .eb   { stroke: #58a6ff; stroke-width: 2; fill: none; }
+  </style>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#30363d"/>
+    </marker>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="880" height="420"/>
+  <text class="t h" x="40" y="38">Una alerta es una intersección, no un aviso suelto</text>
+
+  <rect class="surf" x="40" y="70" width="230" height="96" rx="8"/>
+  <text class="t cap"  x="58" y="94">Lo que tú declaras</text>
+  <text class="t mono" x="58" y="116">package.json</text>
+  <text class="t s"    x="58" y="136">solo dependencias directas</text>
+  <text class="t lbl"  x="58" y="154">y sus rangos de versión</text>
+
+  <rect class="surf" x="40" y="184" width="230" height="96" rx="8"/>
+  <text class="t cap"  x="58" y="208">Lo que se resuelve</text>
+  <text class="t mono" x="58" y="230">pnpm-lock.yaml</text>
+  <text class="t s"    x="58" y="250">el árbol completo</text>
+  <text class="t lbl"  x="58" y="268">transitivas incluidas</text>
+
+  <line class="e" x1="270" y1="118" x2="316" y2="150" marker-end="url(#a)"/>
+  <line class="e" x1="270" y1="232" x2="316" y2="200" marker-end="url(#a)"/>
+
+  <rect class="hi" x="320" y="140" width="180" height="70" rx="8"/>
+  <text class="t cap" x="338" y="166">Grafo de dependencias</text>
+  <text class="t s"   x="338" y="188">el inventario real</text>
+
+  <rect class="warn" x="320" y="258" width="180" height="70" rx="8"/>
+  <text class="t cap" x="338" y="284">Advisory Database</text>
+  <text class="t s"   x="338" y="306">GHSA · rangos · parche</text>
+
+  <line class="eb" x1="500" y1="175" x2="556" y2="196" marker-end="url(#ab)"/>
+  <line class="eb" x1="500" y1="293" x2="556" y2="272" marker-end="url(#ab)"/>
+
+  <rect class="err" x="560" y="182" width="200" height="104" rx="8"/>
+  <text class="t cap"   x="578" y="208">Alerta</text>
+  <text class="t s"     x="578" y="230">tu versión está dentro</text>
+  <text class="t s"     x="578" y="248">del rango vulnerable</text>
+  <text class="t monoy" x="578" y="272">severity · epss · scope</text>
+
+  <text class="t lbl" x="560" y="166">grafo ∩ avisos</text>
+
+  <text class="t h" x="40" y="358">Estados de la alerta</text>
+
+  <rect class="err"  x="230" y="336" width="120" height="44" rx="8"/>
+  <text class="t cap" x="250" y="363">open</text>
+
+  <rect class="warn" x="410" y="336" width="150" height="44" rx="8"/>
+  <text class="t cap" x="430" y="363">dismissed</text>
+  <text class="t lbl" x="430" y="400">con motivo escrito</text>
+
+  <rect class="ok"   x="610" y="336" width="150" height="44" rx="8"/>
+  <text class="t cap" x="630" y="363">fixed</text>
+  <text class="t lbl" x="630" y="400">queda como registro</text>
+
+  <line class="e" x1="350" y1="358" x2="406" y2="358" marker-end="url(#a)"/>
+  <line class="e" x1="560" y1="358" x2="606" y2="358" marker-end="url(#a)"/>
+  <text class="t lbl" x="352" y="328">no se arreglará</text>
+  <text class="t lbl" x="556" y="328">el arreglo llegó a main</text>
+</svg>

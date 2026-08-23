@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880" height="400" role="img" aria-label="Dos momentos de defensa: la revisión de dependencias y el análisis de código actúan en el pull request antes de fusionar, mientras que las alertas de Dependabot actúan sobre lo que ya está en la rama principal cuando se publica un aviso nuevo">
+  <title>Antes de fusionar y después de fusionar</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .hi   { fill: #0d1117; stroke: #58a6ff; stroke-width: 1.5; }
+    .ok   { fill: #0d1117; stroke: #3fb950; stroke-width: 1.5; }
+    .warn { fill: #0d1117; stroke: #d29922; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .good { font-size: 11px; fill: #3fb950; }
+    .warnt{ font-size: 11px; fill: #d29922; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+    .eg   { stroke: #3fb950; stroke-width: 2; fill: none; }
+    .ey   { stroke: #d29922; stroke-width: 2; fill: none; }
+    .sep  { stroke: #30363d; stroke-width: 1.5; stroke-dasharray: 5 5; }
+  </style>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#30363d"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#3fb950"/>
+    </marker>
+    <marker id="ay" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#d29922"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="880" height="400"/>
+  <text class="t h" x="40" y="38">La misma vulnerabilidad entra por dos puertas distintas</text>
+
+  <line class="sep" x1="440" y1="66" x2="440" y2="356"/>
+  <text class="t good"  x="150" y="66">ANTES DE FUSIONAR · el control lo impide</text>
+  <text class="t warnt" x="500" y="66">DESPUÉS DE FUSIONAR · el control avisa</text>
+
+  <rect class="surf" x="40" y="86" width="170" height="66" rx="8"/>
+  <text class="t cap" x="58" y="112">Pull request</text>
+  <text class="t s"   x="58" y="134">añade una dependencia</text>
+
+  <line class="eg" x1="210" y1="119" x2="248" y2="119" marker-end="url(#ag)"/>
+
+  <rect class="ok" x="252" y="86" width="164" height="66" rx="8"/>
+  <text class="t cap"  x="270" y="110">Dependency review</text>
+  <text class="t mono" x="270" y="132">fail-on-severity</text>
+
+  <rect class="surf" x="40" y="182" width="170" height="66" rx="8"/>
+  <text class="t cap" x="58" y="208">Pull request</text>
+  <text class="t s"   x="58" y="230">añade código propio</text>
+
+  <line class="eg" x1="210" y1="215" x2="248" y2="215" marker-end="url(#ag)"/>
+
+  <rect class="ok" x="252" y="182" width="164" height="66" rx="8"/>
+  <text class="t cap"  x="270" y="206">CodeQL · SARIF</text>
+  <text class="t mono" x="270" y="228">security-events</text>
+
+  <rect class="surf" x="40" y="278" width="376" height="60" rx="8"/>
+  <text class="t cap"  x="58" y="302">Required check del ruleset</text>
+  <text class="t s"    x="58" y="324">si el control falla, el pull request no se puede fusionar</text>
+
+  <rect class="hi" x="500" y="86" width="180" height="66" rx="8"/>
+  <text class="t cap" x="518" y="112">Rama main</text>
+  <text class="t s"   x="518" y="134">lo que ya está dentro</text>
+
+  <rect class="warn" x="700" y="86" width="140" height="66" rx="8"/>
+  <text class="t cap" x="718" y="110">Aviso nuevo</text>
+  <text class="t s"   x="718" y="132">publicado hoy</text>
+
+  <line class="ey" x1="700" y1="119" x2="686" y2="119" marker-end="url(#ay)"/>
+
+  <line class="ey" x1="590" y1="152" x2="590" y2="180" marker-end="url(#ay)"/>
+
+  <rect class="warn" x="500" y="184" width="340" height="66" rx="8"/>
+  <text class="t cap" x="518" y="208">Alerta de Dependabot</text>
+  <text class="t s"   x="518" y="230">el código no cambió; el mundo sí</text>
+
+  <line class="e" x1="670" y1="250" x2="670" y2="276" marker-end="url(#a)"/>
+
+  <rect class="ok" x="500" y="280" width="340" height="58" rx="8"/>
+  <text class="t cap" x="518" y="304">Pull request de actualización de seguridad</text>
+  <text class="t s"   x="518" y="326">sube a la versión mínima que parchea</text>
+
+  <text class="t lbl" x="40" y="376">Las dos capas hacen falta: la mayoría de los avisos se publican cuando la dependencia lleva meses instalada.</text>
+</svg>

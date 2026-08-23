@@ -1,0 +1,132 @@
+{
+  "semana": "13",
+  "titulo": "Seguridad: Dependabot y code scanning",
+  "checks": [
+    {
+      "id": "dependabot-npm",
+      "descripcion": "Existe .github/dependabot.yml con el ecosistema npm",
+      "api": "repos/{repo}/contents/.github/dependabot.yml",
+      "jq": "(.content | @base64d | test(\"package-ecosystem: *[\\\"']?npm\"))",
+      "pista": "2-practicas/01-dependabot-en-marcha.md, paso 6"
+    },
+    {
+      "id": "dependabot-actions",
+      "descripcion": "El mismo archivo mantiene al día los pines de github-actions",
+      "api": "repos/{repo}/contents/.github/dependabot.yml",
+      "jq": "(.content | @base64d | test(\"package-ecosystem: *[\\\"']?github-actions\"))",
+      "pista": "2-practicas/01-dependabot-en-marcha.md, paso 6"
+    },
+    {
+      "id": "dependabot-agrupado",
+      "descripcion": "Las actualizaciones se agrupan con groups",
+      "api": "repos/{repo}/contents/.github/dependabot.yml",
+      "jq": "(.content | @base64d | test(\"(?m)^ *groups:\"))",
+      "pista": "2-practicas/01-dependabot-en-marcha.md, paso 6"
+    },
+    {
+      "id": "dependabot-cooldown",
+      "descripcion": "Hay un periodo de enfriamiento configurado",
+      "api": "repos/{repo}/contents/.github/dependabot.yml",
+      "jq": "(.content | @base64d | test(\"(?m)^ *cooldown:\"))",
+      "pista": "2-practicas/01-dependabot-en-marcha.md, paso 6"
+    },
+    {
+      "id": "alertas-activas",
+      "descripcion": "Las alertas de Dependabot están activas y son legibles",
+      "api": "repos/{repo}/dependabot/alerts?per_page=1",
+      "jq": "type == \"array\"",
+      "pista": "2-practicas/01-dependabot-en-marcha.md, paso 1"
+    },
+    {
+      "id": "sin-alertas-graves",
+      "descripcion": "No queda ninguna alerta de dependencias abierta de severidad high o critical",
+      "api": "repos/{repo}/dependabot/alerts?state=open&per_page=100",
+      "jq": "[.[] | select(.security_advisory.severity == \"high\" or .security_advisory.severity == \"critical\")] | length == 0",
+      "pista": "2-practicas/02-triaje-y-automerge.md, paso 4"
+    },
+    {
+      "id": "security-updates-activo",
+      "descripcion": "Las actualizaciones de seguridad están activas y no en pausa",
+      "api": "repos/{repo}/automated-security-fixes",
+      "jq": ".enabled == true and .paused == false",
+      "pista": "2-practicas/01-dependabot-en-marcha.md, paso 2"
+    },
+    {
+      "id": "pull-request-de-dependabot",
+      "descripcion": "Dependabot ha abierto al menos un pull request en el repositorio",
+      "api": "repos/{repo}/pulls?state=all&per_page=100",
+      "jq": "[.[] | select(.user.login == \"dependabot[bot]\")] | length > 0",
+      "pista": "2-practicas/01-dependabot-en-marcha.md, paso 5"
+    },
+    {
+      "id": "automerge-solo-parches",
+      "descripcion": "El workflow de auto-merge se limita a las actualizaciones de parche",
+      "api": "repos/{repo}/contents/.github/workflows/dependabot-automerge.yml",
+      "jq": "(.content | @base64d | test(\"version-update:semver-patch\"))",
+      "pista": "2-practicas/02-triaje-y-automerge.md, paso 5"
+    },
+    {
+      "id": "automerge-por-actor",
+      "descripcion": "El auto-merge se condiciona por el autor del pull request, no por el título",
+      "api": "repos/{repo}/contents/.github/workflows/dependabot-automerge.yml",
+      "jq": "(.content | @base64d | test(\"pull_request\\\\.user\\\\.login\"))",
+      "pista": "2-practicas/02-triaje-y-automerge.md, paso 5"
+    },
+    {
+      "id": "codeql-analizando",
+      "descripcion": "Hay al menos un análisis de CodeQL registrado",
+      "api": "repos/{repo}/code-scanning/analyses?per_page=100",
+      "jq": "[.[] | select(.tool.name == \"CodeQL\")] | length > 0",
+      "pista": "2-practicas/03-codeql-en-verde.md, paso 2"
+    },
+    {
+      "id": "codeql-analiza-los-workflows",
+      "descripcion": "CodeQL analiza también el lenguaje actions",
+      "api": "repos/{repo}/code-scanning/analyses?per_page=100",
+      "jq": "[.[] | select((.category // \"\") | test(\"actions\"))] | length > 0",
+      "pista": "2-practicas/03-codeql-en-verde.md, paso 6"
+    },
+    {
+      "id": "codeql-con-permiso-en-el-job",
+      "descripcion": "El workflow de CodeQL declara security-events: write",
+      "api": "repos/{repo}/contents/.github/workflows/codeql.yml",
+      "jq": "(.content | @base64d | test(\"security-events: *write\"))",
+      "pista": "2-practicas/03-codeql-en-verde.md, paso 6"
+    },
+    {
+      "id": "sin-alertas-de-codigo-graves",
+      "descripcion": "No queda ninguna alerta de code scanning abierta de severidad high o critical",
+      "api": "repos/{repo}/code-scanning/alerts?state=open&per_page=100",
+      "jq": "[.[] | select((.rule.security_severity_level // \"\") == \"high\" or (.rule.security_severity_level // \"\") == \"critical\")] | length == 0",
+      "pista": "2-practicas/03-codeql-en-verde.md, paso 5"
+    },
+    {
+      "id": "revision-de-dependencias",
+      "descripcion": "Cada pull request pasa por la revisión de dependencias",
+      "api": "repos/{repo}/contents/.github/workflows/dependency-review.yml",
+      "jq": "(.content | @base64d | test(\"dependency-review-action\"))",
+      "pista": "2-practicas/04-sarif-de-terceros.md, paso 1"
+    },
+    {
+      "id": "sarif-de-terceros",
+      "descripcion": "Hay análisis de una herramienta que no es CodeQL",
+      "api": "repos/{repo}/code-scanning/analyses?per_page=100",
+      "jq": "[.[] | select(.tool.name != \"CodeQL\")] | length > 0",
+      "pista": "2-practicas/04-sarif-de-terceros.md, paso 3"
+    },
+    {
+      "id": "sarif-con-categoria",
+      "descripcion": "El SARIF de terceros se sube con su propia categoría",
+      "api": "repos/{repo}/contents/.github/workflows/analisis-estatico.yml",
+      "jq": "(.content | @base64d | test(\"(?m)^ *category:\"))",
+      "pista": "2-practicas/04-sarif-de-terceros.md, paso 3"
+    },
+    {
+      "id": "workflows-de-seguridad-pinneados",
+      "descripcion": "El workflow de análisis estático no usa ninguna action por tag flotante",
+      "api": "repos/{repo}/contents/.github/workflows/analisis-estatico.yml",
+      "jq": "((.content | @base64d | test(\"(?m)^ *(- )?uses: .*@(v[0-9]|main|master)\")) | not)",
+      "pista": "2-practicas/04-sarif-de-terceros.md, paso 3"
+    }
+  ]
+}

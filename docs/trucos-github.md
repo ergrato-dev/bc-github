@@ -335,6 +335,38 @@ Los consejos genéricos de productividad no entran.
 
 ---
 
-> Las secciones de las semanas 13 a 21 se añaden a medida que se publica cada
+## Semana 13 — Seguridad: Dependabot y code scanning
+
+→ [Semana 13](../bootcamp/week-13-seguridad_dependabot_y_code_scanning/README.md)
+
+| Truco | Cómo |
+|-------|------|
+| Ver el inventario real sin abrir la interfaz | `gh api repos/{owner}/{repo}/dependency-graph/sbom --jq '.sbom.packages[].name'` |
+| Saber quién instaló esa transitiva | `pnpm why <paquete>` |
+| Qué dependencias añade un PR | `gh api repos/{owner}/{repo}/dependency-graph/compare/main...mi-rama` |
+| Comprobar si las alertas están activas | `gh api repos/{owner}/{repo}/vulnerability-alerts --include --silent` — `204` sí, `404` no |
+| Lo único que hay que mirar hoy | `?state=open&scope=runtime&has=patch` en la consulta de alertas |
+| Filtrar por lo que el mundo explota | `?epss_percentage=>0.01` |
+| Resumen por severidad en una línea | `--jq 'group_by(.security_advisory.severity) \| map({sev: .[0].security_advisory.severity, n: length})'` |
+| Ver qué tapa tu regla de auto-triage | `?state=auto_dismissed` |
+| Saber por qué dejaron de llegar PR | `gh api repos/{owner}/{repo}/automated-security-fixes --jq '.paused'` |
+| Listar solo los PR del bot | `gh pr list --app dependabot` — hay flag para apps; `--author` no sirve |
+| Arreglar un PR raro de Dependabot | `@dependabot recreate` en un comentario |
+| Ver las condiciones de ignorado guardadas | `@dependabot show <paquete> ignore conditions` |
+| Pausar un ecosistema sin borrar su bloque | `open-pull-requests-limit: 0` |
+| Dónde falla un `dependabot.yml` inválido | Insights → Dependency graph → Dependabot, con **Check for updates** |
+| Secreto que Dependabot pueda leer | `gh secret set NOMBRE --app dependabot` — los de Actions no los ve |
+| El límite de PR no cuenta los de seguridad | `open-pull-requests-limit` solo aplica a las actualizaciones de versión |
+| Lenguaje `actions` de CodeQL | Analiza tus propios workflows, no solo tu código |
+| Ver si tienes cien alertas o una regla cien veces | `--jq 'group_by(.rule.id) \| map({regla: .[0].rule.id, n: length}) \| sort_by(-.n)'` |
+| Qué herramientas están publicando de verdad | `--jq 'group_by(.tool.name) \| map({t: .[0].tool.name, n: length})'` sobre `code-scanning/analyses` |
+| Que el SARIF se suba aunque la herramienta falle | `continue-on-error: true` en el paso que analiza, no en el que sube |
+| Que un SARIF inválido ponga el job en rojo | `wait-for-processing` de `upload-sarif`, activado por defecto |
+| Subir SARIF sin Actions | `gzip -c x.sarif \| base64 -w0` y `POST code-scanning/sarifs` |
+| Una `category` por herramienta | Compartirla hace que cada subida cierre las alertas de la otra |
+
+---
+
+> Las secciones de las semanas 14 a 21 se añaden a medida que se publica cada
 > semana. Si has hecho una semana y su sección no está aquí,
 > [abre un issue](https://github.com/ergrato-dev/bc-github/issues).
