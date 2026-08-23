@@ -116,6 +116,7 @@ while IFS= read -r check; do
   if [ -n "$endpoint" ]; then
     endpoint="${endpoint//\{repo\}/$REPO}"
     endpoint="${endpoint//\{owner\}/$OWNER}"
+    endpoint="${endpoint//\{name\}/$NAME}"
     result=$(gh api "$endpoint" --jq "$expr" 2>/dev/null)
   elif [ -n "$query" ]; then
     result=$(gh api graphql -F owner="$OWNER" -F repo="$NAME" -f query="$query" --jq "$expr" 2>/dev/null)

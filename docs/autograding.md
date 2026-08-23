@@ -71,12 +71,29 @@ tu propio CI si quieres.
 | --- | :--: | --- |
 | `id` | sí | Identificador estable, kebab-case |
 | `descripcion` | sí | Lo que se imprime al estudiante |
-| `api` | sí* | Endpoint REST. `{repo}` y `{owner}` se sustituyen |
+| `api` | sí* | Endpoint REST. `{repo}`, `{owner}` y `{name}` se sustituyen |
 | `graphql` | sí* | Query GraphQL. Recibe `$owner` y `$repo` como variables |
 | `jq` | sí | Expresión que debe evaluar a `true` sobre la respuesta |
 | `pista` | no | Dónde está el paso que arregla el fallo |
 
 \* Exactamente uno de `api` o `graphql`.
+
+Los tres marcadores del endpoint, con `--repo ana/mi-proyecto`:
+
+| Marcador | Se sustituye por |
+| --- | --- |
+| `{repo}` | `ana/mi-proyecto` |
+| `{owner}` | `ana` |
+| `{name}` | `mi-proyecto` |
+
+`{name}` hace falta en los endpoints que no llevan el repositorio completo, como
+los de packages: `users/{owner}/packages/container/{name}`.
+
+> [!NOTE]
+> **Scopes del token.** Casi todo funciona con lo que concede `gh auth login`.
+> La excepción son los endpoints de `packages` (Semana 12), que devuelven `403`
+> incluso para paquetes públicos sin el scope `read:packages`. Se añade una vez:
+> `gh auth refresh -s read:packages`.
 
 ### Reglas de diseño
 
