@@ -1,0 +1,98 @@
+# ============================================================
+# publicar-npm.yml — paquete en GitHub Packages, con procedencia
+# ============================================================
+# Se completa en la Práctica 04.
+#
+# Publica en npm.pkg.github.com, que no necesita ninguna cuenta ni ningún
+# secreto propio: el GITHUB_TOKEN del run con `packages: write` basta.
+#
+# El registro de GitHub no genera declaraciones de procedencia (eso es
+# exclusivo de npmjs). Por eso el paquete se atestigua aquí a mano, con
+# actions/attest-build-provenance sobre el .tgz que se sube.
+# ============================================================
+
+name: publicar paquete
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publicar:
+    name: Publicar en GitHub Packages
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # ============================================
+      # PASO 2: preparar pnpm, Node y el registro
+      # ============================================
+      # pnpm/action-setup va ANTES que setup-node (Semana 09): setup-node
+      # necesita pnpm en el PATH para localizar el store.
+      # `registry-url` es lo que escribe el .npmrc del runner y deja el
+      # registro apuntado para que `pnpm publish` sepa a dónde ir.
+      # Descomenta el bloque siguiente:
+      #
+      # - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+      #
+      # - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      #   with:
+      #     node-version: 22
+      #     registry-url: https://npm.pkg.github.com
+      #     cache: pnpm
+      #
+      # - run: pnpm install --frozen-lockfile
+
+      # ============================================
+      # PASO 3: mirar qué se va a publicar antes de publicarlo
+      # ============================================
+      # Una versión publicada no se reescribe. Este step es la última
+      # oportunidad de ver que no se cuela nada que no debería salir.
+      # Descomenta el bloque siguiente:
+      #
+      # - name: Contenido del paquete
+      #   run: |
+      #     pnpm pack
+      #     tar -tzf ./*.tgz
+
+      # ============================================
+      # PASO 4: publicar
+      # ============================================
+      # NODE_AUTH_TOKEN va en el env del step, no en el with de setup-node.
+      # --no-git-checks: el runner tiene el checkout en un tag, no en la
+      # rama de publicación, y sin el flag pnpm aborta antes de empezar.
+      # Descomenta el bloque siguiente:
+      #
+      # - name: Publicar
+      #   run: pnpm publish --no-git-checks
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ============================================
+      # PASO 5: atestiguar el tarball
+      # ============================================
+      # El .tgz del PASO 3 es exactamente lo que se subió al registro.
+      # Descomenta el bloque siguiente:
+      #
+      # - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+      #   with:
+      #     subject-path: "*.tgz"
+      #
+      # - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      #   with:
+      #     name: paquete
+      #     path: "*.tgz"
+
+      - run: echo "Sin los PASOS 2-5 este workflow no publica nada."

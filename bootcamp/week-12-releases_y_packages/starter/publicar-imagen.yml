@@ -1,0 +1,136 @@
+# ============================================================
+# publicar-imagen.yml — imagen en GHCR, con procedencia
+# ============================================================
+# Se completa en la Práctica 03.
+#
+# Se dispara cuando se publica un release, no en cada push: lo que se
+# publica es una versión, no un commit.
+#
+# Nota: los releases creados por el GITHUB_TOKEN no disparan workflows.
+# Este funciona porque release-please usa un token de usuario (Práctica 02),
+# y porque un release creado a mano con `gh` también lo dispara.
+# ============================================================
+
+name: publicar imagen
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: imagen-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    name: Construir y publicar en GHCR
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    # Los tres permisos, solo en este job:
+    #   packages: write     → empujar al registro
+    #   id-token: write     → firmar la atestación
+    #   attestations: write → guardarla en GitHub
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
+
+    outputs:
+      digest: ${{ steps.build.outputs.digest }}
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # ============================================
+      # PASO 2: autenticarse contra ghcr.io
+      # ============================================
+      # Sin secretos propios: el GITHUB_TOKEN del run ya vale.
+      # Descomenta el bloque siguiente:
+      #
+      # - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+
+      # ============================================
+      # PASO 3: derivar etiquetas y labels del tag
+      # ============================================
+      # type=semver solo produce etiquetas cuando el evento trae un tag.
+      # type=sha se genera siempre y evita quedarse sin ninguna.
+      # Descomenta el bloque siguiente:
+      #
+      # - id: meta
+      #   uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
+      #   with:
+      #     images: ghcr.io/${{ github.repository }}
+      #     tags: |
+      #       type=semver,pattern={{version}}
+      #       type=semver,pattern={{major}}.{{minor}}
+      #       type=semver,pattern={{major}}
+      #       type=sha
+
+      # ============================================
+      # PASO 4: construir y empujar
+      # ============================================
+      # Descomenta el bloque siguiente:
+      #
+      # - id: build
+      #   uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
+      #   with:
+      #     context: .
+      #     push: true
+      #     tags: ${{ steps.meta.outputs.tags }}
+      #     labels: ${{ steps.meta.outputs.labels }}
+      #     cache-from: type=gha
+      #     cache-to: type=gha,mode=max
+
+      # ============================================
+      # PASO 5: atestiguar la procedencia de la imagen
+      # ============================================
+      # El sujeto es el digest, nunca la etiqueta: la etiqueta se mueve.
+      # push-to-registry deja la atestación junto a la imagen, para poder
+      # verificarla sin llamar a la API de GitHub.
+      # Descomenta el bloque siguiente:
+      #
+      # - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+      #   with:
+      #     subject-name: ghcr.io/${{ github.repository }}
+      #     subject-digest: ${{ steps.build.outputs.digest }}
+      #     push-to-registry: true
+
+      - run: echo "Sin los PASOS 2-5 este workflow no publica nada."
+
+  verificar:
+    name: Verificar lo publicado
+    needs: publicar
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      packages: read
+      attestations: read
+    steps:
+      # ============================================
+      # PASO 6: comprobar la procedencia desde fuera del build
+      # ============================================
+      # Un artefacto firmado que nadie verifica es un adorno.
+      # Descomenta el bloque siguiente:
+      #
+      # - name: Verificar la atestación
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     IMAGEN: ghcr.io/${{ github.repository }}@${{ needs.publicar.outputs.digest }}
+      #   run: |
+      #     echo "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+      #     gh attestation verify "oci://$IMAGEN" \
+      #       --repo "$GITHUB_REPOSITORY" \
+      #       --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/publicar-imagen.yml"
+
+      - run: echo "Sin el PASO 6 no se comprueba nada."

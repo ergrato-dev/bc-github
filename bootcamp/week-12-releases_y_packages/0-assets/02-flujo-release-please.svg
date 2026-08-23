@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" role="img" aria-label="Ciclo de release-please: los commits feat y fix fusionados en main disparan la action, que abre o actualiza un pull request de release con la versión y el changelog; ese pull request se acumula hasta que alguien lo fusiona, y entonces se crean el tag y el release, cuyo evento published dispara la publicación de la imagen y del paquete">
+  <title>El ciclo del pull request de release</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .inner{ fill: #0d1117; stroke: #30363d; stroke-width: 1; }
+    .hi   { fill: #0d1117; stroke: #58a6ff; stroke-width: 1.5; }
+    .ok   { fill: #0d1117; stroke: #3fb950; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .good { font-size: 11px; fill: #3fb950; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+    .eb   { stroke: #58a6ff; stroke-width: 2; fill: none; }
+    .eg   { stroke: #3fb950; stroke-width: 2; fill: none; }
+  </style>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#30363d"/>
+    </marker>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="880" height="420"/>
+  <text class="t h" x="40" y="36">Publicar deja de ser un comando y pasa a ser fusionar un pull request</text>
+
+  <!-- 1 commits -->
+  <rect class="surf" x="40" y="66" width="230" height="104" rx="8"/>
+  <text class="t cap"  x="58" y="92">1 · Se fusiona en main</text>
+  <text class="t mono" x="58" y="116">feat: exportar a CSV</text>
+  <text class="t mono" x="58" y="134">fix: multa del último día</text>
+  <text class="t lbl"  x="58" y="156">Conventional Commits, Semana 07</text>
+
+  <line class="e" x1="270" y1="118" x2="326" y2="118" marker-end="url(#a)"/>
+
+  <!-- 2 action -->
+  <rect class="hi" x="326" y="66" width="230" height="104" rx="8"/>
+  <text class="t cap"  x="344" y="92">2 · release-please</text>
+  <text class="t s"    x="344" y="114">lee los commits desde el</text>
+  <text class="t s"    x="344" y="132">último release y calcula 1.1.0</text>
+  <text class="t lbl"  x="344" y="156">con RELEASE_PLEASE_TOKEN</text>
+
+  <line class="e" x1="556" y1="118" x2="612" y2="118" marker-end="url(#a)"/>
+
+  <!-- 3 PR -->
+  <rect class="hi" x="612" y="66" width="228" height="104" rx="8"/>
+  <text class="t cap"  x="630" y="92">3 · PR de release</text>
+  <text class="t mono" x="630" y="114">chore(main): release 1.1.0</text>
+  <text class="t s"    x="630" y="134">package.json + CHANGELOG.md</text>
+  <text class="t lbl"  x="630" y="156">se acumula, no se duplica</text>
+
+  <!-- bucle -->
+  <path class="e" d="M726 170 L726 200 L441 200 L441 176" marker-end="url(#a)"/>
+  <text class="t lbl" x="470" y="220">cada feat o fix nuevo lo actualiza mientras nadie lo fusione</text>
+
+  <!-- 4 merge -->
+  <rect class="ok" x="612" y="238" width="228" height="90" rx="8"/>
+  <text class="t cap"  x="630" y="264">4 · Se fusiona (squash)</text>
+  <text class="t good" x="630" y="286">tag v1.1.0 + release</text>
+  <text class="t lbl"  x="630" y="308">el squash lo firma GitHub</text>
+  <line class="eg" x1="726" y1="238" x2="726" y2="204" marker-end="url(#ag)"/>
+
+  <!-- 5 evento -->
+  <rect class="surf" x="40" y="238" width="516" height="90" rx="8"/>
+  <text class="t cap"  x="58" y="264">5 · El evento release: published dispara lo que venga detrás</text>
+  <rect class="inner" x="58" y="276" width="230" height="38" rx="6"/>
+  <text class="t mono" x="74" y="300">publicar-imagen.yml → GHCR</text>
+  <rect class="inner" x="304" y="276" width="234" height="38" rx="6"/>
+  <text class="t mono" x="320" y="300">publicar-npm.yml → paquete</text>
+  <line class="eg" x1="612" y1="284" x2="560" y2="284" marker-end="url(#ag)"/>
+
+  <text class="t s"   x="40" y="366">El pull request de release es una revisión, no un botón: el diff del CHANGELOG.md</text>
+  <text class="t s"   x="40" y="386">es la última oportunidad de ver que un mensaje de commit estaba mal escrito.</text>
+  <text class="t lbl" x="40" y="408">Un release creado por el GITHUB_TOKEN no dispararía el paso 5.</text>
+</svg>

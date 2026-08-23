@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880" height="400" role="img" aria-label="Cadena de publicación verificable: commits firmados, revisión por ruleset, actions pinneadas por SHA, atestación de procedencia del artefacto, release inmutable y verificación en el consumo; la cadena vale lo que su eslabón más débil">
+  <title>La cadena de publicación, eslabón a eslabón</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .inner{ fill: #0d1117; stroke: #30363d; stroke-width: 1; }
+    .hi   { fill: #0d1117; stroke: #58a6ff; stroke-width: 1.5; }
+    .ok   { fill: #0d1117; stroke: #3fb950; stroke-width: 1.5; }
+    .err  { fill: #0d1117; stroke: #f85149; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .good { font-size: 11px; fill: #3fb950; }
+    .errt { font-size: 11px; fill: #f85149; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+    .eg   { stroke: #3fb950; stroke-width: 2; fill: none; }
+  </style>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#30363d"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="880" height="400"/>
+  <text class="t h" x="40" y="36">De quién escribió el código a quién lo instala</text>
+
+  <rect class="surf" x="40" y="64" width="180" height="76" rx="8"/>
+  <text class="t cap" x="56" y="88">Commits firmados</text>
+  <text class="t s"   x="56" y="108">quién escribió</text>
+  <text class="t lbl" x="56" y="128">Semana 01</text>
+
+  <line class="e" x1="220" y1="102" x2="256" y2="102" marker-end="url(#a)"/>
+
+  <rect class="surf" x="256" y="64" width="180" height="76" rx="8"/>
+  <text class="t cap" x="272" y="88">Ruleset con review</text>
+  <text class="t s"   x="272" y="108">que otro lo miró</text>
+  <text class="t lbl" x="272" y="128">Semana 08</text>
+
+  <line class="e" x1="436" y1="102" x2="472" y2="102" marker-end="url(#a)"/>
+
+  <rect class="surf" x="472" y="64" width="180" height="76" rx="8"/>
+  <text class="t cap" x="488" y="88">Actions por SHA</text>
+  <text class="t s"   x="488" y="108">qué código corrió</text>
+  <text class="t lbl" x="488" y="128">Semana 11</text>
+
+  <line class="e" x1="652" y1="102" x2="688" y2="102" marker-end="url(#a)"/>
+
+  <rect class="ok" x="688" y="64" width="152" height="76" rx="8"/>
+  <text class="t cap"  x="704" y="88">Atestación</text>
+  <text class="t good" x="704" y="108">salió de ese build</text>
+  <text class="t lbl"  x="704" y="128">Semana 12</text>
+
+  <path class="eg" d="M764 140 L764 166 L440 166 L440 192" marker-end="url(#ag)"/>
+
+  <rect class="ok" x="256" y="192" width="180" height="76" rx="8"/>
+  <text class="t cap"  x="272" y="216">Release inmutable</text>
+  <text class="t good" x="272" y="236">no lo han cambiado</text>
+  <text class="t lbl"  x="272" y="256">Semana 12</text>
+
+  <line class="eg" x1="256" y1="230" x2="220" y2="230" marker-end="url(#ag)"/>
+
+  <rect class="hi" x="40" y="192" width="180" height="76" rx="8"/>
+  <text class="t cap"  x="56" y="216">Verificación</text>
+  <text class="t mono" x="56" y="236">gh attestation verify</text>
+  <text class="t lbl"  x="56" y="256">al consumir</text>
+
+  <rect class="err" x="472" y="192" width="368" height="76" rx="8"/>
+  <text class="t cap"  x="488" y="216">El eslabón más débil decide</text>
+  <text class="t errt" x="488" y="236">Atestiguar un build con actions por tag flotante</text>
+  <text class="t errt" x="488" y="256">es firmar un contenido que no controlas.</text>
+
+  <text class="t s"   x="40" y="308">Una atestación afirma qué repositorio, qué commit y qué workflow produjeron un digest.</text>
+  <text class="t s"   x="40" y="328">No afirma que el código sea correcto, ni que no tenga vulnerabilidades.</text>
+  <text class="t lbl" x="40" y="356">Una atestación que nadie comprueba es un adorno: la verificación es parte de la cadena, no un extra.</text>
+  <text class="t lbl" x="40" y="378">SBOM, advisories y Scorecard cierran el resto en la Semana 14.</text>
+</svg>

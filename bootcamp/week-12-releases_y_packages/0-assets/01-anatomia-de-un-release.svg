@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880" height="400" role="img" aria-label="Anatomía de un release: un commit del grafo de Git recibe un tag anotado y firmado; ese tag lo referencia un objeto release de GitHub con título, notas, adjuntos y estados draft, prerelease y latest; borrar el release no borra el tag y la versión del package.json es un cuarto elemento que debe coincidir">
+  <title>Commit, tag, release y versión: cuatro cosas distintas</title>
+  <style>
+    .bg   { fill: #0d1117; }
+    .surf { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .inner{ fill: #0d1117; stroke: #30363d; stroke-width: 1; }
+    .hi   { fill: #0d1117; stroke: #58a6ff; stroke-width: 1.5; }
+    .ok   { fill: #0d1117; stroke: #3fb950; stroke-width: 1.5; }
+    .warn { fill: #0d1117; stroke: #d29922; stroke-width: 1.5; }
+    .t    { font-family: Inter, Roboto, "Segoe UI", system-ui, sans-serif; }
+    .h    { font-size: 15px; font-weight: 600; fill: #f0f6fc; }
+    .cap  { font-size: 13px; font-weight: 600; fill: #f0f6fc; }
+    .s    { font-size: 12px; fill: #8b949e; }
+    .lbl  { font-size: 11px; fill: #8b949e; }
+    .good { font-size: 11px; fill: #3fb950; }
+    .warnt{ font-size: 11px; fill: #d29922; }
+    .mono { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 11px; fill: #58a6ff; }
+    .e    { stroke: #30363d; stroke-width: 2; fill: none; }
+    .eb   { stroke: #58a6ff; stroke-width: 2; fill: none; }
+    .dot  { fill: #8b949e; }
+  </style>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#30363d"/>
+    </marker>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="880" height="400"/>
+  <text class="t h" x="40" y="36">Cuatro objetos que hay que mover juntos</text>
+
+  <!-- Git -->
+  <rect class="surf" x="40" y="64" width="360" height="150" rx="8"/>
+  <text class="t cap" x="60" y="90">Git · vive en el repositorio</text>
+
+  <circle class="dot" cx="76"  cy="128" r="6"/>
+  <circle class="dot" cx="146" cy="128" r="6"/>
+  <circle class="dot" cx="216" cy="128" r="6"/>
+  <line class="e" x1="82" y1="128" x2="140" y2="128"/>
+  <line class="e" x1="152" y1="128" x2="210" y2="128"/>
+  <text class="t lbl" x="60" y="152">commits · el SHA es el contenido</text>
+
+  <rect class="ok" x="252" y="106" width="128" height="44" rx="6"/>
+  <text class="t mono" x="266" y="124">tag v1.0.0</text>
+  <text class="t good" x="266" y="140">anotado y firmado</text>
+  <line class="e" x1="252" y1="128" x2="224" y2="128" marker-end="url(#a)"/>
+  <text class="t lbl" x="60" y="186">Un tag ligero no tiene autor ni fecha: si se mueve, no queda rastro.</text>
+
+  <!-- GitHub -->
+  <rect class="hi" x="440" y="64" width="400" height="234" rx="8"/>
+  <text class="t cap" x="460" y="90">GitHub · vive en su base de datos</text>
+
+  <rect class="inner" x="460" y="106" width="360" height="112" rx="6"/>
+  <text class="t mono" x="476" y="128">release "v1.0.0"</text>
+  <text class="t s"    x="476" y="150">título · notas en Markdown · adjuntos</text>
+  <text class="t s"    x="476" y="170">draft · prerelease · latest</text>
+  <text class="t lbl"  x="476" y="196">apunta al tag, no al commit</text>
+
+  <line class="eb" x1="440" y1="150" x2="384" y2="132" marker-end="url(#ab)"/>
+
+  <rect class="warn" x="460" y="232" width="360" height="46" rx="6"/>
+  <text class="t warnt" x="476" y="252">Borrar el release NO borra el tag.</text>
+  <text class="t warnt" x="476" y="268">Borrar el tag deja el release apuntando al vacío.</text>
+
+  <!-- Version -->
+  <rect class="surf" x="40" y="238" width="360" height="60" rx="8"/>
+  <text class="t cap"  x="60" y="262">Versión · vive en un archivo</text>
+  <text class="t mono" x="60" y="284">package.json  "version": "1.0.0"</text>
+
+  <text class="t s" x="40" y="336">Cuando las cuatro no coinciden, nadie sabe qué se publicó. La Semana 12</text>
+  <text class="t s" x="40" y="356">consiste en que se muevan juntas y sin que nadie escriba el número a mano.</text>
+  <text class="t lbl" x="40" y="380">La `v` va en el tag; el archivo de versión no la lleva.</text>
+</svg>

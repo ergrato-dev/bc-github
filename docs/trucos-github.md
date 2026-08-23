@@ -297,6 +297,44 @@ Los consejos genéricos de productividad no entran.
 
 ---
 
-> Las secciones de las semanas 12 a 21 se añaden a medida que se publica cada
+## Semana 12 — Releases y packages
+
+→ [Semana 12](../bootcamp/week-12-releases_y_packages/README.md)
+
+| Truco | Cómo |
+|-------|------|
+| Saber si un tag es anotado | `git cat-file -t v1.0.0` — `tag` sí, `commit` no |
+| Firmar también los tags | `git config --global tag.gpgSign true` |
+| Empujar solo los tags que viajan | `git push --follow-tags`, no `--tags` |
+| Abortar si el tag no existe en remoto | `gh release create v1.0.0 --verify-tag` |
+| Previsualizar las notas sin crear nada | `gh api repos/{owner}/{repo}/releases/generate-notes --method POST -f tag_name=vX --jq .body` |
+| Cambiar el punto de partida de las notas | `--notes-start-tag v1.0.0` |
+| Anteponer un resumen a lo generado | `--generate-notes` **más** `--notes-file` |
+| Montar el release antes de publicarlo | `--draft`, `gh release upload`, `--draft=false` |
+| Radiografía del estado de publicación | `gh release list --json tagName,isLatest,isDraft` |
+| Cerrar el candado | `gh api repos/{owner}/{repo}/immutable-releases --method PUT` |
+| Borrar release y tag a la vez | `gh release delete v1.0.0 --cleanup-tag` |
+| Ordenar tags como versiones | `git tag --sort=-v:refname` |
+| Forzar la versión que calcula release-please | `Release-As: 1.5.0` en el cuerpo del commit |
+| Encadenar solo cuando publica | `if: needs.release.outputs.publicado == 'true'` (cadena, con comillas) |
+| Un release del `GITHUB_TOKEN` no dispara workflows | Por eso `release-please` usa un token de usuario |
+| El PR de release, con squash | Los commits de `release-please` no van firmados; el squash lo firma GitHub |
+| Etiquetas de imagen desde el tag | `type=semver,pattern={{version}}` en `docker/metadata-action` |
+| No quedarse sin etiquetas | `type=sha` siempre, porque `type=semver` calla si no hay tag |
+| Vincular el paquete al repositorio | `LABEL org.opencontainers.image.source` |
+| El paquete nace privado | Se cambia solo en la interfaz; se comprueba con `gh api users/{owner}/packages/...` |
+| El scope que falta | `gh auth refresh -s read:packages` o todo `packages` da 403 |
+| Comprobar que es público de verdad | `docker logout ghcr.io` y luego `docker pull` |
+| Inspeccionar una imagen sin bajarla | `docker buildx imagetools inspect ghcr.io/OWNER/REPO:1.2.3` |
+| `pnpm publish` en CI | `--no-git-checks`, o aborta por rama y árbol sucio |
+| Ver qué entra en el paquete | `pnpm pack` y `tar -tzf ./*.tgz` |
+| El sujeto de la atestación de una imagen | El digest del `build-push-action`, nunca la etiqueta |
+| Verificación estrecha | `--signer-workflow OWNER/REPO/.github/workflows/x.yml` |
+| Leer el JSON no es verificar | Solo `gh attestation verify` comprueba firmas |
+| Retirar una versión sin borrarla | `gh release edit vX --prerelease` y publicar el arreglo |
+
+---
+
+> Las secciones de las semanas 13 a 21 se añaden a medida que se publica cada
 > semana. Si has hecho una semana y su sección no está aquí,
 > [abre un issue](https://github.com/ergrato-dev/bc-github/issues).

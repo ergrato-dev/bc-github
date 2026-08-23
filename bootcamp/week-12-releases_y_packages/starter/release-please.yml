@@ -1,0 +1,68 @@
+# ============================================================
+# release.yml — el PR de release y el release
+# ============================================================
+# Se completa en la Práctica 02.
+#
+# Corre en cada push a main. Casi siempre solo actualiza un pull request;
+# cuando ese pull request se fusiona, crea el tag y el release.
+#
+# El GITHUB_TOKEN de este workflow se queda en `contents: read`: quien
+# escribe es el token fine-grained de RELEASE_PLEASE_TOKEN, no el del run.
+# ============================================================
+
+name: release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# Dos releases a la vez dejarían el manifiesto en un estado incoherente.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Calcular versión y publicar
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    # ============================================
+    # PASO 4: exponer el resultado a otros workflows
+    # ============================================
+    # Descomenta las tres líneas siguientes:
+    # outputs:
+    #   publicado: ${{ steps.rp.outputs.release_created }}
+    #   tag: ${{ steps.rp.outputs.tag_name }}
+
+    steps:
+      # ============================================
+      # PASO 2: release-please
+      # ============================================
+      # Descomenta el bloque siguiente. El SHA es el de la v5.0.0,
+      # comprobado en agosto de 2026 (ver README.md de starter/).
+      #
+      # - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+      #   id: rp
+      #   with:
+      #     token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+      #     config-file: release-please-config.json
+      #     manifest-file: .release-please-manifest.json
+
+      # ============================================
+      # PASO 5: dejar constancia en el resumen del run
+      # ============================================
+      # Descomenta el bloque siguiente:
+      #
+      # - name: Resumen
+      #   run: |
+      #     if [ "${{ steps.rp.outputs.release_created }}" = "true" ]; then
+      #       echo "Publicado ${{ steps.rp.outputs.tag_name }}" >> "$GITHUB_STEP_SUMMARY"
+      #     else
+      #       echo "Sin release: el PR de release sigue abierto o no hay nada que publicar." >> "$GITHUB_STEP_SUMMARY"
+      #     fi
+
+      - run: echo "Sin el PASO 2 este workflow no hace nada."

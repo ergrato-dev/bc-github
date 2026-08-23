@@ -1,0 +1,132 @@
+{
+  "semana": "12",
+  "titulo": "Releases y packages",
+  "checks": [
+    {
+      "id": "release-publicado",
+      "descripcion": "Hay un release publicado marcado como latest",
+      "api": "repos/{repo}/releases/latest",
+      "jq": ".draft == false and .prerelease == false",
+      "pista": "2-practicas/01-tu-primer-release.md, paso 4"
+    },
+    {
+      "id": "notas-con-contenido",
+      "descripcion": "El release más reciente tiene notas, no un cuerpo vacío",
+      "api": "repos/{repo}/releases/latest",
+      "jq": "(.body | length) > 60",
+      "pista": "2-practicas/01-tu-primer-release.md, paso 5"
+    },
+    {
+      "id": "varios-releases",
+      "descripcion": "Hay al menos dos releases: el manual y el automatizado",
+      "api": "repos/{repo}/releases",
+      "jq": "length >= 2",
+      "pista": "2-practicas/02-release-automatizado.md, paso 5"
+    },
+    {
+      "id": "configuracion-de-notas",
+      "descripcion": "Existe .github/release.yml con categorías de changelog",
+      "api": "repos/{repo}/contents/.github/release.yml",
+      "jq": "(.content | @base64d | test(\"(?m)^ *categories:\"))",
+      "pista": "2-practicas/01-tu-primer-release.md, paso 2"
+    },
+    {
+      "id": "releases-inmutables",
+      "descripcion": "Los releases publicados son inmutables",
+      "api": "repos/{repo}/immutable-releases",
+      "jq": ".enabled == true",
+      "pista": "2-practicas/01-tu-primer-release.md, paso 6"
+    },
+    {
+      "id": "changelog-versionado",
+      "descripcion": "Existe CHANGELOG.md en el repositorio",
+      "api": "repos/{repo}/contents/CHANGELOG.md",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/02-release-automatizado.md, paso 5"
+    },
+    {
+      "id": "configuracion-de-release-please",
+      "descripcion": "Existe release-please-config.json",
+      "api": "repos/{repo}/contents/release-please-config.json",
+      "jq": "(.content | @base64d | test(\"release-type\"))",
+      "pista": "2-practicas/02-release-automatizado.md, paso 2"
+    },
+    {
+      "id": "manifiesto-de-version",
+      "descripcion": "El manifiesto de release-please declara una versión SemVer",
+      "api": "repos/{repo}/contents/.release-please-manifest.json",
+      "jq": "(.content | @base64d | test(\"[0-9]+\\\\.[0-9]+\\\\.[0-9]+\"))",
+      "pista": "2-practicas/02-release-automatizado.md, paso 2"
+    },
+    {
+      "id": "workflow-de-release",
+      "descripcion": "El workflow de release usa release-please con un token propio",
+      "api": "repos/{repo}/contents/.github/workflows/release.yml",
+      "jq": "(.content | @base64d) as $y | ($y | test(\"release-please-action@[0-9a-f]{40}\")) and ($y | test(\"secrets.RELEASE_PLEASE_TOKEN\"))",
+      "pista": "2-practicas/02-release-automatizado.md, paso 2"
+    },
+    {
+      "id": "secreto-de-release-please",
+      "descripcion": "El secreto RELEASE_PLEASE_TOKEN está configurado",
+      "api": "repos/{repo}/actions/secrets/RELEASE_PLEASE_TOKEN",
+      "jq": ".name == \"RELEASE_PLEASE_TOKEN\"",
+      "pista": "2-practicas/02-release-automatizado.md, paso 1"
+    },
+    {
+      "id": "dockerfile-vinculado",
+      "descripcion": "El Dockerfile declara org.opencontainers.image.source",
+      "api": "repos/{repo}/contents/Dockerfile",
+      "jq": "(.content | @base64d | test(\"org.opencontainers.image.source\"))",
+      "pista": "2-practicas/03-imagen-en-ghcr.md, paso 1"
+    },
+    {
+      "id": "workflow-de-imagen",
+      "descripcion": "El workflow de la imagen declara packages, id-token y attestations en write",
+      "api": "repos/{repo}/contents/.github/workflows/publicar-imagen.yml",
+      "jq": "(.content | @base64d) as $y | ($y | test(\"(?m)^ *packages: *write\")) and ($y | test(\"(?m)^ *id-token: *write\")) and ($y | test(\"(?m)^ *attestations: *write\"))",
+      "pista": "2-practicas/03-imagen-en-ghcr.md, paso 2"
+    },
+    {
+      "id": "imagen-sin-tags-flotantes",
+      "descripcion": "El workflow de la imagen no referencia ninguna action por tag o rama",
+      "api": "repos/{repo}/contents/.github/workflows/publicar-imagen.yml",
+      "jq": "(.content | @base64d | test(\"uses: *[A-Za-z0-9._-]+/[^@\\n]+@(?![0-9a-f]{40})\") | not)",
+      "pista": "1-teoria/05-ghcr-publicar-una-imagen.md, sección 3"
+    },
+    {
+      "id": "imagen-publicada-y-publica",
+      "descripcion": "La imagen existe en GHCR y es pública",
+      "api": "users/{owner}/packages/container/{name}",
+      "jq": ".visibility == \"public\"",
+      "pista": "2-practicas/03-imagen-en-ghcr.md, pasos 0 y 4 — necesita 'gh auth refresh -s read:packages' y que el paquete se llame como el repositorio"
+    },
+    {
+      "id": "workflow-de-paquete",
+      "descripcion": "El workflow del paquete pide identidad para atestiguar",
+      "api": "repos/{repo}/contents/.github/workflows/publicar-npm.yml",
+      "jq": "(.content | @base64d) as $y | ($y | test(\"(?m)^ *id-token: *write\")) and ($y | test(\"attest-build-provenance@[0-9a-f]{40}\"))",
+      "pista": "2-practicas/04-paquete-con-procedencia.md, pasos 2 y 5"
+    },
+    {
+      "id": "registro-declarado",
+      "descripcion": "El package.json declara publishConfig con el registro de GitHub",
+      "api": "repos/{repo}/contents/package.json",
+      "jq": "(.content | @base64d | fromjson | .publishConfig.registry) == \"https://npm.pkg.github.com\"",
+      "pista": "2-practicas/04-paquete-con-procedencia.md, paso 1"
+    },
+    {
+      "id": "paquete-publicado",
+      "descripcion": "El paquete está publicado en GitHub Packages",
+      "api": "users/{owner}/packages/npm/{name}",
+      "jq": ".version_count >= 1",
+      "pista": "2-practicas/04-paquete-con-procedencia.md, paso 3 — necesita 'gh auth refresh -s read:packages'"
+    },
+    {
+      "id": "verificacion-documentada",
+      "descripcion": "El README explica cómo verificar la procedencia antes de usar el paquete",
+      "api": "repos/{repo}/readme",
+      "jq": "(.content | @base64d | test(\"attestation verify\"))",
+      "pista": "2-practicas/04-paquete-con-procedencia.md, paso 6"
+    }
+  ]
+}
