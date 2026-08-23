@@ -1,0 +1,99 @@
+# Auditoría semanal del repositorio — Semana 15.
+#
+# Copia este archivo a `.github/workflows/auditoria.yml` de tu repositorio y ve
+# descomentando los bloques en orden, siguiendo la Práctica 03.
+
+name: Auditoría del repositorio
+
+on:
+  schedule:
+    - cron: "17 6 * * 1" # lunes 06:17 UTC — nunca en punto: esa hora se encola
+  workflow_dispatch:
+
+# ============================================
+# PASO 1: permisos mínimos (Semana 11)
+# ============================================
+# `contents: read` para leer el guion; `issues: write` porque el informe se
+# publica actualizando un issue. Nada más.
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  auditar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # ============================================
+      # PASO 2: ejecutar la auditoría
+      # ============================================
+      # El guion sale con 1 cuando hay hallazgos y con 3 cuando no pudo
+      # auditar. Se guarda el código para decidir después: los hallazgos se
+      # publican, el fallo real pone el workflow en rojo.
+      - name: Auditar
+        id: auditar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set +e
+          pnpm tsx tools/auditoria.ts --repo "${{ github.repository }}" --formato markdown \
+            | tee informe.md
+          echo "codigo=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+
+      # ============================================
+      # PASO 3: dejarlo donde alguien lo vea
+      # ============================================
+      # Descomenta: el resumen del job es gratis y se ve al abrir la ejecución.
+      #
+      # - name: Resumen del job
+      #   run: cat informe.md >> "$GITHUB_STEP_SUMMARY"
+
+      # Descomenta: el JSON crudo, para comparar semanas entre sí.
+      #
+      # - name: Guardar el JSON
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: pnpm tsx tools/auditoria.ts --repo "${{ github.repository }}" --formato json > informe.json || true
+      #
+      # - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      #   with:
+      #     name: auditoria
+      #     path: informe.json
+
+      # Descomenta: un issue, actualizado — no uno nuevo cada semana.
+      #
+      # - name: Publicar el informe
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     EXISTENTE=$(gh issue list --label auditoria --state open --limit 1 \
+      #       --json number --jq '.[0].number // empty')
+      #     if [ -n "$EXISTENTE" ]; then
+      #       gh issue edit "$EXISTENTE" --body-file informe.md
+      #     else
+      #       gh issue create --title "Auditoría del repositorio" \
+      #         --label auditoria --body-file informe.md
+      #     fi
+
+      # ============================================
+      # PASO 4: fallar si de verdad se rompió
+      # ============================================
+      # Código 3 = no se pudo auditar (sin permisos, API caída). Eso sí tiene
+      # que poner el workflow en rojo; los hallazgos, no.
+      #
+      # - name: Marcar el fallo real
+      #   if: steps.auditar.outputs.codigo == '3'
+      #   run: |
+      #     echo "La auditoría no pudo ejecutarse. Revisa el log del paso anterior."
+      #     exit 1

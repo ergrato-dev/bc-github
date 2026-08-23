@@ -402,6 +402,47 @@ Los consejos genéricos de productividad no entran.
 
 ---
 
-> Las secciones de las semanas 15 a 21 se añaden a medida que se publica cada
+## Semana 15 — API REST, GraphQL y `gh` CLI
+
+→ [Semana 15](../bootcamp/week-15-api_rest_graphql_y_gh_cli/README.md)
+
+| Truco | Cómo |
+|-------|------|
+| Guiones portables sin editar una línea | `{owner}`, `{repo}` y `{branch}` se resuelven dentro del repo clonado |
+| Apuntar cualquier guion a otro repositorio | `GH_REPO=owner/repo gh …` |
+| Aprender un endpoint que no encuentras | `GH_DEBUG=api gh pr list` y copia la petición que manda `gh` |
+| Explorar sin gastar cupo | `gh api … --cache 10m` mientras afinas el `--jq` |
+| Consultar el cupo es gratis | `gh api rate_limit` no cuenta contra ningún límite |
+| Saber a qué hora vuelves a tener cupo | `date -d "@$(gh api rate_limit --jq '.resources.core.reset')"` |
+| Preguntar sin gastar | Guarda el `ETag` y mándalo en `If-None-Match`: un `304` no consume cupo |
+| Ver solo las cabeceras | `-i --silent` |
+| Saber qué cubo estás gastando | `X-RateLimit-Resource` en la respuesta |
+| Contar bien una colección | `--paginate --slurp \| jq 'add \| length'` |
+| `--slurp` no admite `--jq` ni `--template` | La salida se pasa a `jq` por tubería |
+| `--paginate --jq 'length'` miente | Cuenta por página, no en total |
+| Tres veces menos peticiones, gratis | `?per_page=100` |
+| El total sin traer nada | `totalCount` en GraphQL, `total_count` en búsqueda |
+| Booleanos y números en `gh api` | `-F campo=true`, no `-f` |
+| Consulta desde archivo | `-F query=@consulta.graphql` — con `-f` manda la ruta como texto |
+| Que `--paginate` recorra una consulta GraphQL | `$endCursor: String` en `after:` y `pageInfo { hasNextPage endCursor }` |
+| Medir lo que cuesta una consulta | `rateLimit { cost remaining }` dentro de la propia consulta |
+| El puente entre las dos APIs | `.node_id` de cualquier respuesta REST |
+| «¿Cómo se llamaba ese campo?» | `__type(name: "Repository") { fields { name } }` |
+| Un error de GraphQL llega con `200` | Hay que mirar `errors`, no el código HTTP |
+| Tabla alineada sin salir de `gh` | `--template '{{tablerow …}}{{tablerender}}'` |
+| Octokit con tu sesión, sin crear un PAT | `export GITHUB_TOKEN=$(gh auth token)` |
+| Paginar sin escribir el bucle | `octokit.paginate(…)`, y `paginate.iterator()` si es enorme |
+| Endpoint sin método tipado en el SDK | `octokit.request("GET /repos/{owner}/{repo}/rulesets", …)` |
+| El cupo en Actions no son 5 000 | El `GITHUB_TOKEN` tiene 1 000/hora y repositorio |
+| Informe visible sin descargar nada | `cat informe.md >> "$GITHUB_STEP_SUMMARY"` |
+| Un issue actualizado en vez de 52 al año | `gh issue list --json number --jq '.[0].number // empty'` |
+| Probar una extensión sin publicarla | `gh extension install .` desde su directorio |
+| Que tu extensión se pueda encontrar | El topic `gh-extension` |
+| Fijar la versión de una extensión ajena | `gh extension install owner/gh-x --pin v1.2.0` |
+| Ver qué actualizaría antes de hacerlo | `gh extension upgrade --all --dry-run` |
+
+---
+
+> Las secciones de las semanas 16 a 21 se añaden a medida que se publica cada
 > semana. Si has hecho una semana y su sección no está aquí,
 > [abre un issue](https://github.com/ergrato-dev/bc-github/issues).

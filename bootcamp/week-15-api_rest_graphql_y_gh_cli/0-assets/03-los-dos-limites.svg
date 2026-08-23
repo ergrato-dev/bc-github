@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 450" width="880" height="450" font-family="Inter, Roboto, system-ui, sans-serif">
+  <rect width="880" height="450" fill="#0d1117"/>
+
+  <text x="440" y="38" fill="#f0f6fc" font-size="22" font-weight="700" text-anchor="middle">Los dos límites</text>
+  <text x="440" y="62" fill="#8b949e" font-size="14" text-anchor="middle">Uno mide cuánto pides; el otro, cómo lo pides</text>
+
+  <!-- primario -->
+  <rect x="40" y="90" width="380" height="200" rx="10" fill="#161b22" stroke="#30363d"/>
+  <text x="70" y="122" fill="#58a6ff" font-size="17" font-weight="700">Primario · cuánto</text>
+  <text x="70" y="148" fill="#8b949e" font-size="13">5 000 peticiones/hora autenticado</text>
+  <text x="70" y="170" fill="#8b949e" font-size="13">1 000/hora para el GITHUB_TOKEN de un repo</text>
+  <text x="70" y="192" fill="#8b949e" font-size="13">30/min en búsqueda · 10/min en código</text>
+
+  <rect x="70" y="210" width="320" height="58" rx="6" fill="#0d1117" stroke="#3fb950"/>
+  <text x="84" y="234" fill="#3fb950" font-size="12.5" font-weight="700">Se ve venir</text>
+  <text x="84" y="254" fill="#8b949e" font-size="12.5">X-RateLimit-Remaining · Reset · Resource</text>
+
+  <!-- secundario -->
+  <rect x="460" y="90" width="380" height="200" rx="10" fill="#161b22" stroke="#30363d"/>
+  <text x="490" y="122" fill="#58a6ff" font-size="17" font-weight="700">Secundario · cómo</text>
+  <text x="490" y="148" fill="#8b949e" font-size="13">Ráfagas, concurrencia, escrituras seguidas</text>
+  <text x="490" y="170" fill="#8b949e" font-size="13">Sin número público: mide comportamiento</text>
+  <text x="490" y="192" fill="#8b949e" font-size="13">Un segundo entre escrituras que mutan</text>
+
+  <rect x="490" y="210" width="320" height="58" rx="6" fill="#0d1117" stroke="#f85149"/>
+  <text x="504" y="234" fill="#f85149" font-size="12.5" font-weight="700">No se ve venir</text>
+  <text x="504" y="254" fill="#8b949e" font-size="12.5">403/429 con Retry-After: esperar, no reintentar</text>
+
+  <!-- las tres salidas -->
+  <text x="440" y="326" fill="#f0f6fc" font-size="16" font-weight="700" text-anchor="middle">Tres formas de gastar menos</text>
+
+  <rect x="40" y="344" width="250" height="76" rx="8" fill="#161b22" stroke="#30363d"/>
+  <text x="60" y="370" fill="#58a6ff" font-size="13" font-weight="700">ETag → 304</text>
+  <text x="60" y="392" fill="#8b949e" font-size="12.5">If-None-Match: "…"</text>
+  <text x="60" y="410" fill="#3fb950" font-size="12.5">no consume cupo</text>
+
+  <rect x="315" y="344" width="250" height="76" rx="8" fill="#161b22" stroke="#30363d"/>
+  <text x="335" y="370" fill="#58a6ff" font-size="13" font-weight="700">per_page=100</text>
+  <text x="335" y="392" fill="#8b949e" font-size="12.5">217 elementos:</text>
+  <text x="335" y="410" fill="#3fb950" font-size="12.5">8 peticiones → 3</text>
+
+  <rect x="590" y="344" width="250" height="76" rx="8" fill="#161b22" stroke="#30363d"/>
+  <text x="610" y="370" fill="#58a6ff" font-size="13" font-weight="700">GraphQL</text>
+  <text x="610" y="392" fill="#8b949e" font-size="12.5">100 issues + comentarios</text>
+  <text x="610" y="410" fill="#3fb950" font-size="12.5">cost: 1 (REST: 101)</text>
+</svg>

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="880" height="440" font-family="Inter, Roboto, system-ui, sans-serif">
+  <rect width="880" height="440" fill="#0d1117"/>
+
+  <text x="440" y="38" fill="#f0f6fc" font-size="22" font-weight="700" text-anchor="middle">Lo que no cabe en una respuesta</text>
+  <text x="440" y="62" fill="#8b949e" font-size="14" text-anchor="middle">217 elementos, dos formas de recorrerlos</text>
+
+  <!-- REST -->
+  <text x="60" y="106" fill="#58a6ff" font-size="16" font-weight="700">REST · páginas numeradas</text>
+
+  <rect x="60" y="122" width="150" height="58" rx="6" fill="#161b22" stroke="#30363d"/>
+  <text x="76" y="146" fill="#f0f6fc" font-size="12.5">?per_page=100</text>
+  <text x="76" y="166" fill="#8b949e" font-size="12.5">página 1 → 100</text>
+
+  <rect x="240" y="122" width="150" height="58" rx="6" fill="#161b22" stroke="#30363d"/>
+  <text x="256" y="146" fill="#f0f6fc" font-size="12.5">?page=2</text>
+  <text x="256" y="166" fill="#8b949e" font-size="12.5">página 2 → 100</text>
+
+  <rect x="420" y="122" width="150" height="58" rx="6" fill="#161b22" stroke="#30363d"/>
+  <text x="436" y="146" fill="#f0f6fc" font-size="12.5">?page=3</text>
+  <text x="436" y="166" fill="#8b949e" font-size="12.5">página 3 → 17</text>
+
+  <path d="M210 151 L240 151" stroke="#8b949e" stroke-width="2"/>
+  <path d="M390 151 L420 151" stroke="#8b949e" stroke-width="2"/>
+
+  <rect x="600" y="122" width="220" height="58" rx="6" fill="#161b22" stroke="#3fb950"/>
+  <text x="616" y="146" fill="#3fb950" font-size="12.5" font-weight="700">Link: rel="next"</text>
+  <text x="616" y="166" fill="#8b949e" font-size="12.5">ausente = era la última</text>
+
+  <!-- GraphQL -->
+  <text x="60" y="240" fill="#58a6ff" font-size="16" font-weight="700">GraphQL · cursores</text>
+
+  <rect x="60" y="256" width="230" height="72" rx="6" fill="#161b22" stroke="#30363d"/>
+  <text x="76" y="280" fill="#f0f6fc" font-size="12.5">labels(first: 100)</text>
+  <text x="76" y="302" fill="#8b949e" font-size="12.5">pageInfo {</text>
+  <text x="90" y="320" fill="#3fb950" font-size="12.5">hasNextPage · endCursor</text>
+
+  <path d="M290 292 L340 292" stroke="#8b949e" stroke-width="2"/>
+  <text x="315" y="284" fill="#8b949e" font-size="11" text-anchor="middle">endCursor</text>
+
+  <rect x="340" y="256" width="230" height="72" rx="6" fill="#161b22" stroke="#30363d"/>
+  <text x="356" y="280" fill="#f0f6fc" font-size="12.5">labels(first: 100,</text>
+  <text x="370" y="300" fill="#f0f6fc" font-size="12.5">after: $endCursor)</text>
+  <text x="356" y="320" fill="#8b949e" font-size="12.5">hasNextPage: false → fin</text>
+
+  <rect x="600" y="256" width="220" height="72" rx="6" fill="#161b22" stroke="#3fb950"/>
+  <text x="616" y="280" fill="#3fb950" font-size="12.5" font-weight="700">totalCount</text>
+  <text x="616" y="302" fill="#8b949e" font-size="12.5">el número sin traer</text>
+  <text x="616" y="320" fill="#8b949e" font-size="12.5">ni un elemento</text>
+
+  <!-- aviso -->
+  <rect x="60" y="356" width="760" height="56" rx="8" fill="#161b22" stroke="#d29922"/>
+  <text x="80" y="380" fill="#d29922" font-size="13" font-weight="700">La trampa</text>
+  <text x="80" y="400" fill="#8b949e" font-size="12.5">--paginate --jq 'length' cuenta POR PÁGINA · --slurp | jq 'length' cuenta PÁGINAS · lo correcto: --slurp | jq 'add | length'</text>
+</svg>

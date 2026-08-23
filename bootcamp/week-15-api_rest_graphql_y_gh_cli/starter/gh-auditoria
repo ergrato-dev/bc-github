@@ -1,0 +1,125 @@
+#!/usr/bin/env bash
+#
+# gh-auditoria — extensión de gh que resume el estado de un repositorio.
+#
+# Copia este archivo a la raíz de tu repositorio `gh-auditoria`, dale permiso
+# de ejecución (`chmod +x gh-auditoria`) y ve descomentando los bloques según
+# la Práctica 04.
+#
+# Uso:  gh auditoria [--repo OWNER/REPO] [--formato texto|json]
+
+set -euo pipefail
+
+REPO=""
+FORMATO="texto"
+
+uso() {
+  cat <<'AYUDA'
+Resume el estado de configuración de un repositorio.
+
+USO
+  gh auditoria [--repo OWNER/REPO] [--formato texto|json]
+
+OPCIONES
+  --repo      Repositorio a auditar. Por defecto, el del directorio actual.
+  --formato   texto (por defecto) o json.
+  -h, --help  Esta ayuda.
+AYUDA
+}
+
+# ============================================
+# PASO 1: argumentos con nombre
+# ============================================
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --repo)    REPO="${2:-}"; shift 2 ;;
+    --formato) FORMATO="${2:-}"; shift 2 ;;
+    -h|--help) uso; exit 0 ;;
+    *) echo "Opción desconocida: $1" >&2; uso >&2; exit 2 ;;
+  esac
+done
+
+# GH_REPO hace que {owner} y {repo} apunten donde tú quieras sin tocar
+# ninguna de las llamadas de abajo.
+[ -n "$REPO" ] && export GH_REPO="$REPO"
+
+# ============================================
+# PASO 2: recoger
+# ============================================
+DATOS=$(gh api graphql -F owner='{owner}' -F repo='{repo}' -f query='
+query($owner: String!, $repo: String!) {
+  repository(owner: $owner, name: $repo) {
+    nameWithOwner
+    isPrivate
+    licenseInfo { spdxId }
+    issues(states: OPEN) { totalCount }
+    pullRequests(states: OPEN) { totalCount }
+    rulesets(first: 10) { nodes { name enforcement } }
+    vulnerabilityAlerts(states: OPEN) { totalCount }
+  }
+}' --jq '.data.repository')
+
+# Descomenta: los workflows solo existen en REST.
+#
+# WORKFLOWS=$(gh api 'repos/{owner}/{repo}/actions/workflows?per_page=100' \
+#   --jq '[.workflows[] | select(.state == "active")] | length')
+
+# Descomenta: endpoint que responde con el código de estado, no con el cuerpo.
+# El `|| true` evita que `set -e` mate el guion en un 404 que es una respuesta
+# perfectamente válida.
+#
+# ESTADO=$(gh api repos/{owner}/{repo}/vulnerability-alerts -i --silent 2>/dev/null | head -1 || true)
+# case "$ESTADO" in
+#   *204*) DEPENDABOT="activo" ;;
+#   *404*) DEPENDABOT="desactivado" ;;
+#   *)     DEPENDABOT="desconocido" ;;
+# esac
+
+# ============================================
+# PASO 3: presentar — JSON primero
+# ============================================
+INFORME=$(printf '%s' "$DATOS" | jq \
+  --arg workflows "${WORKFLOWS:-0}" \
+  --arg dependabot "${DEPENDABOT:-desconocido}" '{
+    repo: .nameWithOwner,
+    publico: (.isPrivate | not),
+    licencia: (.licenseInfo.spdxId // "sin licencia"),
+    issues_abiertos: .issues.totalCount,
+    prs_abiertos: .pullRequests.totalCount,
+    rulesets_activos: [.rulesets.nodes[] | select(.enforcement == "ACTIVE") | .name],
+    alertas_dependencias: .vulnerabilityAlerts.totalCount,
+    workflows_activos: ($workflows | tonumber),
+    dependabot: $dependabot
+  }')
+
+case "$FORMATO" in
+  json)
+    printf '%s\n' "$INFORME"
+    ;;
+  texto)
+    printf '%s' "$INFORME" | jq -r '
+      "Repositorio:  \(.repo)",
+      "Público:      \(.publico)",
+      "Licencia:     \(.licencia)",
+      "Issues / PRs: \(.issues_abiertos) / \(.prs_abiertos)",
+      "Rulesets:     \(if (.rulesets_activos | length) > 0 then (.rulesets_activos | join(", ")) else "ninguno activo" end)",
+      "Dependabot:   \(.dependabot) (\(.alertas_dependencias) alertas)",
+      "Workflows:    \(.workflows_activos) activos"'
+    ;;
+  *)
+    echo "Formato desconocido: $FORMATO" >&2
+    exit 2
+    ;;
+esac
+
+# ============================================
+# PASO 4: código de salida útil en CI
+# ============================================
+# Descomenta: 1 si falta algo importante, 0 si todo está en su sitio.
+#
+# if printf '%s' "$INFORME" | jq -e '.publico and (.licencia != "sin licencia")
+#      and ((.rulesets_activos | length) > 0)' > /dev/null; then
+#   exit 0
+# else
+#   exit 1
+# fi

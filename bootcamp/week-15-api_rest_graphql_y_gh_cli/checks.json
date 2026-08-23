@@ -1,0 +1,174 @@
+{
+  "semana": "15",
+  "titulo": "API REST, GraphQL y `gh` CLI",
+  "checks": [
+    {
+      "id": "consulta-graphql-versionada",
+      "descripcion": "La consulta de auditoría vive en tools/consultas/auditoria.graphql",
+      "api": "repos/{repo}/contents/tools/consultas/auditoria.graphql",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/02-una-consulta-en-vez-de-veinte.md, paso 3"
+    },
+    {
+      "id": "consulta-con-variables",
+      "descripcion": "La consulta usa variables tipadas en vez de interpolar valores",
+      "api": "repos/{repo}/contents/tools/consultas/auditoria.graphql",
+      "jq": "(.content | @base64d) as $q | ($q | test(\"\\\\$owner: *String!\")) and ($q | test(\"\\\\$repo: *String!\"))",
+      "pista": "2-practicas/02-una-consulta-en-vez-de-veinte.md, paso 3"
+    },
+    {
+      "id": "label-de-auditoria",
+      "descripcion": "Existe el label auditoria",
+      "api": "repos/{repo}/labels/auditoria",
+      "jq": ".name == \"auditoria\"",
+      "pista": "2-practicas/01-la-api-en-la-mano.md, paso 5"
+    },
+    {
+      "id": "issue-de-auditoria",
+      "descripcion": "Hay un issue abierto con el label auditoria",
+      "api": "repos/{repo}/issues?labels=auditoria&state=open&per_page=100",
+      "jq": "length > 0",
+      "pista": "2-practicas/02-una-consulta-en-vez-de-veinte.md, paso 6"
+    },
+    {
+      "id": "un-solo-issue-de-auditoria",
+      "descripcion": "El informe actualiza un issue, no crea uno nuevo cada semana",
+      "api": "repos/{repo}/issues?labels=auditoria&state=open&per_page=100",
+      "jq": "length == 1",
+      "pista": "2-practicas/03-el-guion-de-auditoria.md, paso 7"
+    },
+    {
+      "id": "guion-de-auditoria",
+      "descripcion": "Existe tools/auditoria.ts",
+      "api": "repos/{repo}/contents/tools/auditoria.ts",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/03-el-guion-de-auditoria.md, paso 1"
+    },
+    {
+      "id": "guion-usa-octokit",
+      "descripcion": "El guion usa Octokit y pagina con octokit.paginate",
+      "api": "repos/{repo}/contents/tools/auditoria.ts",
+      "jq": "(.content | @base64d) as $s | ($s | test(\"from \\\"octokit\\\"\")) and ($s | test(\"octokit.paginate\"))",
+      "pista": "2-practicas/03-el-guion-de-auditoria.md, paso 3"
+    },
+    {
+      "id": "guion-usa-las-dos-apis",
+      "descripcion": "El guion consulta GraphQL y REST, cada una para lo que solo ella tiene",
+      "api": "repos/{repo}/contents/tools/auditoria.ts",
+      "jq": "(.content | @base64d) as $s | ($s | test(\"octokit.graphql\")) and ($s | test(\"vulnerability-alerts\"))",
+      "pista": "2-practicas/03-el-guion-de-auditoria.md, paso 3"
+    },
+    {
+      "id": "guion-respeta-los-limites",
+      "descripcion": "El cliente lleva los plugins de throttling y retry",
+      "api": "repos/{repo}/contents/tools/auditoria.ts",
+      "jq": "(.content | @base64d) as $s | ($s | test(\"plugin-throttling\")) and ($s | test(\"plugin-retry\"))",
+      "pista": "2-practicas/03-el-guion-de-auditoria.md, paso 2"
+    },
+    {
+      "id": "guion-con-salida-json",
+      "descripcion": "El guion emite JSON además de Markdown",
+      "api": "repos/{repo}/contents/tools/auditoria.ts",
+      "jq": "(.content | @base64d) as $s | ($s | test(\"--formato\")) and ($s | test(\"JSON.stringify\"))",
+      "pista": "2-practicas/03-el-guion-de-auditoria.md, paso 5"
+    },
+    {
+      "id": "guion-distingue-fallo-de-hallazgo",
+      "descripcion": "El guion sale con 3 cuando no pudo auditar, no con 1",
+      "api": "repos/{repo}/contents/tools/auditoria.ts",
+      "jq": "(.content | @base64d | test(\"process.exit\\\\(3\\\\)\"))",
+      "pista": "2-practicas/03-el-guion-de-auditoria.md, paso 3"
+    },
+    {
+      "id": "octokit-declarado",
+      "descripcion": "package.json declara octokit como dependencia",
+      "api": "repos/{repo}/contents/package.json",
+      "jq": "(.content | @base64d | fromjson) as $p | (($p.dependencies // {}) + ($p.devDependencies // {}) | has(\"octokit\"))",
+      "pista": "2-practicas/03-el-guion-de-auditoria.md, paso 1"
+    },
+    {
+      "id": "workflow-de-auditoria",
+      "descripcion": "Existe .github/workflows/auditoria.yml y corre por schedule",
+      "api": "repos/{repo}/contents/.github/workflows/auditoria.yml",
+      "jq": "(.content | @base64d) as $y | ($y | test(\"(?m)^ *- *cron:\")) and ($y | test(\"workflow_dispatch\"))",
+      "pista": "2-practicas/03-el-guion-de-auditoria.md, paso 6"
+    },
+    {
+      "id": "workflow-con-permisos-minimos",
+      "descripcion": "El workflow declara permissions con issues: write",
+      "api": "repos/{repo}/contents/.github/workflows/auditoria.yml",
+      "jq": "(.content | @base64d) as $y | ($y | test(\"(?m)^permissions:\")) and ($y | test(\"(?m)^ *issues: *write\"))",
+      "pista": "2-practicas/03-el-guion-de-auditoria.md, paso 6"
+    },
+    {
+      "id": "workflow-usa-el-token-del-job",
+      "descripcion": "Usa el GITHUB_TOKEN del job, no un PAT guardado",
+      "api": "repos/{repo}/contents/.github/workflows/auditoria.yml",
+      "jq": "(.content | @base64d | test(\"secrets.GITHUB_TOKEN\"))",
+      "pista": "2-practicas/03-el-guion-de-auditoria.md, paso 6"
+    },
+    {
+      "id": "workflow-pinneado",
+      "descripcion": "Ese workflow no usa ninguna action por tag flotante",
+      "api": "repos/{repo}/contents/.github/workflows/auditoria.yml",
+      "jq": "((.content | @base64d | test(\"(?m)^ *(- )?uses: .*@(v[0-9]|main|master)\")) | not)",
+      "pista": "2-practicas/03-el-guion-de-auditoria.md, paso 6"
+    },
+    {
+      "id": "auditoria-ejecutada",
+      "descripcion": "El workflow de auditoría se ha ejecutado al menos una vez",
+      "api": "repos/{repo}/actions/workflows/auditoria.yml/runs?per_page=1",
+      "jq": ".total_count > 0",
+      "pista": "2-practicas/03-el-guion-de-auditoria.md, paso 7"
+    },
+    {
+      "id": "extension-publicada",
+      "descripcion": "El repositorio gh-auditoria existe y es público",
+      "api": "repos/{owner}/gh-auditoria",
+      "jq": ".private == false",
+      "pista": "2-practicas/04-tu-extension-de-gh.md, paso 5"
+    },
+    {
+      "id": "extension-descubrible",
+      "descripcion": "gh-auditoria lleva el topic gh-extension",
+      "api": "repos/{owner}/gh-auditoria",
+      "jq": "((.topics // []) | index(\"gh-extension\")) != null",
+      "pista": "2-practicas/04-tu-extension-de-gh.md, paso 5"
+    },
+    {
+      "id": "extension-ejecutable",
+      "descripcion": "El ejecutable gh-auditoria está en la raíz con permiso de ejecución",
+      "api": "repos/{owner}/gh-auditoria/contents/gh-auditoria",
+      "jq": ".type == \"file\"",
+      "pista": "2-practicas/04-tu-extension-de-gh.md, paso 2"
+    },
+    {
+      "id": "extension-versionada",
+      "descripcion": "gh-auditoria tiene al menos un release para poder fijar la versión",
+      "api": "repos/{owner}/gh-auditoria/releases/latest",
+      "jq": "(.tag_name // \"\") != \"\"",
+      "pista": "2-practicas/04-tu-extension-de-gh.md, paso 5"
+    },
+    {
+      "id": "extension-documentada",
+      "descripcion": "gh-auditoria tiene README con el comando de instalación",
+      "api": "repos/{owner}/gh-auditoria/contents/README.md",
+      "jq": "(.content | @base64d | test(\"gh extension install\"))",
+      "pista": "2-practicas/04-tu-extension-de-gh.md, paso 4"
+    },
+    {
+      "id": "auditoria-documentada",
+      "descripcion": "El README del repositorio explica cómo se audita y dónde está la extensión",
+      "api": "repos/{repo}/contents/README.md",
+      "jq": "(.content | @base64d) as $r | ($r | test(\"(?i)auditor\")) and ($r | test(\"gh-auditoria\"))",
+      "pista": "2-practicas/04-tu-extension-de-gh.md, paso 7"
+    },
+    {
+      "id": "guion-legible-por-graphql",
+      "descripcion": "El guion de auditoría tiene contenido real (comprobado por GraphQL)",
+      "graphql": "query($owner: String!, $repo: String!) { repository(owner: $owner, name: $repo) { object(expression: \"HEAD:tools/auditoria.ts\") { ... on Blob { byteSize } } } }",
+      "jq": "(.data.repository.object.byteSize // 0) > 500",
+      "pista": "2-practicas/03-el-guion-de-auditoria.md, paso 1"
+    }
+  ]
+}

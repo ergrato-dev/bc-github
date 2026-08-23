@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" font-family="Inter, Roboto, system-ui, sans-serif">
+  <rect width="880" height="420" fill="#0d1117"/>
+
+  <text x="440" y="38" fill="#f0f6fc" font-size="22" font-weight="700" text-anchor="middle">La escalera: de un comando a una herramienta</text>
+  <text x="440" y="62" fill="#8b949e" font-size="14" text-anchor="middle">Subir un escalón solo cuando el anterior deja de sostener</text>
+
+  <!-- escalon 1 -->
+  <rect x="40" y="300" width="190" height="80" rx="8" fill="#161b22" stroke="#30363d"/>
+  <text x="60" y="328" fill="#58a6ff" font-size="14" font-weight="700">gh api</text>
+  <text x="60" y="350" fill="#8b949e" font-size="12">Una pregunta, ahora</text>
+  <text x="60" y="368" fill="#8b949e" font-size="12">--jq para dar forma</text>
+
+  <!-- escalon 2 -->
+  <rect x="250" y="235" width="190" height="145" rx="8" fill="#161b22" stroke="#30363d"/>
+  <text x="270" y="263" fill="#58a6ff" font-size="14" font-weight="700">guion en bash</text>
+  <text x="270" y="285" fill="#8b949e" font-size="12">Varias llamadas juntas</text>
+  <text x="270" y="303" fill="#8b949e" font-size="12">Salida en JSON</text>
+  <text x="270" y="321" fill="#8b949e" font-size="12">Códigos de salida</text>
+  <text x="270" y="345" fill="#d29922" font-size="12">Techo: condiciones</text>
+  <text x="270" y="363" fill="#d29922" font-size="12">y agregación</text>
+
+  <!-- escalon 3 -->
+  <rect x="460" y="170" width="190" height="210" rx="8" fill="#161b22" stroke="#30363d"/>
+  <text x="480" y="198" fill="#58a6ff" font-size="14" font-weight="700">Octokit</text>
+  <text x="480" y="220" fill="#8b949e" font-size="12">paginate() sin bucles</text>
+  <text x="480" y="238" fill="#8b949e" font-size="12">throttling + retry</text>
+  <text x="480" y="256" fill="#8b949e" font-size="12">Tipos y tests</text>
+  <text x="480" y="274" fill="#8b949e" font-size="12">REST y GraphQL juntos</text>
+  <text x="480" y="298" fill="#3fb950" font-size="12">Corre solo en Actions</text>
+  <text x="480" y="316" fill="#3fb950" font-size="12">cada semana</text>
+
+  <!-- escalon 4 -->
+  <rect x="670" y="105" width="190" height="275" rx="8" fill="#161b22" stroke="#3fb950"/>
+  <text x="690" y="133" fill="#3fb950" font-size="14" font-weight="700">extensión de gh</text>
+  <text x="690" y="155" fill="#8b949e" font-size="12">gh auditoria</text>
+  <text x="690" y="173" fill="#8b949e" font-size="12">Repo con prefijo gh-</text>
+  <text x="690" y="191" fill="#8b949e" font-size="12">Ejecutable homónimo</text>
+  <text x="690" y="209" fill="#8b949e" font-size="12">Hereda la sesión de gh</text>
+  <text x="690" y="227" fill="#8b949e" font-size="12">install · upgrade · pin</text>
+  <text x="690" y="251" fill="#f0f6fc" font-size="12">topic: gh-extension</text>
+
+  <!-- flechas -->
+  <path d="M230 340 L250 340" stroke="#8b949e" stroke-width="2"/>
+  <path d="M440 300 L460 300" stroke="#8b949e" stroke-width="2"/>
+  <path d="M650 240 L670 240" stroke="#8b949e" stroke-width="2"/>
+
+  <text x="440" y="404" fill="#d29922" font-size="13" text-anchor="middle">Instalar una extensión ajena es ejecutar su código con tu sesión: léela antes, y fija la versión</text>
+</svg>
